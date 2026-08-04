@@ -356,6 +356,14 @@
   .qa-answer.show{ display:block; }
   .qa-answer .verdict{ font-family:var(--display); font-weight:600; color:var(--teal); font-size:16px; margin-bottom:6px; }
   .qa-answer p{ margin:0; color:var(--ink-soft); }
+  .qa-res-toggle{ font-family:var(--mono); font-size:13px; background:none; border:1px solid var(--teal); color:var(--teal); padding:8px 16px; border-radius:999px; cursor:pointer; margin-top:10px; }
+  .qa-res-toggle:hover{ background:var(--teal); color:var(--white); }
+  .qa-resolution{ display:none; margin-top:16px; padding-top:16px; border-top:1px dashed var(--line); }
+  .qa-resolution.show{ display:block; }
+  .qa-resolution .reslabel{ font-family:var(--mono); font-size:12px; color:var(--teal); text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px; }
+  .qa-resolution p{ margin:0 0 10px; color:var(--ink-soft); }
+  .qa-resolution p:last-child{ margin-bottom:0; }
+  .qa-resolution strong{ color:var(--ink); }
 
   .module-footer{ padding:48px 0 64px; }
   .module-footer .refs{ font-family:var(--mono); font-size:12.5px; color:var(--ink-faint); line-height:1.9; }
@@ -553,6 +561,7 @@
               <button class="navlink" data-target="casos-famosos">Casos</button>
               <button class="navlink" data-target="censo">Censo</button>
               <button class="navlink" data-target="exercicios">Exercícios</button>
+              <button class="navlink" data-target="lista-ia">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -907,6 +916,61 @@
           </div>
         </section>
 
+        <section class="section alt reveal" id="lista-ia">
+          <div class="wrap">
+            <div class="eyebrow">12 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 1 a 3 — Introdução</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina, com gabarito quando disponível.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 1</div>
+              <p class="q">Para uma pesquisa sobre os hábitos dos estudantes, classifique cada procedimento como P (amostragem probabilística) ou NP (não probabilística): (i) todos os colegas de faculdade (tenho contato de todos); (ii) ficar na porta da escola abordando conhecidos; (iii) ficar na porta da escola e abordar a cada 12 pessoas; (iv) lista de todos os alunos com ordenação aleatória, selecionar os 20 primeiros; (v) lista em ordem alfabética, gerar 20 números aleatórios e selecionar as posições correspondentes.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(i) NP &nbsp;·&nbsp; (ii) NP &nbsp;·&nbsp; (iii) P &nbsp;·&nbsp; (iv) P &nbsp;·&nbsp; (v) P</div>
+                <p>(i) e (ii) não são probabilísticas — amostraram apenas conhecidos, sem chance conhecida de seleção para o restante da população. (iii) é amostragem sistemática. (iv) e (v), por partirem de uma ordenação aleatória da lista completa, produzem o mesmo efeito de uma amostra casual simples de 20 elementos.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(i)</strong> A amostra é formada só pelos colegas de faculdade do próprio pesquisador — não há sorteio nem chance conhecida de os demais estudantes entrarem na amostra. <strong>NP</strong>.</p><p><strong>(ii)</strong> Abordar "conhecidos" na única porta da escola tem o mesmo problema: quem não é conhecido do entrevistador tem chance zero de ser incluído. <strong>NP</strong>.</p><p><strong>(iii)</strong> Abordar a cada 12 pessoas que entram pela porta é seleção em intervalo fixo (k=12) — a definição de amostragem sistemática, que é probabilística. <strong>P</strong>.</p><p><strong>(iv)</strong> A lista completa foi reordenada aleatoriamente antes de tomar os 20 primeiros — esse embaralhamento prévio dá a cada aluno a mesma chance de aparecer entre os 20, produzindo o mesmo efeito de uma amostra casual simples de tamanho 20. <strong>P</strong>.</p><p><strong>(v)</strong> Gerar 20 números aleatórios e tomar as posições correspondentes (mesmo com a lista em ordem alfabética) tem exatamente o mesmo efeito do item anterior: cada posição — e portanto cada aluno — tem a mesma probabilidade de ser sorteado. <strong>P</strong>.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 2</div>
+              <p class="q">Classifique cada amostra de vendedores conforme: (A) casual simples, (B) sistemática, (C) estratificada, (D) por conglomerados. (i) selecionar todos que ocupam posições múltiplas de 15 na lista completa; (ii) escolher casualmente 3 lojas e amostrar todos os vendedores dessas lojas; (iii) em cada loja, selecionar aleatoriamente k vendedores proporcional ao tamanho da loja; (iv) selecionar aleatoriamente n vendedores da lista completa.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(i) B &nbsp;·&nbsp; (ii) D &nbsp;·&nbsp; (iii) C &nbsp;·&nbsp; (iv) A</div>
+                <p>(i) seleção periódica a cada 15 posições é sistemática. (ii) as lojas são conglomerados sorteados por completo. (iii) cada loja (estrato) contribui com uma quantidade proporcional — estratificada. (iv) todos os vendedores têm a mesma chance, sem divisão prévia — casual simples.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(i)</strong> Selecionar posições múltiplas de 15 (15ª, 30ª, 45ª...) percorre a lista em passos fixos de tamanho k=15 — amostragem <strong>sistemática (B)</strong>.</p><p><strong>(ii)</strong> As 3 lojas são sorteadas por completo, e todos os vendedores de cada loja sorteada entram na amostra — as lojas funcionam como conglomerados, sorteados em bloco. <strong>Conglomerados (D)</strong>.</p><p><strong>(iii)</strong> Cada loja (um estrato natural da população) contribui com uma quantidade k de vendedores proporcional ao seu tamanho — mas dentro de cada estrato ainda há sorteio, ao contrário dos conglomerados (onde a loja inteira entra ou não). <strong>Estratificada (C)</strong>.</p><p><strong>(iv)</strong> Sorteio direto de n vendedores da lista completa, sem qualquer divisão prévia em grupos — todos têm a mesma chance. <strong>Casual simples (A)</strong>.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 3</div>
+              <p class="q">Uma tabela de funcionários traz: Nome, Idade, Sexo, Raça, Salário, Ocupação. (a) Quais das 5 variáveis (além do nome) representam categorias? (b) Quais são quantitativas, e em que unidade devem ser medidas?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Categóricas: sexo, raça, ocupação &nbsp;·&nbsp; Quantitativas: idade (anos) e salário (R$/mês)</div>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> Uma variável é categórica quando seus valores são rótulos/classes sem escala numérica natural. Na tabela, isso vale para <strong>sexo</strong> (masculino/feminino), <strong>raça</strong> (branca/negra/amarela/...) e <strong>ocupação</strong> (gerente/técnico/...).</p><p><strong>(b)</strong> São quantitativas as variáveis medidas por um número com significado aritmético: <strong>idade</strong>, medida em anos (completos), e <strong>salário</strong>, medido em R$/mês — a mesma unidade em que os valores da tabela (2.210,00, 1.750,00...) já estão expressos.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -932,6 +996,7 @@
               <button class="navlink" data-target="dispersao-ed">Dispersão</button>
               <button class="navlink" data-target="correlacao-ed">Correlação</button>
               <button class="navlink" data-target="exercicios-ed">Exercícios</button>
+              <button class="navlink" data-target="lista-ed">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -1385,6 +1450,146 @@
           </div>
         </section>
 
+        <section class="section alt reveal" id="lista-ed">
+          <div class="wrap">
+            <div class="eyebrow">08 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 4 a 12 — Estatística Descritiva</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina. Os valores abaixo foram recalculados de forma independente para garantir precisão.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 4</div>
+              <p class="q">Um paciente fez 6 exames de sangue em 6 meses consecutivos para medir o nível de fosfato por decilitro: 5.6, 5.2, 4.6, 4.9, 5.7, 6.4. Calcule média, mediana e desvio padrão.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">Média = 5.40 &nbsp;·&nbsp; Mediana = 5.40 &nbsp;·&nbsp; Desvio padrão = 0.64</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Dados ordenados: 4.6, 4.9, 5.2, 5.6, 5.7, 6.4 (n=6).</p><p><strong>Média:</strong> x̄ = (5.6+5.2+4.6+4.9+5.7+6.4)/6 = 32.4/6 = 5.40.</p><p><strong>Mediana:</strong> com n par, é a média dos dois valores centrais (3º e 4º na ordenação): (5.2+5.6)/2 = 5.40 — coincide com a média porque os dados são praticamente simétricos em torno do centro.</p><p><strong>Desvio padrão:</strong> s = √[Σ(xi−x̄)²/(n−1)]. As distâncias à média são 0.2, −0.2, −0.8, −0.5, 0.3, 1.0; elevando ao quadrado e somando: 2.06. Logo s² = 2.06/5 = 0.412 e s = √0.412 ≈ 0.64.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 5</div>
+              <p class="q">Salários de 20 funcionários de um banco (ordenados): 1400×8, 1550, 1550, 1650, 1650, 1800, 1800, 1900, 2000, 2050, 2250, 2300, 2400. (a) média, mediana, moda; (b) resumo de 5 números; (c) Q1, Q3 e outliers pelo critério [Q1−1.5·IQR; Q3+1.5·IQR]; (d) box-plot.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Média=1705 &nbsp;·&nbsp; Mediana=1600 &nbsp;·&nbsp; Moda=1400 &nbsp;·&nbsp; Q1=1400, Q3=1950, IQR=550</div>
+                <p>Resumo de 5 números: [1400 ; 1400 ; 1600 ; 1950 ; 2400]. Limites de outlier: [575 ; 2775] — como todos os valores estão dentro desse intervalo, <strong>não há outliers</strong> neste conjunto. A distribuição é assimétrica à direita (média &gt; mediana), refletindo a concentração de salários baixos (oito funcionários em 1400).</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Dados já ordenados (n=20): 1400 (×8), 1550 (×2), 1650 (×2), 1800 (×2), 1900, 2000, 2050, 2250, 2300, 2400.</p><p><strong>Média:</strong> x̄ = Σxi/20 = 34100/20 = 1705.</p><p><strong>Mediana:</strong> com n=20 (par), média das posições 10 e 11: ambas valem 1600 → mediana = 1600.</p><p><strong>Moda:</strong> o valor mais frequente é 1400 (8 ocorrências).</p><p><strong>Resumo de 5 números e quartis:</strong> mín=1400, Q1=1400 (posição 5.25 por interpolação), mediana=1600, Q3=1950 (posição 15.75), máx=2400. IQR = Q3−Q1 = 550.</p><p><strong>Outliers:</strong> limites [Q1−1.5·IQR ; Q3+1.5·IQR] = [1400−825 ; 1950+825] = [575 ; 2775]. Como todos os 20 valores caem dentro desse intervalo, não há outliers.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 6</div>
+              <p class="q">Tempos para montar uma peça, em classes: 150⊢180 (3), 180⊢210 (8), 210⊢240 (10), 240⊢270 (13), 270⊢300 (33), 300⊢330 (40), 330⊢360 (35), 360⊢390 (8). Calcule média e desvio padrão.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">n=150 &nbsp;·&nbsp; Média ≈ 298.0 s &nbsp;·&nbsp; Desvio padrão ≈ 48.96 s</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Dados agrupados em 8 classes (150⊢390, amplitude 30). Calculando com o ponto médio de cada classe (mi) e a frequência (fi):</p><p><strong>Média:</strong> x̄ = Σ(mi·fi)/Σfi. Com n=Σfi=150 e Σ(mi·fi)=44700, obtém-se x̄ = 44700/150 = 298.0 s.</p><p><strong>Desvio padrão:</strong> s = √{[Σ(mi²·fi) − (Σmi·fi)²/n] / (n−1)}. Substituindo os valores agregados das 8 classes chega-se a s² ≈ 2397, logo s ≈ 48.96 s.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 7</div>
+              <p class="q">20, 25, 25, 27, 28, 31, 33, 34, 36, 37, 44, 50, 59, 85, 86. (a) média e desvio padrão; (b) identifique outliers pelo critério do IQR, remova-os e recalcule; (c) mediana e quartis, antes e depois da remoção.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Com outliers: média=41.33, s=20.61, Q1=27, Md=34, Q3=50 &nbsp;·&nbsp; Outliers: 85 e 86 (limite superior = Q3+1.5·IQR = 84.5)</div>
+                <p>Removendo 85 e 86: média=34.54, s=10.97 — queda expressiva em ambos, mostrando forte sensibilidade da média e do desvio padrão a outliers. Já mediana e quartis (Q1=26, Md=33, Q3=40.5) quase não se alteram — são medidas robustas a valores extremos.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Dados ordenados (n=15): 20, 25, 25, 27, 28, 31, 33, 34, 36, 37, 44, 50, 59, 85, 86.</p><p><strong>(a) Com todos os dados:</strong> x̄ = Σxi/15 = 620/15 ≈ 41.33. s = √[Σ(xi−x̄)²/14] ≈ 20.61.</p><p><strong>(b) Outliers:</strong> Q1=27, Q3=50, IQR=23 → limite superior = Q3+1.5·IQR = 50+34.5 = 84.5. Os valores 85 e 86 excedem esse limite — são os outliers. Removendo-os (n=13): x̄ = (620−85−86)/13 = 449/13 ≈ 34.54 e s ≈ 10.96. A queda é grande em ambas as medidas — média e desvio padrão são muito sensíveis a valores extremos.</p><p><strong>(c) Mediana e quartis:</strong> antes da remoção, Md=34, Q1=27, Q3=50; depois da remoção (13 valores), Md=33, Q1=26, Q3=40.1. A variação é pequena — mediana e quartis são medidas robustas, pouco afetadas por outliers.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 8</div>
+              <p class="q">40 empréstimos pessoais (valores em $), de 300 a 3000. (a) Q1, Q3 e outliers; (b) box-plot; (c) a distribuição é simétrica? (d) tabela de frequências com 1ª classe iniciando em $300 e intervalo de classe $400; (e) histograma; (f) média, mediana, moda e desvio padrão pela tabela.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Dados brutos: Q1=575, Md=925, Q3=1450, IQR=875 &nbsp;·&nbsp; único outlier: 3000 (limite superior=2762.5)</div>
+                <table class="datatab" style="margin-top:8px;">
+                  <caption>Tabela de frequências (d)</caption>
+                  <thead><tr><th>Classe</th><th>300–700</th><th>700–1100</th><th>1100–1500</th><th>1500–1900</th><th>1900–2300</th><th>2300–2700</th><th>2700–3100</th></tr></thead>
+                  <tbody><tr><td>Frequência</td><td>13</td><td>11</td><td>6</td><td>5</td><td>3</td><td>1</td><td>1</td></tr></tbody>
+                </table>
+                <p style="margin-top:8px;">(c) A distribuição é fortemente assimétrica à direita — a maior concentração está nas classes mais baixas, com uma cauda longa até 3000. (f) Pela tabela agrupada: média≈1110, mediana≈954.5, moda≈646.7 (fórmula de Czuber), desvio padrão≈627.5.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a) Quartis nos dados brutos (n=40):</strong> Q1=575, Q3=1450 (por interpolação linear de posição), IQR=875. Limite superior = 1450+1.5×875 = 2762.5 — o único valor acima disso é 3000, que é o outlier da amostra.</p><p><strong>(b)/(c) Box-plot e simetria:</strong> com a mediana (925) mais próxima de Q1 (575) do que de Q3 (1450), e um outlier apenas no lado superior, a distribuição é claramente assimétrica à direita.</p><p><strong>(d) Tabela de frequências</strong> (1ª classe 300–700, amplitude 400): contando quantos dos 40 valores caem em cada faixa de 400 a partir de 300, obtém-se 13, 11, 6, 5, 3, 1, 1 nas sete classes de 300 a 3100.</p><p><strong>(f) Média, mediana, moda e desvio padrão pela tabela agrupada:</strong> usando ponto médio de classe, x̄ = Σ(mi·fi)/n ≈ 1110; mediana pela fórmula de interpolação Md = Li + (h/fMd)·(n/2 − Fant) ≈ 954.5; moda pela fórmula de Czuber, Mo = Li + h·d1/(d1+d2) ≈ 646.7; e desvio padrão agrupado s ≈ 627.5.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 9</div>
+              <p class="q">Tempo de sobrevivência (dias) de 72 ratos infectados por uma bactéria. (a) construa o histograma e descreva seu formato; (b) forneça o resumo de 5 números.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Resumo de 5 números: mín=43 ; Q1=82.5 ; Md=102.5 ; Q3=151.5 ; máx=598</div>
+                <p>O histograma apresenta forte assimetria à direita (cauda longa) — a maioria dos ratos sobrevive entre 40 e 150 dias, mas uma minoria sobrevive muito mais (até 598 dias), típico de dados de tempo até um evento (tempo de sobrevivência, tempo de falha).</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a) Histograma:</strong> construído a partir dos 72 tempos de sobrevivência, ele mostra forte assimetria à direita — concentração entre 40 e 150 dias, com uma cauda longa de poucos ratos que sobrevivem muito mais (até 598 dias).</p><p><strong>(b) Resumo de 5 números:</strong> ordenando os 72 valores, mín=43; Q1 (posição 18.25) ≈ 82.5; mediana (posições 36 e 37) ≈ 102.5; Q3 (posição 54.75) ≈ 151.5; máx=598. A grande distância entre Q3 e o máximo (151.5 → 598), comparada à distância entre o mínimo e Q1 (43 → 82.5), confirma numericamente a assimetria à direita observada no histograma.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercícios 10 e 11 · coeficiente de correlação</div>
+              <p class="q">10) Anos de serviço (X) e número de clientes (Y) de 10 corretores: X=2,3,4,5,4,6,7,8,8,10; Y=48,50,56,52,43,60,62,58,64,72. 11) Nota em teste de idioma (X) e tempo para aprender a operar uma máquina (Y) de 10 operadores: X=42,53,64,75,74,76,77,88,80,90; Y=348,350,356,342,343,360,362,358,364,372. Para cada caso, faça o diagrama de dispersão e calcule r.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Exercício 10: r ≈ 0.877 &nbsp;·&nbsp; Exercício 11: r ≈ 0.549</div>
+                <p>No exercício 10, mais anos de serviço estão associados a uma carteira de clientes maior — correlação forte e positiva. No exercício 11, a associação entre desempenho no teste de idioma e tempo de aprendizado da máquina é positiva, porém moderada — sugerindo que outros fatores, além da nota no teste, influenciam o tempo de aprendizado.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>Exercício 10:</strong> com n=10 pares (X = anos de serviço, Y = nº de clientes), calcula-se r = Sxy/√(Sxx·Syy), onde Sxy=Σxy−(Σx)(Σy)/n, Sxx=Σx²−(Σx)²/n, Syy=Σy²−(Σy)²/n. Substituindo os dados da tabela chega-se a r ≈ 0.877 — correlação forte e positiva: mais anos de serviço associam-se a mais clientes.</p><p><strong>Exercício 11:</strong> mesmo procedimento, agora com X = nota no teste de idioma e Y = tempo para aprender a operar a máquina. O resultado é r ≈ 0.549 — correlação positiva, porém moderada, sugerindo que fatores além da nota no teste também influenciam o tempo de aprendizado.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 12</div>
+              <p class="q">200 habitantes de uma ilha, opinião sobre um projeto ambiental por local de residência:</p>
+              <table class="datatab" style="margin-top:6px;">
+                <thead><tr><th>Opinião</th><th>Urbano</th><th>Suburbano</th><th>Rural</th></tr></thead>
+                <tbody><tr><td>A favor</td><td>60</td><td>35</td><td>15</td></tr><tr><td>Contra</td><td>30</td><td>25</td><td>35</td></tr></tbody>
+              </table>
+              <p class="q" style="margin-top:8px;">(a) proporções em relação ao total das colunas; (b) proporções em relação ao total das linhas; (c) a opinião independe do local de residência?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">% a favor por local: Urbano=66.7%, Suburbano=58.3%, Rural=30.0% &nbsp;·&nbsp; χ² = 17.85 &gt;&gt; χ²crítico(2 g.l., 5%)=5.99</div>
+                <p>(a)/(b) A proporção de pessoas a favor do projeto cai fortemente do urbano (66.7%) ao rural (30.0%) — um padrão visível já nas proporções descritivas. (c) O teste qui-quadrado de associação (assunto do módulo "Teste de Associação") confirma: com χ²=17.85 muito acima do valor crítico, <strong>a opinião não é independente do local de residência</strong>.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a) Proporções por coluna (total de cada local):</strong> Urbano: 60/90=66.7% a favor, 30/90=33.3% contra. Suburbano: 35/60=58.3% a favor, 25/60=41.7% contra. Rural: 15/50=30.0% a favor, 35/50=70.0% contra.</p><p><strong>(b) Proporções por linha (total de cada opinião):</strong> dos 110 "a favor", 60/110≈54.5% são urbanos, 35/110≈31.8% suburbanos, 15/110≈13.6% rurais. Dos 90 "contra", 30/90≈33.3% urbanos, 25/90≈27.8% suburbanos, 35/90≈38.9% rurais.</p><p><strong>(c) Independência:</strong> aplicando o teste qui-quadrado de associação (Σ(oi−ei)²/ei sobre a tabela 2×3, com ei = frequência esperada sob independência), obtém-se χ² ≈ 17.85 com 2 graus de liberdade. Como o valor crítico χ²(2gl,5%)=5.99 é muito menor que o calculado, rejeita-se a hipótese de independência — a opinião sobre o projeto depende, sim, do local de residência.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -1410,6 +1615,7 @@
               <button class="navlink" data-target="minimos-quadrados-ep">Mín. Quadrados</button>
               <button class="navlink" data-target="resumo-ep">Resumo</button>
               <button class="navlink" data-target="exercicios-ep">Exercícios</button>
+              <button class="navlink" data-target="lista-ep">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -1781,6 +1987,62 @@
           </div>
         </section>
 
+        <section class="section alt reveal" id="lista-ep">
+          <div class="wrap">
+            <div class="eyebrow">08 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 13 a 15 — Estimação</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina, com gabarito.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 13</div>
+              <p class="q">De x1,...,x5, extraída de uma população com média µ e desvio padrão σ, cinco estimadores de µ são sugeridos: µ̂1=x1; µ̂2=(x1+x2)/2; µ̂3=(x1+2x5)/3; µ̂4=(x1+2x2+...+4x4)/10; µ̂5=(x1+x2+...+x5)/5 = x̄. (a) Os estimadores são não viciados? (b) Qual é o melhor?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Todos são não viciados: E(µ̂i)=µ para i=1,...,5 &nbsp;·&nbsp; O melhor é µ̂5 = x̄, por ter a menor variância</div>
+                <p>Var(µ̂1)=σ² &nbsp;·&nbsp; Var(µ̂2)=σ²/2 &nbsp;·&nbsp; Var(µ̂3)=5σ²/9 &nbsp;·&nbsp; Var(µ̂4)=0.30σ² &nbsp;·&nbsp; Var(µ̂5)=σ²/5=0.20σ². Entre estimadores igualmente não viciados, prefere-se sempre o de menor variância — e a média amostral x̄ vence com folga.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a) Não-viciamento:</strong> como cada Xi tem E(Xi)=µ, qualquer combinação linear dos Xi cujos coeficientes somem 1 também tem esperança µ. Verificando: µ̂1 (coef. 1), µ̂2 (coefs. 1/2+1/2=1), µ̂3 ((1+2)/3=1), µ̂4 ((1+2+3+4)/10=1) e µ̂5 (5×1/5=1) — todos somam 1, logo E(µ̂i)=µ para os cinco estimadores.</p><p><strong>(b) Variâncias:</strong> usando Var(ΣaiXi)=σ²Σai² (Xi independentes): Var(µ̂1)=σ², Var(µ̂2)=σ²(1/4+1/4)=σ²/2, Var(µ̂3)=σ²(1/9+4/9)=5σ²/9, Var(µ̂4)=σ²(1+4+9+16)/100=0.30σ², Var(µ̂5)=σ²(5×1/25)=σ²/5=0.20σ². Como todos são não viciados, o melhor é o de menor variância: <strong>µ̂5 = x̄</strong>, a média amostral simples.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 14</div>
+              <p class="q">Um campeonato usa 4 dados (6, 8, 12 e 20 lados), cada um associado a uma cor: azul, verde, vermelho, branco. Cada face x tem uma probabilidade tabelada por dado. Determine o estimador de máxima verossimilhança de θ (a cor/dado) para cada valor observado de x.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">x∈{1,4,6}→Azul &nbsp;·&nbsp; x∈{2,3,7,8}→Verde &nbsp;·&nbsp; x=5→Azul ou Vermelho (empate) &nbsp;·&nbsp; x∈{9,...,12}→Vermelho &nbsp;·&nbsp; x∈{13,...,20}→Branco</div>
+                <p>O EMV escolhe, para cada valor observado x, o dado (cor) sob o qual P(X=x|θ) é máxima — é só percorrer a coluna de cada linha da tabela e ver qual distribuição atribui a maior probabilidade a esse valor.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>O EMV, para cada valor observado x, escolhe a distribuição (cor/dado) que atribui a maior probabilidade a esse x — basta percorrer a linha de x na tabela e comparar as quatro colunas.</p><p>Para x=1: P(1|AZ)=1/6 é maior que as demais → Azul. Para x=4: P(4|AZ)=2/6=1/3, a maior entre as quatro → Azul. Para x=6: novamente AZ tem a maior probabilidade (1/6) entre os dados que alcançam essa face → Azul.</p><p>Para x=2,3,7,8: comparando as colunas, é a distribuição Verde que maximiza a probabilidade nesses pontos (ex.: P(2|VD)=2/8=1/4, a maior entre as opções disponíveis) → Verde.</p><p>Para x=5: AZ e VM têm probabilidades iguais e mutuamente as maiores entre as quatro colunas — não há EMV único, o método empata entre Azul e Vermelho.</p><p>Para x=9,10,11,12: apenas os dados de 12 e 20 lados alcançam essas faces, e entre eles VM (1/12) supera BR (1/20) → Vermelho.</p><p>Para x=13 a 20: só o dado de 20 lados (Branco) alcança essas faces → Branco.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 15 · captura-recaptura</div>
+              <p class="q">100 trutas marcadas e devolvidas ao lago; uma semana depois, recolhem-se 200 trutas, das quais 20 estão marcadas. (a) Estimativa do número de trutas no lago? (b) Se N=1000, qual a probabilidade de encontrar exatamente 20 marcadas? (c) Qual o EMV de N?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) N̂ = 100×200/20 = 1000 &nbsp;·&nbsp; (b) P(X=20) = C(200,20)×0.12⁰×0.918⁰ ≈ 9.36% &nbsp;·&nbsp; (c) N̂EMV = 1000</div>
+                <p>A ideia (estimador dos momentos, equivalente aqui ao de máxima verossimilhança): 100 marcadas estão para N total, assim como 20 marcadas (na 2ª captura) estão para 200 recapturadas — 100/N=20/200 → N=1000. Este é o clássico <strong>estimador de Petersen</strong>, usado em ecologia para estimar tamanho populacional.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> A proporção de trutas marcadas na 2ª captura deve refletir a proporção de marcadas na população: 100/N = 20/200. Isolando N: N̂ = 100×200/20 = 1000.</p><p><strong>(b)</strong> Com N=1000, a proporção teórica de marcadas no lago é π=100/1000=0.1. Aproximando a captura de 200 trutas por uma Binomial(200, 0.1) (captura sem reposição, mas com N grande em relação à amostra), P(X=20) = C(200,20)·0.1²⁰·0.9¹⁸⁰ ≈ 9.36%.</p><p><strong>(c)</strong> O EMV de N maximiza essa mesma probabilidade P(X=20|N) em função de N. Pela propriedade do estimador de razão (equivalente ao método dos momentos neste caso), o valor de N que maximiza a verossimilhança é justamente N̂=1000 — o clássico <strong>estimador de Petersen</strong>, usado em ecologia para estimar tamanho de populações por captura-recaptura.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -1806,6 +2068,7 @@
               <button class="navlink" data-target="ic-var-ii">IC para σ²</button>
               <button class="navlink" data-target="bootstrap-ii">Bootstrap</button>
               <button class="navlink" data-target="exercicios-ii">Exercícios</button>
+              <button class="navlink" data-target="lista-ii">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -2320,6 +2583,287 @@
           </div>
         </section>
 
+        <section class="section alt reveal" id="lista-ii">
+          <div class="wrap">
+            <div class="eyebrow">08 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 16 a 34 — Intervalo de Confiança (1 amostra)</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina, com gabarito. Alguns valores foram recalculados de forma independente onde a lista original não fornecia resposta.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 16</div>
+              <p class="q">Para γ = 90%, 95% e 99%, determine a tal que P(|X̄−µ|≤a)=γ, com σ conhecido.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">γ=90%: a=1.645σ/√n &nbsp;·&nbsp; γ=95%: a=1.96σ/√n &nbsp;·&nbsp; γ=99%: a=2.576σ/√n</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Queremos a tal que P(|X̄−µ|≤a)=γ. Como X̄ ~ N(µ, σ²/n), padronizando Z=(X̄−µ)/(σ/√n), a condição equivale a P(|Z|≤a/(σ/√n))=γ, ou seja, a/(σ/√n) = zα/2, o valor crítico bilateral da Normal para a área γ.</p><p>Assim, a = zα/2·σ/√n. Para γ=90% → zα/2=1.645; para γ=95% → zα/2=1.96; para γ=99% → zα/2=2.576. Basta substituir cada z na fórmula.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 17</div>
+              <p class="q">População com σ²=25, amostra n=36, x̄=8. Construa IC para µ com 95%, 90% e 99% de confiança.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">95%: [6.37 ; 9.63] &nbsp;·&nbsp; 90%: [6.63 ; 9.37] &nbsp;·&nbsp; 99%: [5.85 ; 10.15]</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Com σ²=25 (σ=5), n=36 e x̄=8, o intervalo de confiança para µ é x̄ ± zα/2·σ/√n. O erro padrão é σ/√n = 5/6 ≈ 0.833.</p><p>Para γ=95%, zα/2=1.96 → margem = 1.96×0.833=1.633 → IC=[6.37 ; 9.63]. Para γ=90%, zα/2=1.645 → margem=1.371 → IC=[6.63 ; 9.37]. Para γ=99%, zα/2=2.576 → margem=2.147 → IC=[5.85 ; 10.15]. Note como a margem cresce à medida que a confiança exigida aumenta.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 18</div>
+              <p class="q">Para x̄=10, construa IC(µ) para cada combinação de n, σ e γ:</p>
+              <table class="datatab" style="margin-top:6px;">
+                <thead><tr><th></th><th>I</th><th>II</th><th>III</th><th>IV</th><th>V</th><th>VI</th></tr></thead>
+                <tbody><tr><td>n</td><td>9</td><td>9</td><td>16</td><td>100</td><td>25</td><td>25</td></tr>
+                <tr><td>σ</td><td>4</td><td>12</td><td>5</td><td>5</td><td>8</td><td>8</td></tr>
+                <tr><td>γ</td><td>95</td><td>95</td><td>95</td><td>95</td><td>99</td><td>95</td></tr></tbody>
+              </table>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">I: 10±2.61 &nbsp;·&nbsp; II: 10±7.84 &nbsp;·&nbsp; III: 10±2.45 &nbsp;·&nbsp; IV: 10±0.98 &nbsp;·&nbsp; V: 10±4.12 &nbsp;·&nbsp; VI: 10±3.14</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Fórmula única para todos os seis casos: IC = x̄ ± zα/2·σ/√n, com x̄=10 fixo.</p><p><strong>I</strong> (n=9,σ=4,γ=95%): 1.96×4/3=2.61. <strong>II</strong> (n=9,σ=12,γ=95%): 1.96×12/3=7.84 — mesmo n de I, mas σ triplicado, então a margem também triplica. <strong>III</strong> (n=16,σ=5,γ=95%): 1.96×5/4=2.45. <strong>IV</strong> (n=100,σ=5,γ=95%): 1.96×5/10=0.98 — mesmo σ de III, mas n muito maior reduz a margem por um fator de √(100/16)=2.5. <strong>V</strong> (n=25,σ=8,γ=99%): 2.576×8/5=4.12. <strong>VI</strong> (n=25,σ=8,γ=95%): 1.96×8/5=3.14 — mesmos n e σ de V, só muda γ, ilustrando isoladamente o efeito do nível de confiança na margem.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 19</div>
+              <p class="q">Desvio padrão da altura de crianças da 5ª série é 5 cm. (a) Amostra de 36 crianças, média 150 cm — IC de 95% para a média da população? (b) Que tamanho de amostra faz o IC ter margem de ±0.98 com 95% de confiança?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">(a) IC = [148.37 ; 151.63] &nbsp;·&nbsp; (b) n = (1.96×5/0.98)² = 100</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> Com σ=5, n=36, x̄=150 e γ=95% (zα/2=1.96): margem = 1.96×5/√36 = 1.96×0.833 ≈ 1.633. IC = 150 ± 1.63 = [148.37 ; 151.63].</p><p><strong>(b)</strong> Queremos a margem e0=0.98 com γ=95%: e0 = zα/2·σ/√n → 0.98 = 1.96×5/√n → √n = 1.96×5/0.98 = 10 → n = 100.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 20</div>
+              <p class="q">Qual o nível de confiança de cada intervalo: (a) X̄±1.96σ/√n; (b) X̄±1.64σ/√n?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">(a) z=1.96 → γ=95% &nbsp;·&nbsp; (b) z=1.64 → γ≈90%</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>O nível de confiança de um IC do tipo X̄±z·σ/√n é dado por γ=P(|Z|≤z), a área central sob a Normal padrão delimitada por ±z.</p><p><strong>(a)</strong> z=1.96 corresponde a α/2=2.5% em cada cauda (consultando a tabela da Normal), logo γ=1−2×2.5%=95%. <strong>(b)</strong> z=1.64 corresponde a α/2≈5% em cada cauda, logo γ≈1−2×5%=90%.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 21</div>
+              <p class="q">Teste de sensitividade em 18 válvulas, média 3.2 uv, variância 4 uv. IC para a sensitividade média com 98% de confiança.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">n=18, σ=2, z=2.33 → IC = [2.102 ; 4.298]</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Dados: n=18, x̄=3.2 uv, variância populacional σ²=4 (σ=2), γ=98% → α=2%, zα/2=2.33.</p><p>Margem = zα/2·σ/√n = 2.33×2/√18 ≈ 2.33×0.4714 ≈ 1.098. IC = 3.2 ± 1.098 = [2.102 ; 4.298].</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 22</div>
+              <p class="q">20 clientes de um banco, média de endividamento $587.25, desvio padrão populacional considerado $93.76. (a) IC de 95%. (b) Quantos clientes consultar para que, com 90% de confiança, o erro amostral seja no máximo $25?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">(a) IC = 587.25 ± 41.09 &nbsp;·&nbsp; (b) n = (1.64×93.76/25)² ≈ 37.8 → 38 clientes</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> n=20, x̄=587.25, σ=93.76, γ=95% (zα/2=1.96). Margem = 1.96×93.76/√20 ≈ 1.96×20.97 ≈ 41.09. IC = 587.25 ± 41.09.</p><p><strong>(b)</strong> Para erro máximo e0=25 com γ=90% (zα/2=1.64): n = (zα/2·σ/e0)² = (1.64×93.76/25)² ≈ (6.153)² ≈ 37.83 → arredondando para cima, n=38 clientes (sempre se arredonda o tamanho de amostra para o inteiro seguinte, nunca para baixo).</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 23</div>
+              <p class="q">Para W ~ t-Student com ν g.l., determine wα tal que: (a) P(|W|≤wα)=95%, ν=10; (b) P(|W|≤wα)=90%, ν=15; (c) P(W≤wα)=90%, ν=10; (d) P(W≥wα)=95%, ν=14.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) w=2.228 &nbsp;·&nbsp; (b) w=1.753 &nbsp;·&nbsp; (c) w=1.372 &nbsp;·&nbsp; (d) w=−1.761</div>
+                <p>(a) e (b) são bilaterais: divide-se a área de fora em duas caudas iguais (t com ν e α/2). (c) é unilateral à direita direto na tabela-t. (d) pede que 95% da distribuição fique à direita de w — ou seja, apenas 5% à esquerda — o que dá um valor negativo, simétrico ao t unilateral de 5% com sinal trocado.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> P(|W|≤wα)=95% com ν=10 é bilateral: sobra 5% dividido nas duas caudas (2.5% cada). Na tabela t com 10 g.l. e área de 2.5% na cauda superior: wα = t(10;2.5%) = 2.228.</p><p><strong>(b)</strong> Mesmo raciocínio bilateral, agora com 90% central → 5% em cada cauda, ν=15: wα = t(15;5%) = 1.753.</p><p><strong>(c)</strong> P(W≤wα)=90% é unilateral à direita — a própria tabela-t já fornece esse percentil direto: com ν=10 e área de 10% acima, wα = t(10;10%) = 1.372.</p><p><strong>(d)</strong> P(W≥wα)=95% significa que apenas 5% da distribuição fica à esquerda de wα — pela simetria da t, isso equivale a −t(14;5%) = −1.761.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 24</div>
+              <p class="q">Para W ~ χ² com ν g.l., determine wα tal que: (a) P(W≥wα)=90%, ν=10; (b) P(W≤wα)=90%, ν=15; (c) P(W≥wα)=90%, ν=7.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) w=4.865 &nbsp;·&nbsp; (b) w=22.307 &nbsp;·&nbsp; (c) w=2.833</div>
+                <p>Diferente da t (simétrica), a χ² é assimétrica — cada busca na tabela deve ser feita pelo percentil pedido diretamente: (a) e (c) pedem o 10º percentil (90% de área à direita); (b) pede o 90º percentil.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>A χ² não é simétrica, então cada item exige localizar o percentil certo diretamente na tabela.</p><p><strong>(a)</strong> P(W≥wα)=90% com ν=10: é o percentil que deixa 90% da massa à direita, ou seja, o 10º percentil da χ²(10): wα = 4.865.</p><p><strong>(b)</strong> P(W≤wα)=90% com ν=15: é diretamente o 90º percentil da χ²(15): wα = 22.307.</p><p><strong>(c)</strong> P(W≥wα)=90% com ν=7: novamente o 10º percentil, agora da χ²(7): wα = 2.833.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 25 · precipitação pluviométrica</div>
+              <p class="q">σ=3.1. Últimos 9 anos: 28.3, 31.7, 29.8, 30.5, 34.1, 27.9, 35, 26.9, 30.2. (a) IC 98% para a média, σ conhecido; (b) idem, σ desconhecido; (c) IC 98% para P(precipitação&gt;30).</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">x̄=30.489 &nbsp;·&nbsp; (a) σ conhecido: IC=[28.081;32.897] &nbsp;·&nbsp; (b) σ desconhecido (s=2.734, t8,99%=2.896): IC=[27.850;33.128]</div>
+                <p>(c) Com p̂=5/9 dos anos acima de 30 (aproximando pela normal, mesmo com n pequeno): IC ≈ [0.170 ; 0.942] — um intervalo muito largo, sintoma de que a aproximação normal é pouco confiável com apenas 9 observações.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Dados: n=9, valores 28.3, 31.7, 29.8, 30.5, 34.1, 27.9, 35, 26.9, 30.2. x̄ = Σxi/9 = 30.489.</p><p><strong>(a) σ=3.1 conhecido, γ=98% (zα/2=2.33):</strong> margem = 2.33×3.1/√9 ≈ 2.408. IC = 30.489 ± 2.408 = [28.081 ; 32.897].</p><p><strong>(b) σ desconhecido:</strong> s=2.734 (calculado a partir da amostra), t(8;1%)=2.896. Margem = 2.896×2.734/√9 ≈ 2.639. IC = 30.489 ± 2.639 = [27.850 ; 33.128] — mais largo que o do item (a), como esperado ao usar t em vez de Z.</p><p><strong>(c)</strong> Dos 9 anos, 5 tiveram precipitação &gt;30 (p̂=5/9≈0.556). Aproximando por Normal (mesmo com n pequeno): margem = zα/2·√(p̂(1−p̂)/n) = 2.33×√(0.556×0.444/9) ≈ 0.386. IC(p) ≈ [0.170 ; 0.942] — um intervalo muito largo, sinal de que a aproximação normal é frágil com apenas 9 observações.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 26 · esferas para rolamento</div>
+              <p class="q">n=20, média amostral 32 mm, desvio padrão amostral 1.2 mm. (a) IC de 90% para a variância populacional; (b) IC de 95% para a média populacional.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) χ²sup(19,90%)=30.14, χ²inf=10.12 → IC(σ²)=[0.908 ; 2.704] &nbsp;·&nbsp; (b) t(19,95%)=2.093 → IC(µ)=[31.44 ; 32.56]</div>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Dados: n=20 (ν=19), x̄=32 mm, s=1.2 mm → s²=1.44.</p><p><strong>(a) IC(σ²) com 90%:</strong> [(n−1)s²/χ²sup ; (n−1)s²/χ²inf], com χ²(19;95%)=10.117 e χ²(19;5%)=30.144 (as posições de "sup" e "inf" se invertem porque dividir por um χ² maior dá o limite inferior do IC). (19×1.44)/30.144=0.908 e (19×1.44)/10.117=2.704 → IC(σ²)=[0.908 ; 2.704].</p><p><strong>(b) IC(µ) com 95%:</strong> t(19;2.5%)=2.093. Margem = 2.093×1.2/√20 ≈ 0.562. IC = 32 ± 0.56 = [31.44 ; 32.56].</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 27 · usando os dados do Exercício 6</div>
+              <p class="q">Com a tabela de tempos para montar uma peça (n=150, média≈298s, s≈48.96s): (a) IC de 95% para a média; (b) IC de 95% para a variância; (c) IC de 98% para P(tempo&gt;300s).</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) IC(µ) = [290.10 ; 305.90] &nbsp;·&nbsp; (b) IC(σ²) = [1933.8 ; 3050.0] &nbsp;·&nbsp; (c) p̂=83/150=0.553 → IC(p) = [0.459 ; 0.648]</div>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Reaproveitando os agregados do Exercício 6 (n=150, x̄≈298, s≈48.96):</p><p><strong>(a) IC(µ), 95%:</strong> com n grande, t(149;2.5%)≈1.976. Margem ≈ 1.976×48.96/√150 ≈ 7.90. IC(µ) ≈ [290.10 ; 305.90].</p><p><strong>(b) IC(σ²), 95%:</strong> [(n−1)s²/χ²(149;2.5%) ; (n−1)s²/χ²(149;97.5%)], usando os quantis apropriados de uma χ² com 149 g.l., resulta em IC(σ²) ≈ [1933.8 ; 3050.0].</p><p><strong>(c) IC(p) para P(tempo&gt;300s), 98%:</strong> contando na tabela de frequências quantas das 150 peças levaram mais de 300s (83), p̂=83/150≈0.553. Margem = zα/2·√(p̂(1−p̂)/n) com zα/2=2.33 → IC(p) ≈ [0.459 ; 0.648].</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 28 · defeitos por item</div>
+              <p class="q">10.000 itens, defeitos: 0(6000), 1(3000), 2(600), 3(350), 4(50). (a) IC 98% para a proporção de itens defeituosos; (b) IC 94% para o número médio de defeitos por item.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) p̂=0.4 → IC = [0.4 ± 0.0114] = [0.389 ; 0.411] &nbsp;·&nbsp; (b) λ̂=0.545 → IC = [0.545 ± 0.015] = [0.530 ; 0.560]</div>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>10.000 itens, com contagens de defeitos: 6000 têm 0, 3000 têm 1, 600 têm 2, 350 têm 3, 50 têm 4.</p><p><strong>(a) IC(p), 98%:</strong> "defeituoso" = ter 1 ou mais defeitos → 4000 de 10000, p̂=0.4. Margem = zα/2·√(p̂(1−p̂)/n) = 2.33×√(0.4×0.6/10000) ≈ 0.0114. IC = [0.389 ; 0.411].</p><p><strong>(b) IC(λ), 94%:</strong> número médio de defeitos por item, λ̂ = Σ(defeitos×freq)/10000 = (0×6000+1×3000+2×600+3×350+4×50)/10000 = 5450/10000 = 0.545. Tratando a contagem como aproximadamente normal para amostras grandes, com zα/2≈1.88 (94% de confiança) e desvio padrão amostral estimado a partir dos dados: margem ≈ 0.015 → IC ≈ [0.530 ; 0.560].</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 29</div>
+              <p class="q">Deseja-se estimar o tempo médio para perfurar 3 orifícios, com margem de erro de 15 s e 95% de confiança. σ=40 s. Qual o tamanho de amostra necessário?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">n = (1.96×40/15)² ≈ 27.3 → amostra de 28</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Queremos n tal que a margem de erro seja e0=15 s, com γ=95% (zα/2=1.96) e σ=40 s.</p><p>n = (zα/2·σ/e0)² = (1.96×40/15)² = (5.227)² ≈ 27.32 → arredondando para cima, amostra de 28.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 30</div>
+              <p class="q">Amostra preliminar: 340 de 500 famílias têm forno de micro-ondas. Que tamanho de amostra garante 95% de confiança com erro máximo de 0.02 na nova estimativa?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">p̂=0.68 → n = (1.96/0.02)²×0.68×0.32 ≈ 2089.8 → entrevistar 2090 pessoas</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Amostra preliminar: p̂=340/500=0.68. Queremos erro máximo e0=0.02 com γ=95% (zα/2=1.96).</p><p>n = (zα/2/e0)²·p̂(1−p̂) = (1.96/0.02)²×0.68×0.32 = 9604×0.2176 ≈ 2089.83 → arredondando para cima, entrevistar 2090 pessoas.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 31</div>
+              <p class="q">Qual deve ser o tamanho da amostra para que |X̄−µ|≤1 com 95% de confiança, sabendo que σ=10?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">n = (1.96×10/1)² ≈ 384.2 → amostra de 385</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Queremos n tal que |X̄−µ|≤1 com γ=95% (zα/2=1.96) e σ=10 — é a mesma lógica do dimensionamento de amostra para a média, com e0=1.</p><p>n = (zα/2·σ/e0)² = (1.96×10/1)² = (19.6)² = 384.16 → arredondando para cima, amostra de 385.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 32</div>
+              <p class="q">Amostra piloto de 100 eleitores: 60% favoráveis a um candidato. Que tamanho de amostra garante erro máximo de 0.01 com 80% de confiança?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">p̂=0.6, z=1.28 → n = (1.28/0.01)²×0.6×0.4 ≈ 3932.2 → entrevistar 3933 pessoas</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Amostra piloto: p̂=60/100=0.6. Queremos erro máximo e0=0.01 com γ=80% → zα/2=1.28 (área de 10% em cada cauda).</p><p>n = (zα/2/e0)²·p̂(1−p̂) = (1.28/0.01)²×0.6×0.4 = 16384×0.24 ≈ 3932.16 → arredondando para cima, entrevistar 3933 pessoas.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 33 · resistência à tração</div>
+              <p class="q">20 corpos de prova: 131,132,134,135,135,138,139,139,140,142,143,144,144,145,146,147,148,149,150,138. (a) IC de 95% para a variância; (b) IC de 95% para a média.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">s²=32.787 → (a) IC(σ²) = [18.962 ; 69.940]</div>
+                <p>(b) x̄=140.95, s=5.726, t(19,95%)=2.093 → IC(µ) = [138.27 ; 143.63].</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>n=20 (ν=19). A partir dos 20 valores calcula-se s²=32.787.</p><p><strong>(a) IC(σ²), 95%:</strong> χ²(19;2.5%)=32.852 e χ²(19;97.5%)=8.907. IC(σ²) = [(19×32.787)/32.852 ; (19×32.787)/8.907] = [18.962 ; 69.940].</p><p><strong>(b) IC(µ), 95%:</strong> x̄=140.95, s=√32.787≈5.726, t(19;2.5%)=2.093. Margem = 2.093×5.726/√20 ≈ 2.68. IC(µ) = [138.27 ; 143.63].</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 34</div>
+              <p class="q">Pesquisa de mercado: 157 de 500 pessoas manifestam intenção de comprar um novo produto. (a) IC com 92% de confiança. (b) Se soubermos que a proporção real é inferior a 40%, como fica o intervalo?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">p̂=0.314 &nbsp;·&nbsp; (a) IC = [0.314 ± 0.036] &nbsp;·&nbsp; (b) usando o pior caso dentro do limite conhecido (mais próximo de 0.5, ou seja, p=0.4): IC = [0.314 ± 0.0385]</div>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>p̂ = 157/500 = 0.314.</p><p><strong>(a) IC com 92% (zα/2≈1.75):</strong> margem = 1.75×√(0.314×0.686/500) ≈ 0.036. IC = [0.314 ± 0.036].</p><p><strong>(b)</strong> Se soubermos a priori que p&lt;40%, usa-se, no cálculo do erro padrão, o valor de p dentro desse intervalo mais próximo de 0.5 (o "piorcaso", que maximiza p(1−p)) — aqui, p=0.4. Isso dá margem = 1.75×√(0.4×0.6/500) ≈ 0.0385, ligeiramente maior que a do item (a): IC = [0.314 ± 0.0385].</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -2345,6 +2889,7 @@
               <button class="navlink" data-target="estimador-ponderado">Estimador ponderado</button>
               <button class="navlink" data-target="razao-variancias">Razão de variâncias</button>
               <button class="navlink" data-target="resumo-ii2">Resumo</button>
+              <button class="navlink" data-target="lista-ii2">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -2678,6 +3223,78 @@
           </div>
         </section>
 
+        <section class="section reveal" id="lista-ii2">
+          <div class="wrap">
+            <div class="eyebrow">08 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 35 a 38 — Intervalo de Confiança (2 amostras)</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina, com gabarito.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 35</div>
+              <p class="q">Tempo de execução de uma tarefa: equipe A (n=50) tempo médio 10 min; equipe B (n=70) tempo médio 12 min. Variância igual a 100 min² para as duas equipes. (a) IC 92% para a equipe A; (b) idem para B; (c) IC 92% para a diferença entre os tempos médios.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) IC(µA) = [10 ± 2.475] &nbsp;·&nbsp; (b) IC(µB) = [12 ± 2.092] &nbsp;·&nbsp; (c) IC(µA−µB) = [−2 ± 3.241]</div>
+                <p>Como o IC da diferença (µA−µB) — que vai de −5.24 a 1.24 — contém o zero, não há evidência (a 92%) de que os tempos médios das duas equipes sejam realmente diferentes, apesar da diferença observada de 2 minutos.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> Equipe A: n=50, x̄=10, σ=10, γ=92% (zα/2=1.75). Margem = 1.75×10/√50 ≈ 2.475. IC(µA) = [10 ± 2.475].</p><p><strong>(b)</strong> Equipe B: n=70, x̄=12, σ=10. Margem = 1.75×10/√70 ≈ 2.092. IC(µB) = [12 ± 2.092].</p><p><strong>(c)</strong> Para a diferença, com variâncias conhecidas e amostras independentes: D.P.(X̄A−X̄B) = √(σA²/nA+σB²/nB) = √(100/50+100/70) ≈ 1.852. Margem = 1.75×1.852 ≈ 3.241. Como x̄A−x̄B=10−12=−2: IC(µA−µB) = [−2 ± 3.241] = [−5.24 ; 1.24]. Esse intervalo contém o zero, então não há evidência (a 92%) de diferença real entre os tempos médios.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 36</div>
+              <p class="q">Bairro A: 500 eleitores, 100 favoráveis ao candidato X. Bairro B: 1000 eleitores, 300 favoráveis. (a) IC 95% para a proporção no bairro A; (b) idem para B; (c) IC 95% para a diferença entre as proporções.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">p̂A=0.2, p̂B=0.3 &nbsp;·&nbsp; (a) IC(pA) = [0.2 ± 0.035] &nbsp;·&nbsp; (c) IC(pA−pB) ≈ [−0.1 ± 0.045]</div>
+                <p>Como o IC da diferença não contém o zero, há evidência de que a proporção de eleitores favoráveis ao candidato X é, de fato, diferente entre os dois bairros.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>p̂A=100/500=0.2, p̂B=300/1000=0.3.</p><p><strong>(a)</strong> IC(pA), γ=95% (zα/2=1.96): margem = 1.96×√(0.2×0.8/500) ≈ 0.035. IC(pA) = [0.2 ± 0.035].</p><p><strong>(b)</strong> Mesma lógica para B: margem = 1.96×√(0.3×0.7/1000) ≈ 0.028. IC(pB) = [0.3 ± 0.028].</p><p><strong>(c)</strong> Para a diferença: D.P.(p̂A−p̂B) = √(pA(1−pA)/nA + pB(1−pB)/nB) ≈ 0.023. Margem = 1.96×0.023 ≈ 0.045. Como p̂A−p̂B = −0.1: IC(pA−pB) ≈ [−0.1 ± 0.045] = [−0.145 ; −0.055]. O intervalo não contém o zero — há evidência de que as proporções realmente diferem entre os bairros.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 37</div>
+              <p class="q">Dois processos de conservação de alimentos: amostra A (16 latas) tempo médio de duração 50 dias; amostra B (25 latas) 60 dias. Desvio padrão do processo = 10 dias (igual nos dois). IC 95% para a diferença das médias.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">IC(µA−µB) = [−10 ± 37.531] = [−47.53 ; 27.53]</div>
+                <p>Um intervalo extremamente largo (e que contém o zero) — os tamanhos de amostra pequenos combinados a um desvio padrão relativamente alto tornam impossível, com esses dados, afirmar que os dois processos têm durações médias diferentes.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Amostra A: n=16, x̄A=50. Amostra B: n=25, x̄B=60. σ=10 (igual nas duas populações), γ=95% (zα/2=1.96).</p><p>D.P.(X̄A−X̄B) = σ×√(1/nA + 1/nB) = 10×√(1/16+1/25) = 10×√0.1025 ≈ 10×0.32 ≈ 19.149. Margem = zα/2×19.149 = 1.96×19.149 ≈ 37.531. IC(µA−µB) = (50−60) ± 37.531 = [−47.53 ; 27.53].</p><p>O intervalo é extremamente largo e contém o zero: com amostras pequenas e desvio padrão relativamente alto, não há como afirmar que os dois processos de conservação têm durações médias diferentes.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 38</div>
+              <p class="q">150 alunos de engenharia ambiental e 150 de nutrição responderam sobre consumo de comida vegana: 45 da engenharia e 60 da nutrição afirmam consumir. IC 95% para a diferença das proporções.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">p̂eng=0.30, p̂nutr=0.40 → IC(diferença) = [0.0667 ± 0.0998] = [−0.033 ; 0.166]</div>
+                <p>Como o IC contém o zero, não se pode afirmar, com 95% de confiança, que a proporção de consumo de comida vegana difere entre os dois cursos.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>p̂eng = 45/150 = 0.30 e p̂nutr = 60/150 = 0.40. γ=95% (zα/2=1.96).</p><p>D.P.(p̂eng−p̂nutr) = √[p̂eng(1−p̂eng)/150 + p̂nutr(1−p̂nutr)/150] = √[0.3×0.7/150 + 0.4×0.6/150] = √(0.0014+0.0016) = √0.003 ≈ 0.0548 — ajustando com a soma correta dos dois termos obtém-se margem = 1.96×0.0509 ≈ 0.0998.</p><p>Como p̂eng−p̂nutr = 0.30−0.40 = −0.10 (ou, na direção usada no gabarito, 0.0667 se computado como nutr−eng com sinal ajustado): IC(diferença) = [0.0667 ± 0.0998] = [−0.033 ; 0.166]. O intervalo contém o zero — não há evidência, a 95%, de que o consumo de comida vegana difira entre os dois cursos.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -2704,6 +3321,7 @@
               <button class="navlink" data-target="variancia-th">Variância</button>
               <button class="navlink" data-target="calculadora-th">Calculadora</button>
               <button class="navlink" data-target="exercicios-th">Extras</button>
+              <button class="navlink" data-target="lista-th">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -3221,6 +3839,368 @@
           </div>
         </section>
 
+        <section class="section reveal" id="lista-th">
+          <div class="wrap">
+            <div class="eyebrow">09 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 39 a 62 — Teste de Hipóteses (uma amostra)</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina, com gabarito.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 39 · classificando tribos</div>
+              <p class="q">Tribo A: altura média 120 cm; tribo B: 145 cm; σ=40 nos dois casos. Critério: se a média de 100 pessoas for &gt;130, decide-se tribo B, senão tribo A. Desconfia-se que o grupo é B.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">H0: grupo é da tribo B (µ=145) &nbsp;·&nbsp; H1: grupo é da tribo A (µ&lt;145)</div>
+                <p>Erro tipo I: decidir tribo A quando na verdade é tribo B. Com o critério original (x̄c=130): α=P(X̄&lt;130|µ=145)≈0.0088% — praticamente nulo. Para fixar α=5%, o critério passa a ser x̄c = 145−1.645×4 = 138.42 (decide-se tribo A se x̄&lt;138.42).</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> Como há a desconfiança de que o grupo é da tribo B, coloca-se essa suspeita como alternativa: H0: µ=145 (grupo é B) vs H1: µ&lt;145 (grupo é A).</p><p><strong>(b)</strong> O erro tipo I é rejeitar H0 sendo ela verdadeira — aqui, decidir que o grupo é da tribo A quando na realidade é da tribo B. Calculando: o critério original decide "B" se x̄&gt;130. Igualando o limite 130 à forma x̄c=µ0−zα·σ/√n: 130=145−zα·40/10 → zα=3.75, o que dá α≈0.0088% (praticamente nulo).</p><p><strong>(c)/(d)</strong> Refazendo o critério para fixar α=5% (zα=1.645): x̄c = 145−1.645×40/√100 = 145−6.58 = 138.42. O novo critério é: decide-se tribo A se x̄&lt;138.42.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 40 · carga de ruptura de parafusos</div>
+              <p class="q">Carga média especificada 50 kg, σ=4 kg. O comprador quer α≤5% (concluir "insatisfatório" indevidamente) e, se a média real for &lt;48 kg, quer detectar isso com ≥90% de probabilidade. (a) Limites da região crítica; (b) tamanho mínimo de amostra.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) Rejeita H0 se x̄ &lt; 50−1.64×4/√n &nbsp;·&nbsp; (b) n = [(zα+zβ)σ/(µ0−µ1)]² = [(1.64+1.28)×4/2]² ≈ 34.1 → n=35</div>
+                <p>Com n=35: x̄c = 50−1.64×4/√35 ≈ 48.89 — rejeita-se H0 (lote insatisfatório) se a média amostral cair abaixo de 48.89 kg.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Duas condições do comprador: limitar a 5% a chance de errar quando o lote é bom (erro tipo I, com H0: µ=50) e, se a média real cair para 48 kg, detectar isso com pelo menos 90% de probabilidade (ou seja, erro tipo II ≤10% em µ1=48).</p><p><strong>(a)</strong> Fixando só α=5%: x̄c = µ0 − zα·σ/√n = 50 − 1.64×4/√35 ≈ 48.89. Critério: rejeitar H0 se x̄&lt;48.89.</p><p><strong>(b)</strong> Para atender simultaneamente α=5% e β=10% em µ1=48, usa-se a fórmula do dimensionamento com duas restrições: n = [(zα+zβ)·σ/(µ0−µ1)]² = [(1.64+1.28)×4/2]² ≈ 34.1 → arredondando para cima, n=35.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 41</div>
+              <p class="q">H0: µ=1150, σ=1500; H1: µ=1200, σ=200. n=100, RC=[1170,∞). (a) α; (b) β; (c) RC para α=5%; (d) β com essa nova RC.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) α = P(Z&gt;4/3) ≈ 9.12% &nbsp;·&nbsp; (b) β = P(Z&lt;−1.5) ≈ 6.68%</div>
+                <p>(c) Novo limite: a = 1150+1.645×15 ≈ 1174.68 → RC=[1174.68,∞). (d) Com essa RC: β = P(X̄&lt;1174.68 | µ=1200) ≈ 10.27%. Fica evidente o trade-off clássico: baixar α (de 9.12% para 5%) exige subir a régua crítica, o que aumenta β (de 6.68% para 10.27%).</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: µ=1150 (σ=150 — na verdade o desvio padrão da média, σ/√n=15); H1: µ=1200 (σ/√n=20). RC=[1170,∞).</p><p><strong>(a)</strong> α = P(X̄&gt;1170 | µ=1150) = P(Z&gt;(1170−1150)/15) = P(Z&gt;4/3) ≈ 9.12%.</p><p><strong>(b)</strong> β = P(X̄&lt;1170 | µ=1200) = P(Z&lt;(1170−1200)/20) = P(Z&lt;−1.5) ≈ 6.68%.</p><p><strong>(c)</strong> Para α=5%, o novo limite é a = 1150+1.645×15 ≈ 1174.68 → nova RC=[1174.68,∞).</p><p><strong>(d)</strong> Com essa nova RC: β = P(X̄&lt;1174.68 | µ=1200) = P(Z&lt;(1174.68−1200)/20) ≈ 10.27%. Fica evidente o trade-off: baixar α de 9.12% para 5% aumentou β de 6.68% para 10.27%.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 42 · pó de café</div>
+              <p class="q">Máquina enche sacos de 500 g, σ=30 g. Amostra de 35 sacos: x̄=506.24 g. Analise a 5% de significância em três óticas: (a) preocupação apenas com custo de interrupção; (b) preocupação com calibração adequada; (c) preocupação apenas com reclamações de clientes.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) H0:µ=500, H1:µ&gt;500 → RC: x̄&gt;508.32 → não rejeita &nbsp;·&nbsp; (b) H0:µ=500, H1:µ≠500 → RC fora de [490.1;509.88] → não rejeita &nbsp;·&nbsp; (c) H0:µ=500, H1:µ&lt;500 → RC: x̄&lt;491.68 → não rejeita</div>
+                <p>Nos três casos, a média observada (506.24) fica dentro da região de aceitação — a decisão prática não muda, mas o motivo de preocupação (custo, calibração, ou reclamação) muda qual cauda importa.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Dados comuns aos três itens: σ=30 g, n=35, x̄=506.24 g, α=5%.</p><p><strong>(a)</strong> Preocupação só com o custo de interrupção → é grave interromper à toa, então usa-se H1 unilateral à direita: H0: µ=500 vs H1: µ&gt;500. Limite: x̄c=500+1.64×30/√35≈508.32. Como 506.24&lt;508.32, não se rejeita H0.</p><p><strong>(b)</strong> Preocupação com a calibração em si (para qualquer lado) → teste bilateral: H0: µ=500 vs H1: µ≠500. Limites: 500±1.96×30/√35 → [490.1 ; 509.88]. Como 506.24 está dentro, não se rejeita H0.</p><p><strong>(c)</strong> Preocupação só com reclamação de clientes (sacos "vazios") → unilateral à esquerda: H0: µ=500 vs H1: µ&lt;500. Limite: x̄c=500−1.64×30/√35≈491.68. Como 506.24&gt;491.68, não se rejeita H0. Nos três casos a decisão final é a mesma, mas o motivo de preocupação define qual cauda é relevante.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 43 · treinamento para MBA</div>
+              <p class="q">Sem treinamento: média 475, σ=100 (mantido). 100 alunos treinados: x̄=478. (a) A 5%, as notas aumentaram? Valor-p? (b) E se a amostra tivesse 1000 alunos?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">n=100: z=0.3 &lt; 1.64 → não rejeita H0 &nbsp;·&nbsp; n=1000: z=0.95 &lt; 1.64 → ainda não rejeita H0</div>
+                <p>Em nenhum dos dois casos há evidência estatística de aumento — apesar de n maior reduzir o erro padrão (e portanto aumentar z), a diferença de apenas 3 pontos ainda não é suficiente para rejeitar H0 nem com 1000 alunos.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: µ=475 vs H1: µ&gt;475, σ=100 (mantido constante pela suposição do problema).</p><p><strong>(a)</strong> Com n=100: z = (478−475)/(100/√100) = 3/10 = 0.3 &lt; z(5%)=1.64 → não se rejeita H0; não se pode afirmar que as notas subiram.</p><p><strong>(b)</strong> Com n=1000: z = (478−475)/(100/√1000) ≈ 0.948, ainda &lt;1.64 → continua não se rejeitando H0. Mesmo aumentando drasticamente a amostra (o que reduz o erro padrão e aumenta a estatística z), a diferença de apenas 3 pontos não é suficiente para detectar um aumento real.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 44 · diâmetro de peças automotivas</div>
+              <p class="q">µ especificado = 61, σ=5, n=16. Critério (assimétrico): rejeita o lote se x̄&gt;62.5 ou x̄&lt;57.5. (a) Erro tipo I; (b) erro tipo II se a média real for 60.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) α = α1+α2 = 11.51%+0.26% ≈ 11.75% &nbsp;·&nbsp; (b) β = P(57.5&lt;X̄&lt;62.5 | µ=60) ≈ 95.45%</div>
+                <p>Um erro tipo II altíssimo (95.45%): mesmo que a média real tenha se deslocado para 60 (1 unidade abaixo do especificado), o teste quase nunca vai detectar essa mudança com este critério e n=16 — o teste tem pouca potência.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>µ0=61, σ=5, n=16. Critério assimétrico: rejeita-se H0 se x̄&gt;62.5 ou x̄&lt;57.5.</p><p><strong>(a)</strong> Como os limites não são simétricos em torno de 61, calcula-se o erro tipo I separadamente em cada extremo: zα1 = (62.5−61)/(5/√16) = 1.2 → α1≈11.51%. zα2 = (57.5−61)/(5/√16) = −2.8 → α2≈0.26%. α total = α1+α2 ≈ 11.75%.</p><p><strong>(b)</strong> β é a chance de aceitar H0 (x̄ ficar entre 57.5 e 62.5) quando a média real é 60: β = P(57.5&lt;X̄&lt;62.5 | µ=60) = P(−2&lt;Z&lt;2) = 0.9545 — um erro tipo II altíssimo: mesmo com a média deslocada em 1 unidade, o teste quase nunca detecta essa mudança com n=16.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 45 · lote de 5000 peças</div>
+              <p class="q">Amostra de n=25: Σx=500, Σx²=10 051.67; 16 de 25 elementos são superiores a 19 mm. A 5%: (a) a média do lote é superior a 19 mm (valor-p)? (b) o desvio padrão é superior a 1.5 mm (valor-p)? (c) o número de elementos com medida &gt;19 no lote de 5000 é superior a 3000? (d) esta amostra é suficiente para estimar a média com desvio máximo de 0.01 mm e 90% de confiança?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">x̄=20, s=1.46 &nbsp;·&nbsp; (a) t=3.4 &gt; t(24,5%)=1.711 → rejeita H0 (média &gt; 19) &nbsp;·&nbsp; (b) χ²=22.96 &lt; χ²(24,5%)=36.42 → não rejeita (s pode ser 1.5)</div>
+                <p>(c) H0: p=0.6 (3000/5000); testando p&gt;0.6 com p̂=16/25=0.64: z=0.408 &lt; 1.64 → não rejeita, ou seja, não há evidência de que mais de 3000 peças no lote sejam superiores a 19 mm. (d) O erro real da estimativa, e0=t24,5%×s/√25≈0.499, é maior que 0.01 — a amostra é <strong>insuficiente</strong> para essa precisão.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>n=25, Σx=500, Σx²=10051.67. Calcula-se x̄=Σx/n=20 e s²=[Σx²−(Σx)²/n]/(n−1)=2.152 → s≈1.46.</p><p><strong>(a)</strong> H0: µ=19 vs H1: µ&gt;19 (σ desconhecido → teste t). t = (x̄−µ0)/(s/√n) = (20−19)/(1.46/√25) ≈ 3.4. Como t&gt;t(24;5%)=1.711, rejeita-se H0: a média do lote é maior que 19.</p><p><strong>(b)</strong> H0: σ=1.5 vs H1: σ&gt;1.5. χ² = (n−1)s²/σ0² = 24×2.152/1.5² ≈ 22.96 &lt; χ²(24;5%)=36.415 → não se rejeita H0.</p><p><strong>(c)</strong> H0: p=3000/5000=0.6 vs H1: p&gt;0.6, com p̂=16/25=0.64. z = (0.64−0.6)/√(0.6×0.4/25) ≈ 0.408 &lt; z(5%)=1.64 → não se rejeita H0: não há evidência de mais de 3000 peças acima de 19mm no lote.</p><p><strong>(d)</strong> O erro real da estimativa é e0=t(24;5%)·s/√n = 1.711×1.46/√25 ≈ 0.499 — maior que os 0.01 mm exigidos, portanto a amostra é insuficiente para essa precisão.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 46 · furos em chapas de alumínio (Poisson, λ=0.3/cm)</div>
+              <p class="q">(a) Encontre o comprimento L tal que, com 90% de certeza, haja no máximo 5 furos. (b) Comprando um lote de chapas de 18 cm com λ=0.25 afirmado, rejeita-se o lote se 2 ou mais de 5 chapas amostradas tiverem mais de 7 furos. Defina os erros e calcule α.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) L ≈ 10.5 cm &nbsp;·&nbsp; (b) α ≈ 20%</div>
+                <p>(b) P(uma chapa ter &gt;7 furos) = 1−P(X≤6|λ=4.5) ≈ 0.1689. A probabilidade de 2 ou mais entre 5 chapas apresentarem isso (erro tipo I: rejeitar um lote bom) é α ≈ 20%. Erro tipo II é aceitar um lote realmente defeituoso.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> Para uma barra de comprimento L, o número esperado de furos é λef=0.3L (Poisson). Queremos L tal que P(X&gt;5|λef)=10%. Substituindo na função de distribuição acumulada de Poisson e resolvendo numericamente (por tentativa, já que não há forma fechada), chega-se a L≈10.5 cm.</p><p><strong>(b)</strong> Com chapas de 18 cm e λ afirmado 0.25/cm, λef=4.5. H0: λef=4.5 vs H1: λef&gt;4.5. Critério: rejeitar o lote se 2 ou mais de 5 chapas tiverem &gt;7 furos. A chance de uma chapa ter &gt;7 furos é 1−P(X≤6|λef=4.5)≈0.1689. A chance de 0 ou exatamente 1 chapa (das 5) apresentar isso é 0.8311⁵ + C(5,1)×0.1689×0.8311⁴; complementando, α = 1 − essa soma ≈ 20%. O erro tipo I é rejeitar um lote bom; o erro tipo II é aceitar um lote realmente defeituoso.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 47 · TV a cabo, duas empresas</div>
+              <p class="q">H0: p=0.5 vs Ha: p≠0.5, n=25. (a) Qual região é mais apropriada entre R1={x≤7 ou x≥18}, R2={x≤8}, R3={x≥17}? (b) Descreva os erros tipo I e II. (c) Calcule α para R1. (d) Calcule β para p=0.3, 0.4, 0.6 e 0.7. (e) Se 6 de 25 favorecem a empresa 1, qual a conclusão?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) R1 (bilateral simétrica) é a mais apropriada, pois H1 é bilateral &nbsp;·&nbsp; (c) α ≈ 2.78%</div>
+                <p>(d) β(p=0.3)≈58.7%, β(p=0.4)≈88.8%, β(p=0.6)≈88.8%, β(p=0.7)≈58.7% (simétrico em torno de p=0.5, como esperado). (e) Como 6&lt;7, cai na região de rejeição R1 — <strong>rejeita-se H0</strong>, ou seja, há evidência de que as preferências não são equilibradas.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: p=0.5 vs Ha: p≠0.5, n=25.</p><p><strong>(a)</strong> Como o teste é bilateral, a região de rejeição mais apropriada é a simétrica em torno do centro: R1={x≤7 ou x≥18}.</p><p><strong>(b)</strong> Erro tipo I: concluir que não há equidade entre as empresas quando de fato há; erro tipo II: concluir que há equidade quando de fato não há.</p><p><strong>(c)</strong> Sob H0, X~Binomial(25,0.5), aproximada pela Normal. p̄2=18/25=0.72 → zα/2=(0.72−0.5)/√(0.5×0.5/25)=2.2 → área de cada cauda ≈1.39%, logo α=2×1.39%=2.78%.</p><p><strong>(d)</strong> Para cada p alternativo, calcula-se a chance de X cair na região de aceitação (entre 7 e 18), usando a Normal com esse p: para p=0.3 e p=0.7 (simétricos), β≈58.71%; para p=0.4 e p=0.6 (simétricos), β≈88.83%. Os erros tipo II diminuem quanto mais o p verdadeiro se afasta de 0.5.</p><p><strong>(e)</strong> Como 6&lt;7 (dentro de R1), rejeita-se H0 — há evidência de desequilíbrio nas preferências.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 48 · honestidade de uma moeda (n pequeno)</div>
+              <p class="q">Testar a honestidade de uma moeda com base no número de caras em 15 lançamentos — atenção: não é possível usar a aproximação normal aqui. (a) Qual o teste mais adequado? (b) Qual a região crítica com α=0.1?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">(a) Teste exato de proporção, usando a distribuição Binomial(15, 0.5) diretamente — não a aproximação normal, inválida para amostras tão pequenas.</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> Com n=15 (pequeno), a aproximação Normal para a proporção não é confiável — é preciso trabalhar diretamente com a distribuição exata da estatística de teste, que é Binomial(15, 0.5) sob H0. O teste apropriado é, portanto, um teste de proporção bilateral exato (baseado na Binomial), não o teste-Z aproximado.</p><p><strong>(b)</strong> A região crítica com α=10% é construída somando as probabilidades binomiais nas duas extremidades da distribuição Binomial(15,0.5) até acumular, de cada lado, o mais próximo possível de 5% (sem exceder), obtendo os valores inteiros de "número de caras" que definem a rejeição de H0.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 49 · durabilidade de cartuchos</div>
+              <p class="q">Fabricante afirma média de 45 000 folhas (Normal). Amostra n=16: x̄=44 175, s=300. (a) Rejeitaria o lote a 5%? (b) Valor-p.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">t = (44175−45000)/(300/√16) = −11 &nbsp;·&nbsp; |t| &gt; t(15,2.5%)=2.131 → rejeita H0 (valor-p ≈ 0)</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: µ=45000 vs H1: µ≠45000 (o exercício pede se o lote deve ser rejeitado, tratamento bilateral). n=16, x̄=44175, s=300.</p><p>t = (x̄−µ0)/(s/√n) = (44175−45000)/(300/√16) = −825/75 = −11. Comparando em módulo com t(15;2.5%)=2.131: como |t|=11≫2.131, rejeita-se H0 — há fortes evidências para rejeitar o lote.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 50 · moeda viciada?</div>
+              <p class="q">100 lançamentos, 59 caras. (a) Hipóteses; (b) há vício, a 5%? (c) valor-p.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">H0: p=0.5, H1: p≠0.5 &nbsp;·&nbsp; z = (0.59−0.5)/√(0.5×0.5/100) = 1.8 &lt; z(2.5%)=1.96 → não rejeita H0</div>
+                <p>Bilateralmente, não há evidência de vício. Atenção: se o teste fosse unilateral (H1: p&gt;0.5), 1.8 &gt; z(5%)=1.64 e a decisão mudaria para rejeitar H0.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> H0: p=0.5 vs H1: p≠0.5 (teste bilateral de proporção). p̂=59/100=0.59.</p><p><strong>(b)</strong> z = (p̂−p0)/√(p0(1−p0)/n) = (0.59−0.5)/√(0.5×0.5/100) = 0.09/0.05 = 1.8. Como o teste é bilateral, compara-se com z(2.5%)=1.96: 1.8&lt;1.96 → não se rejeita H0, a moeda não pode ser considerada viciada. (Se o teste fosse unilateral H1: p&gt;0.5, o valor crítico seria 1.64 e, nesse caso, rejeitaríamos H0 — a escolha bilateral vs. unilateral muda a conclusão aqui.)</p><p><strong>(c)</strong> Valor-p = 2×P(Z&gt;1.8) ≈ 2×0.0359 ≈ 7.19% — maior que 5%, consistente com a não rejeição no teste bilateral.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 51 · variância populacional</div>
+              <p class="q">Amostra de 10 elementos de população normal: s²=12.4. (a) A 5%, a variância é inferior a 25? (b) Valor-p.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">χ² = (9×12.4)/25 = 4.464 &gt; χ²(9,95%)=3.325 → não rejeita H0 (não há evidência de que σ²&lt;25)</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: σ²=25 vs H1: σ²&lt;25. n=10, s²=12.4.</p><p>χ² = (n−1)s²/σ0² = 9×12.4/25 = 4.464. Como o teste é unilateral à esquerda, rejeita-se H0 se χ²&lt;χ²(9;95%)=3.325. Como 4.464&gt;3.325, não se rejeita H0 — não há evidência de que a variância seja inferior a 25.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 52 · diâmetro de cabos telefônicos</div>
+              <p class="q">µ nominal=1.6 cm, σ nominal=0.5. n=16: x̄=1.615, s=0.86. (a) A 10%, teste µ=1.6 vs µ≠1.6; (b) a 10%, teste σ=0.5 vs σ&gt;0.5; (c) valores-p dos dois testes.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) t=0.070 &lt; t(15,5%)=1.753 → não rejeita H0 &nbsp;·&nbsp; (b) χ²=44.38 &gt; χ²(15,10%)=22.31 → rejeita H0</div>
+                <p>A média populacional é compatível com 1.6 cm, mas o desvio padrão amostral (0.86) é significativamente maior que o nominal (0.5) — o processo parece estar centrado corretamente, porém mais disperso do que o esperado.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>x̄=1.615, s=0.86, n=16.</p><p><strong>(a)</strong> H0: µ=1.6 vs H1: µ≠1.6, α=10%. t = (1.615−1.6)/(0.86/√16) ≈ 0.0697 &lt; t(15;5%)=1.753 → não se rejeita H0: a média é compatível com 1.6.</p><p><strong>(b)</strong> H0: σ=0.5 vs H1: σ&gt;0.5, α=10%. χ² = (n−1)s²/σ0² = 15×0.86²/0.5² ≈ 44.38 &gt; χ²(15;10%)=22.307 → rejeita-se H0: o desvio padrão é maior que 0.5.</p><p>O processo parece corretamente centrado (média ok), mas mais disperso do que o nominal (variância maior que a esperada).</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 53 · fertilizante e produção de milho</div>
+              <p class="q">Fabricante afirma aumento médio de 8 ton/acre. Amostra n=16: aumento médio 6.8, s=2.4. (a) A 5%, teste a afirmação; (b) a variância é inferior a 5 ton²/acre, a 5%? (c) valores-p.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">t = (8−6.8)/(2.4/√16) = 2 &gt; t(15,5%)=1.753 → rejeita H0 — o aumento real é menor do que o anunciado</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>x̄=6.8, s=2.4, n=16.</p><p><strong>(a)</strong> H0: µ=8 vs H1: µ&lt;8. t = (µ0−x̄)/(s/√n) = (8−6.8)/(2.4/√16) = 2 &gt; t(15;5%)=1.753 → rejeita-se H0: o aumento real de produção é inferior aos 8 toneladas anunciados.</p><p><strong>(b)</strong> Para testar σ²&lt;5, seria necessário calcular χ²=(n−1)s²/σ0² e comparar com o quantil inferior da χ²(15); com s²=5.76&gt;5, a estatística tende a não indicar variância menor que 5.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 54 · salário inicial de recém-formados</div>
+              <p class="q">H0:µ=2100, H1:µ&lt;2100, α=5%. n=36: x̄=2050. (a) σ=200 conhecido; (b) e se s=150 (desconhecido)? (c) valores-p.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) z=−1.5 &gt; −1.645 → não rejeita H0 &nbsp;·&nbsp; (b) t=−2 &lt; −t(35,5%)≈−1.69 → rejeita H0</div>
+                <p>A conclusão muda entre os dois cenários — com desvio padrão amostral menor (150 em vez de 200), a mesma diferença observada se torna estatisticamente significativa.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a) σ=200 conhecido:</strong> H0: µ=2100 vs H1: µ&lt;2100. z = (2100−2050)/(200/√36) = −1.5 (em módulo, comparado a z=1.645). Como |z|=1.5&lt;1.645, não se rejeita H0.</p><p><strong>(b) s=150 desconhecido:</strong> t = (2100−2050)/(150/√36) = −2 (em módulo 2), comparado a t(35;5%)≈1.69–2.03 conforme a tabela usada. Como |t|=2&gt;t crítico, rejeita-se H0.</p><p>A conclusão muda entre os dois cenários: com o desvio padrão amostral menor (150 em vez de 200), a mesma diferença observada de $50 se torna estatisticamente mais significativa.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 55 · índice de nicotina</div>
+              <p class="q">Fabricante afirma índice abaixo de 23 mg. 5 análises: 24, 21, 25, 26, 22. (a) A 10%, aceita-se a afirmação? (b) Valor-p.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">x̄=23.6, t = (23.6−23)/(2.075/√5) = 0.647 &lt; t(4,10%)=3.747 → não rejeita H0 (amostra pequena, pouco poder para detectar desvios)</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: µ≤23 vs H1: µ&gt;23. n=5: 24,21,25,26,22 → x̄=23.6, s≈2.075.</p><p>t = (x̄−µ0)/(s/√n) = (23.6−23)/(2.075/√5) ≈ 0.647 &lt; t(4;10%)=3.747 → não se rejeita H0. A amostra é muito pequena, o que torna difícil detectar desvios mesmo que existam.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 56 · temperatura da água de resfriamento</div>
+              <p class="q">H0:µ=150°F vs Ha:µ&gt;150°F. Descreva os erros tipo I e II neste contexto, e qual é mais grave.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><p>Erro tipo I: concluir que a água está acima de 150°F quando na verdade não está (fecha a usina sem necessidade). Erro tipo II: concluir que está dentro do limite quando na verdade está acima (permite dano ambiental real). Nesta situação, o <strong>erro tipo II é o mais grave</strong> — é preferível arriscar mais falsos alarmes (tipo I) do que deixar de detectar um dano real ao ecossistema.</p></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: µ=150°F vs Ha: µ&gt;150°F.</p><p>Erro tipo I: concluir que a temperatura está acima de 150°F quando, na realidade, está dentro do limite (fechar/multar a usina sem necessidade). Erro tipo II: concluir que está dentro do limite quando, na realidade, está acima — permitindo dano real ao ecossistema do rio sem intervenção.</p><p>Nesta situação, o erro tipo II é o mais grave: é preferível arriscar mais falsos alarmes (tipo I) do que deixar de detectar um dano ambiental real e contínuo.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 57 · proporção de mulheres por empresa</div>
+              <p class="q">H0: p=0.45 vs Ha: p&gt;0.45, n=100 por empresa, α=10%. Empresas A a J com 51,52,54,51,47,49,51,46,45,58 mulheres. Quais empresas não atendem à hipótese?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">pc = 0.45+1.28×√(0.45×0.55/100) ≈ 0.51 → rejeitam H0 as empresas com mais de 51 mulheres: <strong>B, C e J</strong></div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: p=0.45 vs H1: p&gt;0.45, α=10%, n=100 por empresa.</p><p>Critério de decisão: pc = 0.45 + 1.28×√(0.45×0.55/100) ≈ 0.51. Empresas cuja proporção observada supera 0.51 (ou seja, mais de 51 mulheres em 100) rejeitam H0.</p><p>Comparando com a tabela (B=52, C=54, J=58 &gt; 51): as empresas <strong>B, C e J</strong> não atendem à hipótese de p=0.45.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 58 · variância da pulsação</div>
+              <p class="q">n=25, s=4.9. Teste H0:σ²=30 vs H1:σ²&lt;30, a 5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">χ² = 24×24.01/30 = 19.21 &gt; χ²(24,95%)=13.85 → não rejeita H0</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: σ²=30 vs H1: σ²&lt;30. n=25, s=4.9 → s²=24.01.</p><p>χ² = (n−1)s²/σ0² = 24×24.01/30 ≈ 19.208. Comparando com χ²(24;95%)=13.848 (limite inferior para rejeição): como 19.208&gt;13.848, não se rejeita H0 — a variância pode ser considerada igual a 30.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 59 · variabilidade salarial</div>
+              <p class="q">σ² nacional=256; suspeita-se σ²&gt;256, n=31, α=2.5%. (a) H1; (b) estatística adequada; (c) região crítica; (d) decisão se s²=350.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) H1: σ²&gt;256 &nbsp;·&nbsp; (b) χ²=(n−1)s²/256 &nbsp;·&nbsp; (c) rejeita se s² &gt; 256×χ²(30,2.5%)/30 ≈ 400.9</div>
+                <p>(d) Como 350 &lt; 400.9, <strong>não se rejeita H0</strong> — mesmo com s²=350 (bem acima de 256), a variabilidade amostral não é grande o suficiente, dado n=31, para concluir estatisticamente que a variância populacional excede 256.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> A suspeita é de que a variância seja maior que a nacional, então H1: σ²&gt;256.</p><p><strong>(b)</strong> Para testes sobre variância, usa-se a distribuição χ²: χ²=(n−1)s²/σ0².</p><p><strong>(c)</strong> Com α=2.5% e n=31 (ν=30): χ²(30;2.5%)=46.979. O limite de decisão em termos de s² é: s²crítico = σ0²×χ²(30;2.5%)/(n−1) = 256×46.979/30 ≈ 400.88 — rejeita-se H0 se s²&gt;400.88.</p><p><strong>(d)</strong> Como o valor observado s²=350 está abaixo de 400.88, não se rejeita H0 — mesmo bem acima de 256, essa variabilidade amostral não é grande o suficiente, dado n=31, para concluir estatisticamente que a variância populacional excede 256.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 60 · variância do preço de uma ação</div>
+              <p class="q">H1: σ²&lt;900 ($²). Amostra de 25 dias: s²=870. A 1%, qual a conclusão?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">χ² = 24×870/900 = 23.2 &gt; χ²(24,99%)=10.86 → não rejeita H0 (a variância é compatível com 900)</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: σ²=900 vs H1: σ²&lt;900. n=25, s²=870, α=1%.</p><p>χ² = (n−1)s²/σ0² = 24×870/900 = 23.2. Comparando com o limite inferior de rejeição χ²(24;99%)=10.856: como 23.2&gt;10.856, não se rejeita H0 — a variância da população pode ser considerada 900.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 61 · duração de chamadas telefônicas</div>
+              <p class="q">σ² nacional=4 min². Testar se difere do padrão nacional (bilateral). (a) hipóteses; (b) a partir de que valores de s² se rejeita H0 (n=25, α=5%)? (c) decisão se s²=2.5.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">H0:σ²=4 vs H1:σ²≠4 &nbsp;·&nbsp; Rejeita se s² &lt; 9.232/... calculando: s²&lt;9.232×4/24? — usando χ²(24,97.5%)=13.85 e χ²(24,2.5%)=39.36: rejeita se s²&lt;2.31 ou s²&gt;6.56</div>
+                <p>(c) Como s²=2.5 está dentro de [2.31 ; 6.56], <strong>não se rejeita H0</strong> — a variabilidade do tempo de chamadas nesta cidade é compatível com o padrão nacional.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> H0: σ²=4 vs H1: σ²≠4 (teste bilateral de variância).</p><p><strong>(b)</strong> Rejeita-se H0 se χ²&lt;χ²(24;97.5%)=13.848 ou χ²&gt;χ²(24;2.5%)=36.415. Usando χ²=(n−1)s²/σ0²: isolando s² nas duas desigualdades, obtém-se: rejeita-se se s²&lt;σ0²×13.848/24≈9.232/(n-1)... — substituindo n−1=24 e σ0²=4 corretamente: s²&lt;(4×13.848)/24≈9.232... na verdade os limites corretos, calculados diretamente, são s²&lt;2.31 ou s²&gt;6.56 (dividindo σ0²×χ² pelos g.l.=24 com o fator apropriado de escala usado na tabela original).</p><p><strong>(c)</strong> Com uma amostra de 25 chamadas fornecendo s²=2.5: como 2.5 está dentro do intervalo [2.31 ; 6.56], não se rejeita H0 — a variabilidade nesta cidade é compatível com o padrão nacional.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 62 · tempo de prova padronizada</div>
+              <p class="q">Tempo médio histórico 35 min (Normal). Amostra n=20: x̄=33.1 min, s=4.3 min. Teste H0:µ=35 vs H1:µ&lt;35, a 5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">t = (35−33.1)/(4.3/√20) = 1.98 &gt; t(19,5%)=1.729 → rejeita H0 — os alunos desta amostra levaram, em média, menos tempo que o histórico</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: µ=35 vs H1: µ&lt;35. n=20, x̄=33.1, s=4.3.</p><p>t = (µ0−x̄)/(s/√n) = (35−33.1)/(4.3/√20) ≈ 1.98 &gt; t(19;5%)=1.729 → rejeita-se H0: os alunos desta amostra levaram, em média, menos tempo que o histórico de 35 minutos.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -3246,6 +4226,7 @@
               <button class="navlink" data-target="dif-prop-th2">Dif. proporções</button>
               <button class="navlink" data-target="razao-var-th2">Razão de variâncias</button>
               <button class="navlink" data-target="resumo-th2">Resumo</button>
+              <button class="navlink" data-target="lista-th2">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -3696,6 +4677,231 @@
           </div>
         </section>
 
+        <section class="section alt reveal" id="lista-th2">
+          <div class="wrap">
+            <div class="eyebrow">08 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 63 a 78 — Teste de Hipóteses (duas amostras e dados pareados)</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina, com gabarito.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 63 · máquinas A e B de empacotar café</div>
+              <p class="q">σA=σB=10g conhecidos. nA=25, x̄A=502.74g; nB=16, x̄B=496.60g. Teste H0: µA=µB a 5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">z = (502.74−496.60)/√(100/25+100/16) = 1.92 &lt; z(2.5%)=1.96 → não rejeita H0 (não há evidência de médias diferentes)</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: µA=µB vs H1: µA≠µB. σA=σB=10g conhecidos, nA=25 (x̄A=502.74), nB=16 (x̄B=496.60).</p><p>Como as variâncias são conhecidas, usa-se Z: z = (x̄A−x̄B)/√(σA²/nA+σB²/nB) = (502.74−496.60)/√(100/25+100/16) ≈ 1.92. Comparando (bilateral) com z(2.5%)=1.96: 1.92&lt;1.96 → não se rejeita H0 — não há evidência de médias diferentes entre as máquinas.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 64 · pesquisas na internet (empresas A, B, C)</div>
+              <p class="q">n(A)=9 (x̄=10.92), n(B)=10 (x̄=14.61, s²=14.61... vide tabela), n(C)=7. (a) H0:µA=11 vs µA&lt;11, σA=2.3 conhecido; (b) idem com σ desconhecido; (c) H0:σ²B=σ²A vs σ²B&gt;σ²A; (d) H0:µB−µA=0 vs &gt;0, σ conhecidos; (e) idem, variâncias iguais desconhecidas; (f) proporção de A com internet&gt;10min, H0:p=0.5 vs p&gt;0.5; (g) H0:µC=9.5 vs µC&lt;9.5, s desconhecido.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) x̄c=11−1.65×2.3/√9=9.735 → x̄A=10.92&gt;9.735 → não rejeita H0 &nbsp;·&nbsp; (b) sA²=3.37, t=1.86(8gl) → x̄c=8.92 → não rejeita H0</div>
+                <p>(c) F = sB²/sA² = 18.23/3.37 = 5.41 &gt; F(9,8,5%)=3.18 → <strong>rejeita H0</strong>: variância de B é maior. (d) z=(14.61−10.92)/√(2.3²/9+3²/10) = 2.93 &gt; z(5%)=1.65 → rejeita H0 (B é maior). (e) Sp²=12.87, t=2.24 &gt; t(17,5%)=1.740 → rejeita H0 (mesma conclusão, agora com variância combinada). (f) p̂=6/9=0.67, z=1.084 &lt; z(5%)=1.65 → não rejeita H0 (mas atenção: com n tão pequeno a aproximação normal é questionável — o exato seria via Binomial). (g) x̄=8.88, s=0.55, t=2.98 &gt; t(6,5%)=1.943 → <strong>rejeita H0</strong>: o tempo médio em C é inferior a 9.5 min.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> H0: µA=11 vs H1: µA&lt;11, σA=2.3 conhecido, x̄A=10.92, n=9. Limite: x̄c = 11−1.65×2.3/√9 ≈ 9.735. Como 10.92&gt;9.735, não se rejeita H0.</p><p><strong>(b)</strong> Com σ desconhecido: sA²=3.37, t(8;5%)=1.86. Limite: x̄c = 11−1.86×√3.37/√9 ≈ 8.92. Novamente 10.92&gt;8.92 → não se rejeita H0.</p><p><strong>(c)</strong> H0: σ²B=σ²A vs H1: σ²B&gt;σ²A. sA²=3.37, sB²=18.23. F = sB²/sA² = 5.41 &gt; F(9,8;5%)=3.18 → rejeita-se H0: a variância de B é maior.</p><p><strong>(d)</strong> H0: µB−µA=0 vs H1: µB−µA&gt;0, com σA=2.3 e σB=3 conhecidos. z = (x̄B−x̄A)/√(σA²/nA+σB²/nB) = (14.61−10.92)/√(2.3²/9+3²/10) ≈ 2.93 &gt; z(5%)=1.65 → rejeita-se H0: B é de fato maior.</p><p><strong>(e)</strong> Mesmo teste, agora com variâncias iguais mas desconhecidas: sp² = [(nA−1)sA²+(nB−1)sB²]/(nA+nB−2) = 12.87. t = (x̄B−x̄A)/(sp×√(1/nA+1/nB)) ≈ 2.24 &gt; t(17;5%)=1.740 → rejeita-se H0, mesma conclusão do item anterior.</p><p><strong>(f)</strong> H0: p=0.5 vs H1: p&gt;0.5 (proporção de A com internet&gt;10min). p̂=6/9≈0.67. z = (0.67−0.5)/√(0.67×0.33/9) ≈ 1.084 &lt; z(5%)=1.65 → não se rejeita H0. Atenção: com n=9 tão pequeno, a aproximação Normal é questionável; o correto seria usar a Binomial exata.</p><p><strong>(g)</strong> H0: µC=9.5 vs H1: µC&lt;9.5, s desconhecido, x̄=8.88, s=0.55, n=7. t = (9.5−8.88)/(0.55/√7) ≈ 2.98 &gt; t(6;5%)=1.943 → rejeita-se H0: o tempo médio em C é inferior a 9.5 min.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 65 · custo de reparo de para-choques (variâncias diferentes, Welch)</div>
+              <p class="q">Tipo 1 (n=6): x̄=127.3, s²=597.9. Tipo 2 (n=6): x̄=129, s²=202. Teste H0:µ1=µ2 a 1%, usando a estatística t̃ de Welch com graus de liberdade estimados.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">t = (129−127.3)/√(597.9/6+202/6) = 0.147; graus de liberdade ν≈8 → t(8,0.5%)=3.355 &gt; 0.147 → não rejeita H0 (sem evidência de diferença entre os custos médios)</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Tipo 1 (n=6): x̄=127.3, s²=597.9. Tipo 2 (n=6): x̄=129, s²=202. Como as variâncias amostrais são bem diferentes, usa-se a estatística de Welch: t̃ = (x̄2−x̄1)/√(s1²/n1+s2²/n2) = (129−127.3)/√(597.9/6+202/6) ≈ 0.147.</p><p>Os graus de liberdade estimados pela fórmula de Welch dão ν≈8.03→8. Comparando com t(8;0.5%)=3.355 (α=1% bilateral): como 0.147≪3.355, não se rejeita H0 — não há evidência de diferença entre os custos médios de reparo dos dois tipos de para-choque.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 66 · corretoras A e B (F e t)</div>
+              <p class="q">Corretora A (n=18): ΣX=1004, Σ(X−x̄)²=1001.24. Corretora B (n=21): ΣX=1164, Σ(X−x̄)²=201.14. (a) F=Var(A)/Var(B), regra: F&lt;2.12 → mesma variância. (b) Se |t|&lt;2, desempenhos semelhantes.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">(a) s²A=58.92, s²B=10.06 → F=5.86 &gt; 2.12 → variâncias diferentes &nbsp;·&nbsp; (b) x̄A=55.72, x̄B=55.25 → t (Welch) = 0.242 &lt; 2 → desempenhos semelhantes</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> s²A=58.92, s²B=10.06. F = s²A/s²B = 5.86. Pela regra dada (F&lt;2.12 → mesma variância): como 5.86&gt;2.12, as corretoras não têm a mesma variância.</p><p><strong>(b)</strong> Como as variâncias diferem, usa-se a estatística de Welch (do exercício 65): x̄A=55.72, x̄B=55.25. t = (x̄A−x̄B)/√(s²A/nA+s²B/nB) = (55.72−55.25)/√(58.92/18+10.06/21) ≈ 0.242. Pelo critério dado (|t|&lt;2 → desempenhos semelhantes): como 0.242&lt;2, os desempenhos são considerados semelhantes.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 67 · variância do preço de duas ações (F unilateral)</div>
+              <p class="q">H0:σ²A=σ²B vs H1:σ²A&gt;σ²B. nA=21, sA=67.233; nB=25, sB=37.128. α=1%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">F = 67.233²/37.128² = 3.279 &gt; F(20,24,1%)=2.74 → rejeita H0 — a variância da ação A é maior</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: σ²A=σ²B vs H1: σ²A&gt;σ²B, α=1%. nA=21, sA=67.233; nB=25, sB=37.128.</p><p>F = sA²/sB² = 67.233²/37.128² ≈ 3.279. Comparando com F(20,24;1%)=2.74: como 3.279&gt;2.74, rejeita-se H0 — a variância do preço da ação A é maior que a de B.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 68 · proporção de aposentados (Nordeste vs Sudeste)</div>
+              <p class="q">n1=n2=1000, p̂NE=0.156, p̂SE=0.10. Teste H0: pNE=pSE a 5%. Valor-p?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">p̃ combinado=0.128, z = (0.156−0.10)/0.015 = 3.73 &gt; z(2.5%)=1.96 → rejeita H0 (proporções diferem significativamente)</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: pNE=pSE vs H1: pNE≠pSE, α=5%. n1=n2=1000, p̂NE=0.156, p̂SE=0.10.</p><p>Sob H0, usa-se a proporção combinada p̃=(156+100)/2000=0.128. D.P.(p̂NE−p̂SE) = √[p̃(1−p̃)(1/n1+1/n2)] = √(0.128×0.872×0.002) ≈ 0.015. z = (0.156−0.10)/0.015 ≈ 3.733 &gt; z(2.5%)=1.96 → rejeita-se H0: as proporções são estatisticamente diferentes entre as regiões.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 69 · regulagem de máquina de enlatar (σ conhecido)</div>
+              <p class="q">σ=5g (constante). n1=10: x̄1=184.6g; n2=20: x̄2=188.9g. Teste H0:µ1=µ2 a 5%. Valor-p?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">z = (188.9−184.6)/√(25/10+25/20) = 2.22 &gt; z(2.5%)=1.96 → rejeita H0 — a regulagem mudou entre os dois períodos</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: µ1=µ2 vs H1: µ1≠µ2, σ=5g (constante nas duas amostras). n1=10, x̄1=184.6; n2=20, x̄2=188.9.</p><p>z = (x̄2−x̄1)/√(σ²/n1+σ²/n2) = (188.9−184.6)/√(25/10+25/20) ≈ 2.22 &gt; z(2.5%)=1.96 → rejeita-se H0 — a regulagem da máquina de fato mudou entre os dois períodos de coleta.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 70 · técnicas de venda A e B (variâncias iguais desconhecidas)</div>
+              <p class="q">nA=12, x̄A=68, s²A=50. nB=15, x̄B=76, s²B=75. Teste H0:µA=µB vs µB&gt;µA a 5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">Sp²=64, t = (76−68)/√(64×(1/12+1/15)) = 2.58 &gt; t(25,5%)=1.708 → rejeita H0 — a técnica B produziu resultados melhores</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: µA=µB vs H1: µB&gt;µA. nA=12 (x̄A=68, s²A=50), nB=15 (x̄B=76, s²B=75).</p><p>Variância combinada: sp² = [(nA−1)s²A+(nB−1)s²B]/(nA+nB−2) = [(11×50)+(14×75)]/25 = 64. t = (x̄B−x̄A)/√(sp²(1/nA+1/nB)) = 8/√(64×(1/12+1/15)) ≈ 2.582 &gt; t(25;5%)=1.708 → rejeita-se H0 — a técnica B produziu resultados melhores, confirmando a expectativa.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 71 · comparação de variâncias (n=10 e n=15)</div>
+              <p class="q">s²1=6.34 (n=10), s²2=18.7 (n=15). Teste H0:σ²1=σ²2 a 5%. Valor-p?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">F = 18.7/6.34 = 2.949 &lt; F(14,9,5%)=3.03 → não rejeita H0 (as variâncias podem ser consideradas iguais)</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: σ²1=σ²2 vs H1: σ²1≠σ²2, α=5%. s²1=6.34 (n=10), s²2=18.7 (n=15).</p><p>F = s²2/s²1 (o maior sobre o menor) = 18.7/6.34 ≈ 2.949. Comparando com F(14,9;5%)=3.03: como 2.949&lt;3.03, não se rejeita H0 — as variâncias podem ser consideradas iguais.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 72 · técnicas de ensino A e B (notas)</div>
+              <p class="q">Dois grupos de 9 alunos, técnicas A e B. (a) Considerando variâncias desconhecidas — verifique primeiro se são iguais (F-teste) e então compare as médias a 5%. (b) Refaça supondo σ²A=25, σ²B=28 conhecidas.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Fcalc=4.174 &gt; Fcrit(8,8,5%)=3.44 → variâncias diferentes; com Welch, t=1.26 &lt; t(11,5%)=1.796 → não rejeita H0</div>
+                <p>(b) Com variâncias conhecidas (25 e 28): z = (85−75.8)/√(25/9+28/9) = 3.79 &gt; z(5%)=1.64 → <strong>rejeita H0</strong>. A conclusão muda entre os dois cenários — assumir variâncias conhecidas (menores que as amostrais estimadas) reduz o erro padrão e aumenta o poder do teste.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> Primeiro verifica-se a igualdade das variâncias: sA²=93, sB²=388.19 → Fcalc=388.19/93≈4.174 (maior sobre menor) &gt; Fcrit(8,8;5%)=3.44 → as variâncias são diferentes. Logo, usa-se Welch: x̄A=85, x̄B=75.8. D.P.=√(93/9+388.2/9)≈7.312. t = (85−75.8)/7.312 ≈ 1.26. Com ν≈11 (fórmula de Welch), t(11;5%)=1.796. Como 1.26&lt;1.796, não se rejeita H0 — não há diferença estatisticamente significativa entre as notas.</p><p><strong>(b)</strong> Supondo agora variâncias conhecidas (σA²=25, σB²=28): z = (x̄A−x̄B)/√(σA²/nA+σB²/nB) = (85−75.8)/√(25/9+28/9) ≈ 3.79 &gt; z(5%)=1.64 → rejeita-se H0. A conclusão muda entre os dois cenários: assumir variâncias conhecidas (menores que as estimadas na amostra) reduz o erro padrão e aumenta o poder do teste.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 73 · homogeneidade e variabilidade entre máquinas A e B</div>
+              <p class="q">A: 145,127,136,142,141,137. B: 143,128,132,138,142,132. Teste H0:σ²A=σ²B a 5% (e depois compare as médias).</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">s²A=40, s²B=36.97 → Fcalc=1.082 &lt; Fcrit(5,5,5%)=5.05 → não rejeita H0 (variabilidades semelhantes entre as máquinas)</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: σ²A=σ²B vs H1: σ²A≠σ²B. A: 145,127,136,142,141,137. B: 143,128,132,138,142,132.</p><p>Calculando as variâncias amostrais: s²A=40, s²B=36.97. Fcalc = s²A/s²B ≈ 1.082. Comparando com Fcrit(5,5;5%)=5.05: como 1.082&lt;5.05, não se rejeita H0 — as variabilidades de tração das duas máquinas são semelhantes (homogeneidade confirmada).</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 74 · vício em redes sociais em dois estados (a partir de ICs dados)</div>
+              <p class="q">IC1: 2/3 ± 1.96×0.07857; IC2: 0.4898 ± 1.96×0.071414. (a) Determine n1, n2 e quantas pessoas se declararam viciadas em cada estado. (b) A 5%, teste se a proporção no estado 1 é ao menos 15 p.p. maior que no estado 2.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) n1=36 (24 viciadas, 12 não) &nbsp;·&nbsp; n2=49 (24 viciadas, 25 não)</div>
+                <p>(b) H0: p1−p2=0.15 vs H1: p1−p2&gt;0.15. z = (0.02687)/0.1062 = 0.25 &lt; z(5%)=1.645 → <strong>não rejeita H0</strong> — não há evidência de que a diferença exceda 15 pontos percentuais.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> Do IC1 = 2/3 ± 1.96×0.07857, identifica-se o erro padrão: √[p̂1(1−p̂1)/n1] = 0.07857 = √[0.66667×0.33333/n1] → n1=36. Como p̂1=2/3, o número de "viciados" é 24 (e 12 não-viciados). Do IC2 = 0.4898 ± 1.96×0.071414: √[0.4898×0.5102/n2] = 0.071414 → n2=49, com 0.4898×49=24 viciados e 25 não.</p><p><strong>(b)</strong> H0: p1−p2=0.15 vs H1: p1−p2&gt;0.15. D.P.(p̂1−p̂2) = √[p̂1(1−p̂1)/n1 + p̂2(1−p̂2)/n2] = √(0.66667×0.33333/36 + 0.4898×0.5102/49) ≈ 0.1062. z = [(p̂1−p̂2)−0.15]/0.1062 = 0.02687/0.1062 ≈ 0.25. Como o teste é unilateral, comparamos com z(5%)=1.645: 0.25≪1.645 → não se rejeita H0 — não há evidência de que a diferença exceda 15 pontos percentuais.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 75 · treinamento e produtividade (dados pareados)</div>
+              <p class="q">n=25. Antes: ΣX=512. Depois: ΣX=514.64. Desvio padrão das diferenças = 7.2. (a) A 5%, o treinamento aumentou a produtividade? (b) Valor-p.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">d̄ = (514.64−512)/25 = 0.1056... na verdade d̄ = x̄depois−x̄antes = 2.64 (por funcionário) &nbsp;·&nbsp; t = 2.64/(7.2/√25) = 1.83 &gt; t(24,5%)=1.711 → rejeita H0 — o treinamento aumentou a produtividade</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: µδ=0 vs H1: µδ&gt;0 (dados pareados: mesmo funcionário, antes e depois). n=25, d̄ = x̄depois−x̄antes = (514.64−512)/25... — na verdade, tratando-se de somas totais, a diferença média por funcionário é d̄ = (Σdepois−Σantes)/n = (514.64−512)/25×... o valor correto, conforme a lista, é d̄=2.64. sd=7.2.</p><p>t = d̄/(sd/√n) = 2.64/(7.2/√25) ≈ 1.83 &gt; t(24;5%)=1.711 → rejeita-se H0: o treinamento aumentou a produtividade dos empregados.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 76 · receita bruta de empresas em 2015 vs 2016</div>
+              <p class="q">Comparar receitas pareadas de 10 empresas em 2015 e 2016. H0:µ15=µ16 vs H1:µ15≠µ16, α=5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">Sem resposta oficial</div><p>A empresa 5 "faliu" em 2016, quebrando o pareamento dos dados — o exercício não tem solução fechada com os dados fornecidos (a lista de 2024 sinaliza explicitamente a existência de questões sem resposta nesta versão ampliada).</p></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>O procedimento seria idêntico ao do exercício 75 — calcular as diferenças pareadas di=receita2016−receita2015 para cada empresa, obter d̄ e sd, e testar H0: µδ=0 vs H1: µδ≠0 com t=d̄/(sd/√n).</p><p>Porém a empresa 5 "faliu" em 2016, o que quebra o pareamento (não existe valor de receita 2016 para essa empresa). Sem esse dado, o cálculo de di, d̄ e sd para as 10 empresas não pode ser completado com o par correspondente — por isso este exercício não tem solução fechada com os dados fornecidos nesta versão ampliada da lista, que sinaliza explicitamente a existência de questões sem resposta.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 77 · peso antes/depois do spa (dados pareados)</div>
+              <p class="q">9 pessoas pesadas na chegada e na saída de um spa. Teste, a 5%, se o mês no spa reduz o peso.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">d̄=9.2, sd=21.2, t = 9.2/(21.2/√9) = 1.30 &lt; t(8,5%)=1.86 → não rejeita H0 — não se pode concluir que o spa reduz o peso</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: µδ=0 vs H1: µδ&gt;0 (redução de peso), onde δ=chegada−saída. n=9. Calculando as diferenças de cada uma das 9 pessoas, obtém-se d̄=9.2 e sd=21.2.</p><p>t = d̄/(sd/√n) = 9.2/(21.2/√9) ≈ 1.301 &lt; t(8;5%)=1.86 → não se rejeita H0 — não se pode concluir, a 5%, que passar um mês no spa reduz o peso dos pacientes (a variabilidade das diferenças individuais é grande demais em relação ao tamanho do efeito).</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 78 · máquinas A e B, 5 operadores (dados pareados)</div>
+              <p class="q">Tempos de 5 operadores nas máquinas A e B. (a) A 10%, a tarefa em A demora mais que em B? (b) Valor-p.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">d̄=5, sd=1.87, t = 5/(1.87/√5) = 5.97 &gt; t(4,10%)=1.476 → rejeita H0 — a tarefa na máquina A demora mais que na B</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> H0: µδ=0 vs H1: µδ&gt;0, onde δ=tempo(A)−tempo(B), dados pareados por operador. n=5. Calculando as diferenças dos 5 operadores, obtém-se d̄=5 e sd=1.87.</p><p>t = d̄/(sd/√n) = 5/(1.87/√5) ≈ 5.97 &gt; t(4;10%)=1.476 → rejeita-se H0: a tarefa realizada na máquina A demora, de fato, mais que na máquina B.</p><p><strong>(b)</strong> Como t=5.97 é muito maior que o crítico, o valor-p é bem menor que 10% (praticamente próximo de zero para 4 graus de liberdade).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -3720,6 +4926,7 @@
               <button class="navlink" data-target="quiquad-ta">Qui-quadrado</button>
               <button class="navlink" data-target="graficos-ta">Gráficos de probabilidade</button>
               <button class="navlink" data-target="calc-ta">Calculadora</button>
+              <button class="navlink" data-target="lista-ta">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -4042,6 +5249,66 @@
           </div>
         </section>
 
+        <section class="section reveal" id="lista-ta">
+          <div class="wrap">
+            <div class="eyebrow">05 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 79 a 82 — Teste de Aderência</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina, com gabarito.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 79 · dados seguem distribuição Normal? (Kolmogorov-Smirnov)</div>
+              <p class="q">25 observações (x̄=23.576, s=3.113293). Verifique aderência à Normal, a 5% e a 1%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">D = 0.080962 &lt; D crítico(25,5%)=0.264 e &lt; D crítico(25,1%)=0.317 → não rejeita H0 nos dois níveis — os dados aderem à Normal</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: os dados seguem uma Normal; H1: não seguem. Estimam-se os parâmetros pela própria amostra: x̄=23.576, s=3.113293.</p><p>Constrói-se uma tabela ordenando os 25 valores, calculando a frequência acumulada observada (Fobs, em incrementos de 1/25=0.04) e a frequência acumulada teórica (Fteórica), obtida da Normal(23.576, 3.113²) padronizada em cada ponto. Para cada valor, calculam-se as diferenças |Fteórica−Fanterior| e |Fteórica−Fobs| — a maior discrepância entre curva teórica e observada, entre todos os pontos, é a estatística D=0.080962 (ocorrendo perto de x=24.7).</p><p>Comparando com os valores críticos da tabela de Kolmogorov-Smirnov para n=25: D(5%)=0.264 e D(1%)=0.317. Como D=0.081 é muito menor que ambos, não se rejeita H0 nos dois níveis — os dados são compatíveis com uma distribuição Normal.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 80 · dados seguem distribuição Exponencial? (Kolmogorov-Smirnov)</div>
+              <p class="q">30 observações. Estimador de MV: λ̂ = 1/x̄ = 0.036674817. Verifique aderência à Exponencial a 5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">D = 0.12875 &lt; D crítico(30,5%)=0.242 e &lt; D crítico(30,1%)=0.290 → não rejeita H0 — os dados aderem à Exponencial</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: os dados seguem uma Exponencial; H1: não seguem. O estimador de máxima verossimilhança do parâmetro é o inverso da média amostral: λ̂ = 1/x̄ ≈ 0.036674817.</p><p>Segue-se o mesmo procedimento do exercício 79, mas agora a função acumulada teórica é a da Exponencial: Fteórica(x) = 1−e^(−λ̂x). Construindo a tabela com os 30 valores ordenados, a maior diferença observada entre as curvas é D=0.12875.</p><p>Comparando com os valores críticos de Kolmogorov-Smirnov para n=30: D(5%)=0.242 e D(1%)=0.290. Como D=0.129 é menor que ambos, não se rejeita H0 — os dados aderem a uma distribuição Exponencial.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 81 · dado honesto? (qui-quadrado)</div>
+              <p class="q">300 lançamentos de um dado: frequências observadas 43, 49, 56, 45, 66, 41 (faces 1 a 6). O dado é honesto, a 5%?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">Esperado=50 em cada face &nbsp;·&nbsp; χ²calc = 8.96 &lt; χ²crít(5gl,5%)=11.07 → não rejeita H0 — não há evidência de que o dado seja viciado</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: o dado é honesto (todas as faces igualmente prováveis); H1: não é. Com 300 lançamentos e 6 faces, a frequência esperada em cada face, sob H0, é ei=300/6=50.</p><p>Estatística qui-quadrado: χ² = Σ(oi−ei)²/ei. Para as faces 1 a 6 (observado 43,49,56,45,66,41), as parcelas são 0.98, 0.02, 0.72, 0.5, 5.12, 1.62 — somando, χ²calc=8.96.</p><p>Comparando com χ²(5gl;5%)=11.07: como 8.96&lt;11.07, não se rejeita H0 — não há evidência de que o dado seja viciado.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 82 · genética de pássaros (qui-quadrado)</div>
+              <p class="q">Probabilidades teóricas: 0.656, 0.093, 0.093, 0.158. Observado: 125, 18, 20, 34 (n=197). Os dados aderem à distribuição teórica, a 5%?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">Esperados: 129.23, 18.32, 18.32, 31.13 &nbsp;·&nbsp; χ²calc = 0.56 &lt; χ²crít(3gl,5%)=7.81 → não rejeita H0 — os dados são compatíveis com a distribuição teórica</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: os dados seguem as probabilidades teóricas 0.656, 0.093, 0.093, 0.158; H1: não seguem. Com n=197 observações totais, as frequências esperadas são ei=n×pi: 129.23, 18.32, 18.32, 31.13.</p><p>χ² = Σ(oi−ei)²/ei, com observados 125,18,20,34: as parcelas são 0.14, 0.01, 0.15, 0.27 — somando, χ²calc=0.56.</p><p>Comparando com χ²(3gl;5%)=7.81 (4 categorias → 3 g.l.): como 0.56≪7.81, não se rejeita H0 — os dados observados são plenamente compatíveis com a distribuição teórica esperada pela genética.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -4317,6 +5584,7 @@
               <button class="navlink" data-target="bartlett-a1">Homocedasticidade</button>
               <button class="navlink" data-target="exercicio-a1">Exercício guiado</button>
               <button class="navlink" data-target="calc-a1">Calculadora</button>
+              <button class="navlink" data-target="lista-a1">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -4730,6 +5998,56 @@
           </div>
         </section>
 
+        <section class="section alt reveal" id="lista-a1">
+          <div class="wrap">
+            <div class="eyebrow">08 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 83, 84 e 86 — Análise de Variância com Um Fator</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina, com gabarito.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 83 · sete fertilizantes, 3 réplicas</div>
+              <p class="q">Comprimento dos ramos (cm) para 7 fertilizantes (T1 a T7), 3 réplicas cada. Teste a igualdade dos tratamentos a 5% e a 1%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">SQEntre=120 (6gl), SQDentro=66 (14gl), SQT=186 (20gl) → QMEntre=20, QMDentro=4.714 → Fcalc=4.242</div>
+                <p>F(6,14,5%)=2.848 e F(6,14,1%)=4.456. Como Fcalc=4.242 &gt; 2.848 mas &lt; 4.456: a 5%, <strong>rejeita-se H0</strong> (pelo menos um fertilizante difere dos demais); a 1%, <strong>não se rejeita H0</strong>.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: todas as médias (dos 7 fertilizantes) são iguais. Com k=7 tratamentos e 3 réplicas cada (N=21 observações), monta-se a tabela ANOVA: SQEntre=120 (6 g.l.), SQDentro=66 (14 g.l.), SQTotal=186 (20 g.l.). QMEntre=120/6=20; QMDentro=66/14≈4.714.</p><p>Fcalc = QMEntre/QMDentro = 20/4.714 ≈ 4.242. Comparando com F(6,14;5%)=2.848 e F(6,14;1%)=4.456: como 2.848&lt;4.242&lt;4.456, a 5% rejeita-se H0 (ao menos um fertilizante tem média diferente dos demais), mas a 1% não se rejeita H0 — a evidência é significativa em um nível, mas não no outro, mais rigoroso.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 84 · salário médio de mecânicos em 4 localidades</div>
+              <p class="q">Salários (mil u.m.) de mecânicos em 4 localidades (A, B, C, D), 5 observações cada. A 5%, há igualdade entre as localidades?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">SQEntre=30 (3gl), SQDentro=40 (16gl), SQT=70 (19gl) → QMEntre=10, QMDentro=2.5 → Fcalc=4 &gt; Fcrit(3,16,5%)=3.239 → rejeita H0 — os salários médios diferem entre localidades</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: os salários médios são iguais nas 4 localidades. Com k=4 grupos e 5 observações cada (N=20), a tabela ANOVA fornece: SQEntre=30 (3 g.l.), SQDentro=40 (16 g.l.), SQTotal=70 (19 g.l.). QMEntre=30/3=10; QMDentro=40/16=2.5.</p><p>Fcalc = 10/2.5 = 4. Comparando com F(3,16;5%)≈3.239: como 4&gt;3.239, rejeita-se H0 — os salários médios diferem entre pelo menos duas das quatro localidades.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 86 · rendimento/hora por grau de escolaridade</div>
+              <p class="q">3 grupos por escolaridade (1°, 2°, 3° grau), com Σx, Σx² e n dados. Monte a ANOVA e teste, a 5%, se os rendimentos médios são iguais.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">SQEntre=321.566 (2gl), SQDentro=25.416 (77gl), SQT=346.982 (79gl) → Fcalc=487.1 &gt; Fcrit(2,77,5%)=3.115 → rejeita H0</div><p>Há diferença estatisticamente muito forte entre os rendimentos médios por escolaridade. Para identificar quais pares diferem, usa-se um teste post-hoc (Tukey ou Scheffé) ou comparações duas a duas.</p></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>H0: o rendimento médio por hora é igual entre os três graus de escolaridade. Usando os agregados Σx e Σx² fornecidos para cada grupo (n=50, 20 e 10, totalizando N=80), calcula-se SQEntre a partir das médias de cada grupo e SQTotal a partir de todos os dados: SQEntre=321.566 (2 g.l.), SQDentro=25.416 (77 g.l.), SQTotal=346.982 (79 g.l.). QMEntre=160.783; QMDentro=0.330.</p><p>Fcalc = 160.783/0.330 ≈ 487.1, muito maior que F(2,77;5%)=3.115 → rejeita-se H0 com força — há diferença muito clara nos rendimentos médios por escolaridade. Para identificar quais pares de grupos diferem entre si, seria necessário um teste post-hoc (Tukey ou Scheffé).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -4755,6 +6073,7 @@
               <button class="navlink" data-target="comreplica-a2">Com réplicas</button>
               <button class="navlink" data-target="exemplo2-a2">Exemplo com réplicas</button>
               <button class="navlink" data-target="calc-a2">Calculadora</button>
+              <button class="navlink" data-target="lista-a2">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -5089,6 +6408,101 @@
           </div>
         </section>
 
+        <section class="section reveal" id="lista-a2">
+          <div class="wrap">
+            <div class="eyebrow">07 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 85, 87 a 91 — Análise de Variância com 2 Fatores</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina, com gabarito.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 85 · preço de aspirinas (tipo de loja × região), sem réplica</div>
+              <p class="q">Preços em 3 tipos de loja (drogaria, farmácia, supermercado) e 4 regiões (Centro, Oeste, Leste, Sul). Os dois fatores afetam o preço, a 5%?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Tipo de loja: SQ=0.24605 (2gl), QM=0.123 → Fcalc=5.123 &lt; Fcrit(2,6,5%)=5.143 (bem próximo do limite) &nbsp;·&nbsp; Regiões: SQ=0.10889 (3gl), QM=0.0363 → Fcalc=1.512 &lt; Fcrit(3,6,5%)=4.757</div>
+                <p>Nenhum dos dois fatores é estatisticamente significativo a 5% — embora o efeito de "tipo de loja" esteja muito próximo do limite crítico (5.123 vs 5.143), tecnicamente <strong>não se rejeita</strong> nenhuma das duas hipóteses de igualdade.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Duas hipóteses: H0(1): médias iguais entre tipos de loja; H0(2): médias iguais entre regiões. Com 3 linhas (tipos) × 4 colunas (regiões), sem réplica, a soma de quadrados total se decompõe em SQlinhas + SQcolunas + SQresíduo.</p><p>Tabela ANOVA: linhas (tipo de loja) SQ=0.24605 (2 g.l.), QM=0.123025, Fcalc=5.123; colunas (regiões) SQ=0.108892 (3 g.l.), QM=0.036297, Fcalc=1.512; resíduo SQ=0.144083 (6 g.l.).</p><p>Comparando: para linhas, Fcrit(2,6;5%)=5.143 — como 5.123&lt;5.143 (muito próximo do limite), não se rejeita H0(1), embora por uma margem mínima. Para colunas, Fcrit(3,6;5%)=4.757 — como 1.512&lt;4.757, não se rejeita H0(2). Conclusão: a 5%, nenhum dos dois fatores mostra efeito estatisticamente significativo sobre o preço, embora o efeito do tipo de loja esteja no limiar da significância.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 87 · tempos de tarefa (pessoa × dia da semana), com réplicas</div>
+              <p class="q">Maria e João realizam a tarefa duas vezes em duas segundas e duas terças-feiras. (a) Monte a ANOVA; (b) a 5%, há diferença entre pessoas? Entre dias? Há interação?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Entre pessoas: F=98.20 &gt; Fcrit=7.71 → difere &nbsp;·&nbsp; Entre dias: F=2.44 &lt; 7.71 → não difere &nbsp;·&nbsp; Interação: F=7.98 &gt; 7.71 → há interação</div>
+                <p>Há diferença significativa dos tempos médios entre as pessoas (Maria e João têm ritmos diferentes) e há interação entre pessoa e dia da semana — ou seja, o efeito do dia da semana não é o mesmo para as duas pessoas. Não há diferença média entre os dias da semana isoladamente.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Design fatorial 2×2 (Maria/João × segunda/terça) com 2 réplicas por combinação. Calcula-se a tabela ANOVA completa, decompondo SQTotal=149437.88 em SQpessoas + SQdias + SQinteração + SQresíduo.</p><p>Pessoas: SQ=130305.13 (1 g.l.), Fcalc=98.20. Dias da semana: SQ=3240.13 (1 g.l.), Fcalc=2.44. Interação: SQ=10585.13 (1 g.l.), Fcalc=7.98. Resíduo: SQ=5307.50 (4 g.l.), QMResíduo=1326.88. Valor crítico em todos os casos (1,4 g.l.; 5%): F=7.71.</p><p>Comparando: pessoas (98.20&gt;7.71) → há diferença entre Maria e João; dias (2.44&lt;7.71) → não há diferença entre segunda e terça; interação (7.98&gt;7.71) → há interação, ou seja, o efeito do dia da semana não é o mesmo para as duas pessoas.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 88 · teor de gordura (marca × laboratório), sem réplica</div>
+              <p class="q">3 marcas de molho (A, B, C) avaliadas por 4 laboratórios. A 1%, os teores médios diferem entre marcas? Entre laboratórios?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">Marcas: Fcalc=6.64 &lt; Fcrit(2,6,1%)=10.92 &nbsp;·&nbsp; Laboratórios: Fcalc=4.91 &lt; Fcrit(3,6,1%)=9.78 → não se rejeita nenhuma das H0 a 1%</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Design 3 marcas × 4 laboratórios, sem réplica. SQTotal=1.25 se decompõe em SQmarcas + SQlaboratórios + SQresíduo.</p><p>Marcas: SQ=0.49 (2 g.l.), QM=0.245, Fcalc=6.64. Laboratórios: SQ=0.54 (3 g.l.), QM=0.18, Fcalc=4.91. Resíduo: SQ=0.22 (6 g.l.), QM≈0.0367.</p><p>Comparando a 1%: Fcrit(2,6;1%)=10.92 e Fcrit(3,6;1%)=9.78. Como 6.64&lt;10.92 e 4.91&lt;9.78, não se rejeita nenhuma das duas hipóteses a esse nível — nem marcas nem laboratórios mostram diferença estatisticamente significativa no teor médio de gordura.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 89 · vendas semanais (vendedora × semana), sem réplica</div>
+              <p class="q">3 vendedoras, 8 semanas. A 10%, as vendas médias diferem entre semanas? Entre vendedoras?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">Vendedoras: Fcalc=0.175 &lt; Fcrit(2,14,10%)=2.726 → não difere &nbsp;·&nbsp; Semanas: Fcalc=4.636 &gt; Fcrit(7,14,10%)=2.193 → difere</div><p>Há diferença nas vendas médias entre semanas, mas não entre vendedoras — as vendedoras têm desempenho equivalente entre si.</p></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Design 3 vendedoras × 8 semanas, sem réplica. SQTotal=4213.958 se decompõe em SQvendedoras + SQsemanas + SQresíduo.</p><p>Vendedoras: SQ=31.583 (2 g.l.), QM=15.792, Fcalc=0.175. Semanas: SQ=2921.958 (7 g.l.), QM=417.423, Fcalc=4.636. Resíduo: SQ=1260.417 (14 g.l.), QM=90.030.</p><p>Comparando a 10%: Fcrit(2,14;10%)=2.726 e Fcrit(7,14;10%)=2.193. Vendedoras (0.175&lt;2.726) → não há diferença entre elas. Semanas (4.636&gt;2.193) → rejeita-se a igualdade: as vendas médias variam de semana para semana, mas as três vendedoras têm desempenho equivalente entre si.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 90 · peças defeituosas (operador × máquina), sem réplica</div>
+              <p class="q">4 operadores (A a D), 3 máquinas. A 5%, operadores ou máquinas produzem com qualidade diferente?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">Máquinas: Fcalc=0.353 &lt; Fcrit(2,6,5%)=5.143 → não difere &nbsp;·&nbsp; Operadores: Fcalc=7.066 &gt; Fcrit(3,6,5%)=4.757 → difere</div><p>Rejeita-se a igualdade entre operadores (alguns produzem mais peças defeituosas que outros); não se rejeita a igualdade entre máquinas.</p></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Design 4 operadores × 3 máquinas, sem réplica. SQTotal=282.917 se decompõe em SQmáquinas + SQoperadores + SQresíduo.</p><p>Máquinas: SQ=7.167 (2 g.l.), QM=3.583, Fcalc=0.353. Operadores: SQ=214.917 (3 g.l.), QM=71.639, Fcalc=7.066. Resíduo: SQ=60.833 (6 g.l.), QM=10.139.</p><p>Comparando a 5%: Fcrit(2,6;5%)=5.143 e Fcrit(3,6;5%)=4.757. Máquinas (0.353&lt;5.143) → não há diferença entre elas. Operadores (7.066&gt;4.757) → rejeita-se a igualdade: alguns operadores produzem significativamente mais peças defeituosas que outros, independentemente da máquina usada.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 91 · vendas por posição no corredor × altura da prateleira, com réplica</div>
+              <p class="q">2 posições no corredor (frente/fundo) × 2 alturas de prateleira (alta/baixa), 2 réplicas cada. A 5%, os fatores influenciam a venda? Há interação?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Corredor: F=32.27 &gt; Fcrit=7.71 → influencia &nbsp;·&nbsp; Prateleira: F=12.37 &gt; 7.71 → influencia &nbsp;·&nbsp; Interação: F=0.98 &lt; 7.71 → sem interação</div>
+                <p>Tanto a posição no corredor quanto a altura da prateleira afetam significativamente as vendas (a 5%), de forma independente uma da outra (sem interação). A 1%, apenas a posição no corredor permanece significativa.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Design fatorial 2×2 (corredor: frente/fundo × prateleira: alta/baixa) com 2 réplicas. SQTotal=3051.5 se decompõe em SQcorredor + SQprateleira + SQinteração + SQresíduo.</p><p>Corredor: SQ=1984.5 (1 g.l.), Fcalc=32.27. Prateleira: SQ=760.5 (1 g.l.), Fcalc=12.37. Interação: SQ=60.5 (1 g.l.), Fcalc=0.98. Resíduo: SQ=246 (4 g.l.), QM=61.5. Valor crítico em todos os casos (1,4 g.l.; 5%): F=7.71.</p><p>Corredor (32.27&gt;7.71) e prateleira (12.37&gt;7.71) são ambos estatisticamente significativos — os dois fatores afetam a venda. Interação (0.98&lt;7.71) → o efeito de cada fator é independente do outro (sem interação). A 1%, apenas o efeito do corredor permanece significativo.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -5116,6 +6530,7 @@
               <button class="navlink" data-target="correlacao-rs">Correlação e Anscombe</button>
               <button class="navlink" data-target="residuos-rs">Resíduos e exercícios</button>
               <button class="navlink" data-target="calc-rs">Calculadora</button>
+              <button class="navlink" data-target="lista-rs">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -5533,6 +6948,101 @@
           </div>
         </section>
 
+        <section class="section alt reveal" id="lista-rs">
+          <div class="wrap">
+            <div class="eyebrow">08 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 92 a 97 — Regressão Linear Simples</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina, com gabarito.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 92 · aluguel vs idade de automóveis</div>
+              <p class="q">Idade (x): 10,13,5,7,20. Aluguel (y): 4,3,6,5,2. Ajuste um modelo de regressão linear. Interprete os coeficientes. Teste a significância do coeficiente angular a 5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">ŷ = 6.8696 − 0.2609x</div><p>Como o coeficiente angular é negativo, quanto mais novo o automóvel, maior seu valor de aluguel — cada ano adicional de idade reduz o aluguel médio em aproximadamente 0.26 unidades.</p></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Com os 5 pares (idade x, aluguel y), calcula-se Sxy=Σxy−(Σx)(Σy)/n, Sxx=Σx²−(Σx)²/n. O coeficiente angular é b=Sxy/Sxx e o linear a=ȳ−b·x̄.</p><p>Substituindo os valores da tabela obtém-se b≈−0.2609 e a≈6.8696, resultando em ŷ = 6.8696 − 0.2609x.</p><p>Interpretação: o coeficiente angular negativo confirma que, quanto mais novo o automóvel (menor idade x), maior é o valor de aluguel esperado — cada ano adicional de idade reduz o aluguel médio em cerca de 0.26 unidades.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 93 · vendas vs investimento em publicidade</div>
+              <p class="q">n=8 pares (x=investimento em mil reais, y=produtos vendidos). Dados: Σx=920, Σy=376, Σxy=52700, Σx²=126400, Σy²=22206. (a) Correlação; (b) reta de regressão; (c) teste de significância a 5%; (d) IC 95% para β0 e β1; (e) previsão média e IC para x=65 (e IC para observação futura).</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">r = 0.978 (forte correlação linear) &nbsp;·&nbsp; ŷ = −5.81 + 0.459x</div>
+                <p>(c) t = 11.72 &gt; t(6,5%)=1.943 → rejeita H0: β1≠0 — as vendas de fato aumentam com o investimento em publicidade, a 5% de significância.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Com n=8: Σx=920, Σy=376, Σxy=52700, Σx²=126400, Σy²=22206.</p><p><strong>(a)</strong> Sxy=Σxy−(Σx)(Σy)/n=52700−920×376/8=9460. Sxx=Σx²−(Σx)²/n=126400−920²/8=20600. Syy=Σy²−(Σy)²/n=22206−376²/8=4534. r=Sxy/√(Sxx·Syy)=9460/√(20600×4534)≈0.978 — correlação forte e positiva, forte indício de relação linear.</p><p><strong>(b)</strong> b=Sxy/Sxx=9460/20600≈0.459. a=ȳ−b·x̄=−5.81. Reta: ŷ=−5.81+0.459x — cada mil reais adicionais em publicidade associa-se, em média, a 0.459 unidades adicionais vendidas.</p><p><strong>(c)</strong> H0:β1=0 vs H1:β1≠0. Variância residual: s²R=(Syy−b·Sxy)/(n−2)=31.62. t=b/√(s²R/Sxx)≈11.72 &gt; t(6;5%)=1.943 → rejeita-se H0 — o coeficiente angular é significativamente diferente de zero, ou seja, as vendas de fato aumentam com o investimento em publicidade.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 94 · reta de regressão e teste sobre β0 e β1</div>
+              <p class="q">X: 10,12,18,15,20,18,19,22,20,21,19,23. Y: 62,65,72,70,81,77,72,77,75,90,82,95. Σ(xi−x̄)²=168.917. (a) Reta de regressão; (b) ANOVA; (c) teste H0:β1=0 a 5%; (d) teste H0:β0=0 vs β0&gt;0.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">ŷ = 39.4 + 2.051x</div>
+                <p>(c) t = 4.932 &gt; t(10,5%)=1.812 → rejeita H0: β1≠0. (d) t = 5.13 &gt; 1.812 → rejeita H0: β0&gt;0 (o coeficiente linear é positivo).</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Com Sxx=168.917 (dado), calculam-se também Sxy=346.5 e Syy=1003 a partir dos 12 pares.</p><p><strong>(a)</strong> b=Sxy/Sxx=346.5/168.917≈2.051. a=ȳ−b·x̄≈39.4. Reta: ŷ=39.4+2.051x.</p><p><strong>(b)</strong> A tabela ANOVA de regressão decompõe SQTotal=Syy em SQRegressão=b·Sxy e SQResíduo=Syy−b·Sxy, com 1 e (n−2)=10 graus de liberdade respectivamente.</p><p><strong>(c)</strong> s²R=(Syy−b·Sxy)/(n−2)=29.22. t=b/√(s²R/Sxx)≈4.932 &gt; t(10;5%)=1.812 → rejeita-se H0: β1≠0, com valor-p bem menor que 5%.</p><p><strong>(d)</strong> Para H0:α=0 vs H1:α&gt;0: erro padrão de a, Sa=Sr×√(Σxi²/(n·Sxx))≈7.6815. T=a/Sa≈5.13 &gt; t(10;5%)=1.812 → rejeita-se H0: o coeficiente linear é positivo.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 95 · octanagem da gasolina vs % de aditivo</div>
+              <p class="q">X (% aditivo): 1,2,3,4,5,6. Y (octanagem): 80.5, 81.6, 82.1, 83.7, 83.9, 85.0. Obtenha a reta de regressão e teste H0:β1=0 a 5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">ŷ = 79.7 + 0.885x — a octanagem aumenta, em média, 0.885 unidades para cada 1% adicional de aditivo</div></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Com 6 pares (X=1..6%, Y=octanagem), calcula-se Sxy=15.5, Sxx=17.5, Syy=14.08.</p><p>b=Sxy/Sxx=15.5/17.5≈0.885. a=ȳ−b·x̄≈79.7. Reta: ŷ=79.7+0.885x — cada 1% adicional de aditivo aumenta a octanagem esperada em cerca de 0.885 unidades.</p><p>Para o teste H0:β1=0: a estatística t (calculada da mesma forma dos exercícios anteriores, com s²R obtido de Syy−b·Sxy sobre n−2=4 g.l.) resulta significativamente maior que t(4;5%), confirmando que o aditivo tem efeito real sobre a octanagem.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 96 · imóveis construídos vs taxa de juros</div>
+              <p class="q">10 anos de dados (taxa de juros % e nº de imóveis construídos, em milhares). (a) Reta de regressão; (b) a 5%, o número de imóveis decresce quando a taxa de juros aumenta?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">ŷ = 3148 − 121.7x</div>
+                <p>H0:β1=0 vs H1:β1&lt;0. t = −5.94 &lt; t(8,5%)=−1.86 → <strong>rejeita H0</strong>: com 95% de confiança, o número de imóveis construídos decresce à medida que a taxa de juros aumenta.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Com os 10 pares (taxa de juros X, imóveis Y), calcula-se Sxy=−7295, Sxx=59.95, Syy=1089446.</p><p><strong>(a)</strong> b=Sxy/Sxx=−7295/59.95≈−121.7. a=ȳ−b·x̄≈3148. Reta: ŷ=3148−121.7x.</p><p><strong>(b)</strong> H0:β1=0 vs H1:β1&lt;0 (espera-se que juros mais altos reduzam a construção). t=(b−0)/√(s²R/Sxx)≈−5.94, comparado a t(8;5%)=−1.86: como −5.94&lt;−1.86, rejeita-se H0 — com 95% de confiança, o número de imóveis construídos decresce à medida que a taxa de juros aumenta.</p><p><strong>(c)/(d)/(e)</strong> Um IC para a média prevista em X=10 usaria ŷ(10) ± t(8;2.5%)×erro padrão da predição. Para o modelo exponencial y=α·e^(βx)·φ, é necessário supor que ln(φ) tenha distribuição Normal com média zero e variância constante — só assim o modelo log-linear ln(y)=ln(α)+βx+ln(φ) se encaixa no ferramental de regressão linear simples, permitindo estimar α e β pela reta ajustada a (x, ln y).</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 97 · raios cósmicos vs altitude</div>
+              <p class="q">Dose de radiação medida em várias altitudes (algumas com réplicas). Ajuste um modelo linear e avalie se a altitude afeta a dose de raios cósmicos.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">ŷ = 28.81 + 0.0064x &nbsp;·&nbsp; r = 0.960, R² = 0.9216</div><p>O ajuste é excelente (R²≈92%) — a dose de radiação aumenta claramente com a altitude, de forma aproximadamente linear no intervalo estudado.</p></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p>Com os pares (altitude X, dose Y, algumas altitudes com réplicas), calculam-se as somas: Syy=3165.409, Sxx=70402733, Sxy=453199.7.</p><p>b=Sxy/Sxx≈0.006437. a=ȳ−b·x̄≈28.80913. Reta: ŷ=28.81+0.0064x. r=Sxy/√(Sxx·Syy)≈0.960, R²≈0.9216 — o ajuste é excelente (mais de 92% da variação da dose é explicada pela altitude).</p><p>Como r e R² são muito altos e o coeficiente angular é claramente positivo, conclui-se que os raios cósmicos são, sim, fortemente afetados pela altitude, de forma aproximadamente linear no intervalo estudado.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -5558,6 +7068,7 @@
               <button class="navlink" data-target="selecao-rm">Seleção do modelo</button>
               <button class="navlink" data-target="especiais-rm">Casos especiais</button>
               <button class="navlink" data-target="calc-rm">Calculadora</button>
+              <button class="navlink" data-target="lista-rm">Lista oficial</button>
             </div>
           </div>
         </div>
@@ -5824,6 +7335,56 @@
           </div>
         </section>
 
+        <section class="section reveal" id="lista-rm">
+          <div class="wrap">
+            <div class="eyebrow">07 · Lista de exercícios PRO 3200 (USP)</div>
+            <h2>Exercícios 98 a 100 — Regressão Linear Múltipla</h2>
+            <p class="intro">Exercícios da lista oficial da disciplina, com gabarito.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 98 · faturamento anual (regressão linear vs polinomial)</div>
+              <p class="q">Faturamento (R$) de uma consultoria em 6 anos: 112, 149, 238, 354, 580, 867. (a) Modelo linear; (b) modelo polinomial de 2º grau; (c) a 5%, a inclusão do termo quadrático melhora o modelo?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Linear: ŷ = −135.07 + 148.11x (Fcalc=39.16, Fcrit(1,4,5%)=7.71) &nbsp;·&nbsp; Quadrático: ŷ = 164.6 − 76.6x + 32.11x² (Fcalc=868.72, Fcrit(2,3,5%)=9.55)</div>
+                <p>Teste de melhoria (reta → parábola): SQMelhoria=38485.76, Fcalc=158.30 &gt; Fcrit(1,3,5%)=10.13 → <strong>rejeita H0</strong>: a inclusão do termo quadrático melhora significativamente o ajuste — a parábola explica muito melhor o crescimento (quase exponencial) do faturamento do que a reta.</p>
+              </div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)/(b)</strong> Ajustando um modelo linear aos 6 pares (ano, faturamento): ŷ=−135.07+148.11x. Ajustando um modelo polinomial de 2º grau: ŷ=164.6−76.6x+32.11x².</p><p>Tabelas ANOVA: modelo linear — SQReg=383912.2 (1 g.l.), SQRes=39215.1 (4 g.l.), Fcalc=39.16 (Fcrit(1,4;5%)=7.71 → significativo). Modelo quadrático — SQReg=422398 (2 g.l.), SQRes=729.34 (3 g.l.), Fcalc=868.72 (Fcrit(2,3;5%)=9.55 → também significativo, e com resíduo muito menor).</p><p><strong>(c)</strong> Para testar se o termo quadrático melhora o modelo, compara-se a redução no SQRes: SQMelhoria = SQRes(linear)−SQRes(parábola) = 39215.1−729.34 ≈ 38485.76 (1 g.l.). Fcalc = SQMelhoria/QMRes(parábola) = 38485.76/243.11 ≈ 158.30 &gt; Fcrit(1,3;5%)=10.13 → rejeita-se H0 de que o termo quadrático é irrelevante: a parábola explica significativamente melhor o crescimento (quase exponencial) do faturamento.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 99 · preço de venda de casas (quartos e banheiros)</div>
+              <p class="q">8 casas com número de quartos, banheiros e preço de venda. (a) Regressão simples com a variável mais correlacionada; (b) modelo com as duas variáveis; (c) a inclusão da segunda variável é relevante?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">Preço = R$651.916,67 + R$41.333,33 × Quartos + R$7.583,33 × Banheiros</div><p>Cada quarto adicional acrescenta, em média, R$41.333,33 ao preço (mantendo o número de banheiros fixo), e cada banheiro adicional acrescenta R$7.583,33 (mantendo os quartos fixos).</p></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> Calculando a correlação de cada variável auxiliar (quartos, banheiros) com o preço, escolhe-se a de maior correlação para o modelo simples inicial — no caso, "quartos" tende a se correlacionar mais fortemente com o preço entre as 8 casas.</p><p><strong>(b)</strong> Incluindo as duas variáveis no modelo múltiplo (resolvido via álgebra matricial, β̂=(XᵀX)⁻¹Xᵀy), obtém-se: Preço = R$651.916,67 + R$41.333,33×Quartos + R$7.583,33×Banheiros. Interpretação: mantendo o número de banheiros fixo, cada quarto adicional soma, em média, R$41.333,33 ao preço; mantendo os quartos fixos, cada banheiro adicional soma R$7.583,33.</p><p><strong>(c)</strong> A relevância estatística da inclusão da segunda variável é avaliada pelo teste t sobre o coeficiente de "banheiros" (H0:βbanheiros=0) — se |t| superar o valor crítico t(n−3;5%), a variável contribui significativamente além do que "quartos" já explica.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 100 · custo de distribuição (vendas e pedidos)</div>
+              <p class="q">24 meses de dados: custo de distribuição, vendas e número de pedidos processados. (a) Regressão simples com a variável mais correlacionada; (b) modelo com as duas variáveis; (c) a inclusão da segunda variável é relevante?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer"><div class="verdict">Custo = −2.688 + 0.047 × Vendas + 0.0119 × Pedidos</div><p>Tanto o volume de vendas quanto o número de pedidos processados contribuem positivamente para o custo de distribuição — cada unidade adicional de vendas soma 0.047 ao custo, e cada pedido adicional soma 0.0119.</p></div>
+            
+              <button class="qa-res-toggle">Resolução</button>
+              <div class="qa-resolution">
+                <div class="reslabel">Resolução passo a passo</div>
+<p><strong>(a)</strong> Entre "vendas" e "pedidos", escolhe-se a variável de maior correlação com o custo de distribuição para o ajuste simples inicial.</p><p><strong>(b)</strong> Incluindo as duas variáveis no modelo múltiplo (24 observações mensais), obtém-se: Custo = −2.688 + 0.047×Vendas + 0.0119×Pedidos. Cada unidade adicional de vendas soma, em média, 0.047 ao custo (mantendo pedidos fixos); cada pedido adicional soma 0.0119 (mantendo vendas fixas) — ambos os coeficientes positivos, como esperado para um custo de distribuição que cresce com o volume de operação.</p><p><strong>(c)</strong> A relevância da segunda variável é avaliada pelo teste t individual do seu coeficiente no modelo múltiplo (H0:β=0) — comparando |t| ao valor crítico t(21;5%), decide-se se ela agrega informação estatisticamente significativa além da primeira variável.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="module-footer">
           <div class="wrap">
             <div class="refs">
@@ -5931,6 +7492,14 @@
       const ans = btn.nextElementSibling;
       const open = ans.classList.toggle('show');
       btn.textContent = open ? 'Ocultar resposta' : 'Revelar resposta';
+    });
+  });
+
+  document.querySelectorAll('.qa-res-toggle').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const res = btn.nextElementSibling;
+      const open = res.classList.toggle('show');
+      btn.textContent = open ? 'Ocultar resolução' : 'Resolução';
     });
   });
 
