@@ -4302,6 +4302,1539 @@
 
       </div>
       <!-- ================= END MODULE: TESTE DE ASSOCIAÇÃO ================= -->
+
+      <!-- ================= MODULE: ANOVA 1 FATOR (P3) ================= -->
+      <div class="module-page" data-module="anova-1-fator" id="page-anova-1-fator" hidden>
+
+        <div class="page-subnav">
+          <div class="page-subnav-inner">
+            <span class="psn-title">P3 · Análise de Variância com Um Fator</span>
+            <div class="navlinks">
+              <button class="navlink" data-target="intro-a1">Introdução</button>
+              <button class="navlink" data-target="teoria-a1">Tabela ANOVA</button>
+              <button class="navlink" data-target="exemplo-a1">Exemplo resolvido</button>
+              <button class="navlink" data-target="scheffe-a1">Método de Scheffé</button>
+              <button class="navlink" data-target="bartlett-a1">Homocedasticidade</button>
+              <button class="navlink" data-target="exercicio-a1">Exercício guiado</button>
+              <button class="navlink" data-target="calc-a1">Calculadora</button>
+            </div>
+          </div>
+        </div>
+
+        <header class="hero" id="inicio-a1">
+          <div class="wrap hero-grid">
+            <div>
+              <div class="eyebrow">P3 · Módulo 1 · Profas. Celma de Oliveira Ribeiro e Linda Lee Ho</div>
+              <h1>Duas médias já sabemos comparar. <em>E se forem k populações de uma vez?</em></h1>
+              <p class="lede">A Análise de Variância (ANOVA) — introduzida por Sir Ronald Fisher — estende o teste de igualdade de médias para k populações, decompondo a variabilidade total dos dados em uma parcela explicada pelo fator estudado e uma parcela residual, e comparando as duas através da estatística F.</p>
+              <div class="hero-meta">
+                <span><strong>Depto.</strong> Engenharia de Produção — USP</span>
+                <span><strong>Módulo</strong> Análise de Variância com Um Fator</span>
+              </div>
+            </div>
+            <div id="heroA1" aria-hidden="true"></div>
+          </div>
+        </header>
+
+        <section class="section reveal" id="intro-a1">
+          <div class="wrap">
+            <div class="eyebrow">01 · De duas médias para k populações</div>
+            <h2>H0: µ1 = µ2 = ... = µk</h2>
+            <p class="intro">Já vimos o teste de igualdade de médias para duas populações. A Análise de Variância de um fator estende essa ideia para k populações — testando, de uma só vez, se todas as médias são iguais.</p>
+
+            <p style="color:var(--ink-soft); font-size:16.5px;">De cada uma das k populações, com Xi ~ N(µi,σi²), coleta-se uma amostra aleatória simples: Amostra i: Xi1,...,Xini, da qual se obtêm Xi (média) e Si² (variância).</p>
+
+            <div class="formula-box">
+              <div class="f">H0: µ1 = µ2 = ... = µk &nbsp;&nbsp;·&nbsp;&nbsp; H1: ∃ pelo menos um par (i,j) | µi ≠ µj</div>
+            </div>
+
+            <p class="intro" style="margin-top:24px;">Para desenvolver a análise, soma-se uma suposição às já conhecidas — a <strong>homocedasticidade</strong> entre as populações (σ1²=...=σk²=σ²). Com isso, cada observação pode ser escrita como uma parte determinística mais uma parte aleatória:</p>
+
+            <div class="formula-box">
+              <div class="f">Xij = µi + eij &nbsp;&nbsp;ou, em notação de modelos lineares,&nbsp;&nbsp; Xij = µ + αi + eij</div>
+              <div class="f-note">eij ~ N(0,σ²) &nbsp;·&nbsp; restrição Σαi = 0 (i=1,...,k) &nbsp;·&nbsp; αi é o efeito do i-ésimo nível do fator sobre a média geral µ</div>
+            </div>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Suposição 1</span>
+                <h3>Normalidade</h3>
+                <p>A variável de interesse é quantitativa contínua, com distribuição Normal em cada uma das k populações.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Suposição 2</span>
+                <h3>Homocedasticidade</h3>
+                <p>As k populações têm a mesma variância σ² — sem essa suposição não é possível combinar as variâncias amostrais num único estimador.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Suposição 3</span>
+                <h3>Independência</h3>
+                <p>As amostras são aleatórias simples, extraídas independentemente de cada população.</p>
+              </div>
+            </div>
+
+            <div class="callout teal" style="margin-top:20px;">
+              <div class="eyebrow">A mesma hipótese, em notação de efeitos</div>
+              <p>Testar H0: µ1=...=µk contra H1: ∃(i,j)|µi≠µj é equivalente a testar H0: α1=α2=...=αk=0 contra H1: ∃ algum i | αi≠0. Rejeitar H0 significa concluir que o fator estudado é relevante para explicar a variabilidade da média da variável de interesse.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="teoria-a1">
+          <div class="wrap">
+            <div class="eyebrow">02 · Duas maneiras de estimar a mesma variância</div>
+            <h2>Sp² (dentro dos grupos) e Se² (entre grupos)</h2>
+            <p class="intro">A pergunta chave é: como estimar σ²? Existem várias formas — e comparar duas delas é exatamente o que torna a ANOVA possível.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Estimador 1 · variabilidade interna</span>
+                <h3>Sp² = Σ(ni−1)Si² / Σ(ni−1)</h3>
+                <p>Agrega as k variâncias amostrais num único estimador ponderado — o mesmo raciocínio da variância combinada (pooled) do caso de duas populações. Σ(ni−1)Si²/σ² ~ χ² com n−k graus de liberdade (n=Σni).</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Estimador 2 · variabilidade entre grupos</span>
+                <h3>Se² = Σni(Xi−X)² / (k−1)</h3>
+                <p>Mede a dispersão das médias amostrais em torno da média geral X. Sob H0, Se²(k−1)/σ² ~ χ² com k−1 graus de liberdade.</p>
+              </div>
+            </div>
+
+            <p style="color:var(--ink-soft); font-size:16.5px; margin-top:8px;">Um terceiro estimador, S² = ΣΣ(Xij−X)²/(n−1), também estima σ² sob H0 — mas apenas Sp² continua estimando σ² corretamente caso H0 seja falsa.</p>
+
+            <div class="callout" style="margin-top:8px;">
+              <div class="eyebrow">A ideia central da ANOVA</div>
+              <p>Se H0 for verdadeira, Se² e Sp² estimam a mesma variância σ² — logo a razão Se²/Sp² deve ficar próxima de 1. Como Se²/Sp² é a razão de duas distribuições qui-quadrado pelos respectivos graus de liberdade, ela segue uma distribuição F:</p>
+            </div>
+
+            <div class="formula-box">
+              <div class="f">F = Se² / Sp² ~ F com (k−1) g.l. no numerador e (n−k) g.l. no denominador</div>
+              <div class="f-note">Regra de decisão: se Fobs &gt; Fc, rejeita H0 &nbsp;·&nbsp; Fc é tabelado de acordo com o erro do tipo I adotado</div>
+            </div>
+
+            <h3 style="margin-top:32px; margin-bottom:14px; font-size:19px;">Tabela da ANOVA</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">É comum organizar os resultados da análise de variância de um fator na forma de uma tabela:</p>
+
+            <table class="datatab" style="margin-top:8px;">
+              <caption>Tabela ANOVA — um fator</caption>
+              <thead><tr><th>Fonte de variação</th><th>Soma de Quadrados</th><th>G.L.</th><th>Quadrado médio</th><th>Estatística</th></tr></thead>
+              <tbody>
+                <tr><td>Entre grupos</td><td>SQE = Σni(Xi−X)²</td><td>k−1</td><td>Se² = SQE/(k−1)</td><td rowspan="2" style="vertical-align:middle;">F = Se²/Sp²</td></tr>
+                <tr><td>Dentro dos grupos</td><td>SQD = Σ(ni−1)Si²</td><td>n−k</td><td>Sp² = SQD/(n−k)</td></tr>
+                <tr><td>Total</td><td>SQT = ΣΣ(Xij−X)²</td><td>n−1</td><td></td><td></td></tr>
+              </tbody>
+            </table>
+
+            <div class="flow-note">Note que SQD = Σ(ni−1)Si² = ΣΣ(Xij−Xi)² — a soma de quadrados dentro dos grupos pode ser obtida diretamente das variâncias amostrais, ou somando os desvios de cada observação em relação à média do seu próprio grupo. SQT = SQE + SQD sempre.</div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="exemplo-a1">
+          <div class="wrap">
+            <div class="eyebrow">03 · Exemplo resolvido · preço de aspirinas</div>
+            <h2>O mesmo dado, dois fatores possíveis de análise</h2>
+            <p class="intro">Um consumidor pretende verificar se existe diferença no preço de aspirinas em diferentes cidades e em diferentes tipos de loja. Para isto, selecionou uma única unidade de observação de cada localidade e tipo de loja (α=5%):</p>
+
+            <table class="datatab">
+              <caption>Preço da aspirina, por região e tipo de estabelecimento</caption>
+              <thead><tr><th></th><th>Centro</th><th>Leste</th><th>Oeste</th><th>Sul</th></tr></thead>
+              <tbody>
+                <tr><td>Drogaria</td><td>2.46</td><td>2.85</td><td>2.44</td><td>2.51</td></tr>
+                <tr><td>Farmácia</td><td>2.27</td><td>2.61</td><td>2.35</td><td>2.17</td></tr>
+                <tr><td>Supermercado</td><td>2.72</td><td>2.64</td><td>2.59</td><td>2.54</td></tr>
+              </tbody>
+            </table>
+
+            <p style="color:var(--ink-soft); font-size:16.5px; margin-top:14px;">Os mesmos 12 valores podem ser analisados sob dois fatores diferentes, um por vez — como se fossem dois experimentos independentes de um único fator.</p>
+
+            <h3 style="margin-top:32px; margin-bottom:14px; font-size:19px;">Exercício 1 · o fator é a região</h3>
+
+            <table class="datatab">
+              <caption>Médias e variâncias por região</caption>
+              <thead><tr><th>Região</th><th>Média</th><th>Variância</th><th>n</th></tr></thead>
+              <tbody>
+                <tr><td>Centro</td><td>2.483</td><td>0.051</td><td>3</td></tr>
+                <tr><td>Leste</td><td>2.700</td><td>0.017</td><td>3</td></tr>
+                <tr><td>Oeste</td><td>2.460</td><td>0.015</td><td>3</td></tr>
+                <tr><td>Sul</td><td>2.407</td><td>0.042</td><td>3</td></tr>
+                <tr><td><strong>Média geral</strong></td><td><strong>2.513</strong></td><td></td><td></td></tr>
+              </tbody>
+            </table>
+
+            <div class="qa-card" style="margin-top:20px;">
+              <div class="qlabel">(a) Hipóteses nula e alternativa</div>
+              <p class="q">Utilizando análise de variância de um fator, é possível concluir que os preços são iguais entre regiões?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">H0: os preços são iguais nos diferentes locais &nbsp;·&nbsp; H1: existe pelo menos um local com preço diferente</div>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(b) e (c) Estatísticas e decisão</div>
+              <p class="q">Calcule Se², Sp², a estatística F e conclua, com α=5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Se² = 0.150/3 = 0.05 &nbsp;·&nbsp; Sp² = 0.250/8 = 0.031 &nbsp;·&nbsp; F = 0.05/0.031 = 1.598</div>
+                <p>Com α=5%, o valor crítico é F=4.066 com 3 e 8 graus de liberdade no numerador e denominador. Como Fobs=1.598 &lt; 4.066, <strong>não se rejeita H0</strong> — não há evidência de que o preço varie entre regiões.</p>
+              </div>
+            </div>
+
+            <h3 style="margin-top:36px; margin-bottom:14px; font-size:19px;">Exercício 2 · o mesmo dado, agora com o fator tipo de loja</h3>
+
+            <table class="datatab">
+              <caption>Médias e variâncias por tipo de estabelecimento</caption>
+              <thead><tr><th>Tipo</th><th>Média</th><th>Variância</th><th>n</th></tr></thead>
+              <tbody>
+                <tr><td>Drogaria</td><td>2.565</td><td>0.0370</td><td>4</td></tr>
+                <tr><td>Farmácia</td><td>2.350</td><td>0.0355</td><td>4</td></tr>
+                <tr><td>Supermercado</td><td>2.6225</td><td>0.0059</td><td>4</td></tr>
+                <tr><td><strong>Média geral</strong></td><td><strong>2.513</strong></td><td></td><td></td></tr>
+              </tbody>
+            </table>
+
+            <div class="qa-card" style="margin-top:20px;">
+              <div class="qlabel">Estatísticas e decisão</div>
+              <p class="q">Utilizando análise de variância de um fator, é possível concluir que os preços são iguais entre tipos de estabelecimento?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Se² = 0.165/2 = 0.0825 &nbsp;·&nbsp; Sp² = 0.235/9 = 0.0261 &nbsp;·&nbsp; F = 0.0825/0.0261 = 3.161</div>
+                <p>Com α=5%, o valor crítico é F=4.265 com 2 e 9 graus de liberdade. Como Fobs=3.161 &lt; 4.265, <strong>não se rejeita H0</strong> — também não há evidência de que o preço varie entre tipos de estabelecimento.</p>
+              </div>
+            </div>
+
+            <div class="callout teal" style="margin-top:20px;">
+              <div class="eyebrow">Uma limitação deste exemplo</div>
+              <p>Analisando região e tipo separadamente, nenhum dos dois fatores mostrou-se significativo — mas cada análise ignora completamente o outro fator, o que infla a variabilidade "dentro dos grupos" e reduz o poder do teste. O módulo de ANOVA de <strong>dois fatores</strong> retoma exatamente este exemplo, analisando região e tipo simultaneamente.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="scheffe-a1">
+          <div class="wrap">
+            <div class="eyebrow">04 · A hipótese foi rejeitada — e agora?</div>
+            <h2>Por que não testar as médias duas a duas?</h2>
+            <p class="intro">É comum perguntar: por que este teste — H0: µ1=...=µk — não equivale a testar a igualdade entre médias, considerando todos os pares de média, dois a dois?</p>
+
+            <div class="callout" style="margin-top:8px;">
+              <div class="eyebrow">Resposta</div>
+              <p>Não, não é equivalente, e está errado analisar desta forma. Ao testar dois a dois, você não está considerando todo o experimento — que usa um único estimador da variância para fazer o teste. Ao fazer teste de média dois a dois, cada vez está usando estimadores diferentes de variância. Além disso, ao rejeitar H0 estaremos concluindo que este fator é importante/relevante para explicar a variabilidade da média da variável analisada — uma conclusão sobre o experimento como um todo.</p>
+            </div>
+
+            <p class="intro" style="margin-top:24px;">Uma vez rejeitada H0, há interesse em investigar quais pares de médias diferem. Existem vários métodos de contraste — aqui usamos o <strong>método de Scheffé</strong>, por ser bastante simples.</p>
+
+            <div class="formula-box">
+              <div class="f">Critério: se |Xi − Xj| &gt; δij, então µi ≠ µj</div>
+              <div class="f-note">δij = √[ (k−1) × Fc × Sp² × (1/ni + 1/nj) ] &nbsp;·&nbsp; Fc é o valor crítico da distribuição F usado para rejeitar H0</div>
+            </div>
+
+            <h3 style="margin-top:32px; margin-bottom:14px; font-size:19px;">Exercício 3 · concentração de composto tóxico, quatro laboratórios</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Quatro laboratórios analisam 6 amostras de solo cada, medindo a concentração de um composto químico nocivo (em ppm). Há preocupação de que os resultados diferem entre laboratórios, devido a diferentes técnicas.</p>
+
+            <table class="datatab" style="margin-top:8px;">
+              <caption>Médias e variâncias por laboratório (n=6 cada)</caption>
+              <thead><tr><th>Laboratório</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+              <tbody>
+                <tr><td>Média</td><td>52.33</td><td>49.35</td><td>46.70</td><td>49.77</td></tr>
+                <tr><td>Variância</td><td>4.151</td><td>19.480</td><td>1.120</td><td>1.587</td></tr>
+              </tbody>
+            </table>
+
+            <div class="qa-card" style="margin-top:20px;">
+              <div class="qlabel">(a) Hipóteses e tabela ANOVA</div>
+              <p class="q">Escreva as hipóteses e monte a tabela ANOVA (α=5% e α=1%).</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">H0: todos os laboratórios produzem o mesmo resultado &nbsp;·&nbsp; H1: existe pelo menos um laboratório diferente</div>
+                <table class="datatab" style="margin-top:10px;">
+                  <caption>Tabela ANOVA — Exercício 3</caption>
+                  <thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>F</th></tr></thead>
+                  <tbody>
+                    <tr><td>Entre laboratórios</td><td>95.63</td><td>3</td><td>31.88</td><td rowspan="2" style="vertical-align:middle;">4.848</td></tr>
+                    <tr><td>Dentro dos laboratórios</td><td>131.69</td><td>20</td><td>6.583</td></tr>
+                    <tr><td>Total</td><td>227.32</td><td>23</td><td></td><td></td></tr>
+                  </tbody>
+                </table>
+                <p style="margin-top:10px;">Com F=4.848 &gt; Fc=4.313 (5%) e Fc=8.096 (1%), <strong>rejeita-se H0</strong> nos dois níveis — há evidência de que ao menos um laboratório produz resultado diferente.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(b) Método de Scheffé — qual o valor de δij?</div>
+              <p class="q">Com Fc=3.098 (F com 3 e 20 g.l., 5%) e Sp²=6.583, calcule δij.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">δij = √[ (4−1) × 3.098 × 6.583 × (1/6+1/6) ] = 4.516</div>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(c) Diferenças de médias entre laboratórios e conclusão</div>
+              <p class="q">Compare cada |Xi−Xj| com δij=4.516. Quais laboratórios diferem?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <table class="datatab">
+                  <caption>Diferenças de médias, |Xi−Xj|</caption>
+                  <thead><tr><th>Média</th><th>Lab 1</th><th>Lab 2</th><th>Lab 3</th></tr></thead>
+                  <tbody>
+                    <tr><td>Lab 1 — 52.333</td><td></td><td></td><td></td></tr>
+                    <tr><td>Lab 2 — 49.350</td><td>2.983</td><td></td><td></td></tr>
+                    <tr><td>Lab 3 — 46.700</td><td style="font-weight:700; color:var(--rust);">5.633 ←</td><td>2.650</td><td></td></tr>
+                    <tr><td>Lab 4 — 49.767</td><td>2.567</td><td>−0.417</td><td>−3.067</td></tr>
+                  </tbody>
+                </table>
+                <p style="margin-top:10px;">Apenas |X1−X3| = 5.633 supera δij=4.516 — <strong>os resultados indicam haver diferença entre os laboratórios 1 e 3</strong>; os demais pares não podem ser distinguidos por este contraste.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="bartlett-a1">
+          <div class="wrap">
+            <div class="eyebrow">05 · Uma suposição que também precisa ser testada</div>
+            <h2>Verificando a homocedasticidade — teste de Bartlett</h2>
+            <p class="intro">A ANOVA de um fator assume σ1²=...=σk². Existem vários testes para verificar H0: σ1²=σ2²=...=σk² — aqui usamos o teste desenvolvido por Bartlett, que emprega a estatística:</p>
+
+            <div class="formula-box">
+              <div class="f">D = Σ (ni−1) · ln(Sp²/Si²) &nbsp;&nbsp;,&nbsp;&nbsp; i=1,...,k</div>
+              <div class="f-note">Assintoticamente, D ~ χ² com (k−1) graus de liberdade &nbsp;·&nbsp; se D &gt; Dc, rejeita-se a homocedasticidade</div>
+            </div>
+
+            <h3 style="margin-top:28px; margin-bottom:14px; font-size:19px;">Continuando o Exercício 3 (quatro laboratórios)</h3>
+            <div class="qa-card">
+              <div class="qlabel">Verifique a hipótese de homocedasticidade</div>
+              <p class="q">Com variâncias amostrais 4.151, 19.480, 1.120 e 1.587 (n=6 cada) e Sp²=6.583, calcule D e conclua a 5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">D = (6−1)×[ln(6.583/4.151)+ln(6.583/19.480)+ln(6.583/1.120)+ln(6.583/1.587)] = 12.853</div>
+                <p>Valor crítico χ²(3 g.l., 5%) = 7.815. Como D=12.853 &gt; 7.815, <strong>rejeita-se a hipótese de homocedasticidade</strong> — os laboratórios não têm variâncias iguais, o que é coerente com a grande discrepância observada entre as variâncias amostrais (1.12 a 19.48).</p>
+              </div>
+            </div>
+
+            <div class="def-grid" style="margin-top:24px;">
+              <div class="def-card">
+                <span class="tag">Pergunta comum · 1</span>
+                <h3>E se a homocedasticidade não for satisfeita?</h3>
+                <p>Existem várias soluções. A mais comum é empregar alguma transformação (como ln, entre outras) para estabilizar a variância e refazer a análise.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Pergunta comum · 2</span>
+                <h3>E se a normalidade não for satisfeita?</h3>
+                <p>O método é bastante robusto em relação a isto — pequenos desvios de normalidade afetam pouco a validade da ANOVA, especialmente com amostras balanceadas.</p>
+              </div>
+            </div>
+
+            <div class="callout teal" style="margin-top:8px;">
+              <div class="eyebrow">Uma forma prática de checar o modelo: análise dos resíduos</div>
+              <p>Um modo fácil de avaliar a adequação do modelo linear associado à ANOVA é através da análise dos resíduos: Resíduo = valor observado − valor previsto, ou seja, na notação do modelo, Resíduo = Yij − Ŷij. Padrões nos resíduos (não apenas ruído aleatório) sinalizam violação de alguma suposição do modelo.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="exercicio-a1">
+          <div class="wrap">
+            <div class="eyebrow">06 · Exercício guiado · defeitos em grãos de café</div>
+            <h2>Juntando tudo: ANOVA, Scheffé e Bartlett num só exercício</h2>
+            <p class="intro">Um estudo sobre café robusta analisa a frequência de defeitos no grão para seis regiões diferentes. Em cada região foram escolhidos aleatoriamente 11 lotes, medindo a percentagem do peso total de grãos sem defeito.</p>
+
+            <table class="datatab">
+              <caption>Média, variância e ln(variância) por região (n=11 cada)</caption>
+              <thead><tr><th>Região</th><th>Média</th><th>Desvio</th><th>Variância</th><th>Ln(var)</th></tr></thead>
+              <tbody>
+                <tr><td>Cabinda</td><td>44.19</td><td>6.94</td><td>48.1636</td><td>3.8746</td></tr>
+                <tr><td>Ambriz</td><td>58.87</td><td>18.98</td><td>360.2404</td><td>5.8868</td></tr>
+                <tr><td>Encoje</td><td>51.80</td><td>13.92</td><td>193.7664</td><td>5.2667</td></tr>
+                <tr><td>Cazongo</td><td>60.61</td><td>13.29</td><td>176.6241</td><td>5.1740</td></tr>
+                <tr><td>Libolo</td><td>61.96</td><td>24.49</td><td>599.7601</td><td>6.3965</td></tr>
+                <tr><td>Amboim</td><td>42.11</td><td>21.31</td><td>454.1161</td><td>6.1184</td></tr>
+              </tbody>
+            </table>
+
+            <div class="qa-card" style="margin-top:20px;">
+              <div class="qlabel">(a) A percentagem de grãos sem defeito depende da região? (α=5%)</div>
+              <p class="q">Calcule Se², Sp², a estatística F e conclua.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Se² = 4068.94/5 = 813.79 &nbsp;·&nbsp; Sp² = 18326.71/60 = 305.445 &nbsp;·&nbsp; F = 813.79/305.445 = 2.664</div>
+                <p>Com Fc(5, 60 g.l., 5%) = 2.368, como Fobs=2.664 &gt; 2.368, <strong>rejeita-se H0</strong> de igualdade de percentagem de grãos sem defeito entre regiões.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(b) Tabela ANOVA completa</div>
+              <p class="q">Organize os resultados na tabela ANOVA.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <table class="datatab">
+                  <thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>F</th></tr></thead>
+                  <tbody>
+                    <tr><td>Entre regiões</td><td>4068.94</td><td>5</td><td>813.79</td><td rowspan="2" style="vertical-align:middle;">2.664</td></tr>
+                    <tr><td>Dentro das regiões</td><td>18326.71</td><td>60</td><td>305.445</td></tr>
+                    <tr><td>Total</td><td>22395.65</td><td>65</td><td></td><td></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(c) Método de Scheffé — quais regiões diferem?</div>
+              <p class="q">Com Fc(5,60,5%)=2.368, calcule δij e compare com as diferenças de médias observadas.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">δij = √[ (6−1) × 2.368 × 305.445 × (1/11+1/11) ] = 25.64</div>
+                <table class="datatab" style="margin-top:10px;">
+                  <caption>Diferenças de médias entre regiões</caption>
+                  <thead><tr><th>Média</th><th>Ambriz</th><th>Encoje</th><th>Cazongo</th><th>Libolo</th><th>Amboim</th></tr></thead>
+                  <tbody>
+                    <tr><td>Cabinda — 44.19</td><td>14.68</td><td>7.61</td><td>16.42</td><td>17.77</td><td>−2.08</td></tr>
+                    <tr><td>Ambriz — 58.87</td><td></td><td>−7.07</td><td>1.74</td><td>3.09</td><td>−16.76</td></tr>
+                    <tr><td>Encoje — 51.80</td><td></td><td></td><td>8.81</td><td>10.16</td><td>−9.69</td></tr>
+                    <tr><td>Cazongo — 60.61</td><td></td><td></td><td></td><td>1.35</td><td>−18.50</td></tr>
+                    <tr><td>Libolo — 61.96</td><td></td><td></td><td></td><td></td><td>−19.85</td></tr>
+                  </tbody>
+                </table>
+                <p style="margin-top:10px;">Nenhuma diferença observada supera δij=25.64 (a maior, em módulo, é 19.85). Pelo método de Scheffé, <strong>nenhum par (i,j) é apontado como diferente</strong> — apesar da ANOVA ter rejeitado H0, este contraste específico não tem poder suficiente para localizar o par responsável. Outros tipos de contraste devem ser explorados.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(d) Teste de Bartlett — a homocedasticidade se sustenta?</div>
+              <p class="q">Calcule a estatística D e conclua a 5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">D = (11−1) × Σ ln(305.445/Si²) = 16.14 &nbsp;·&nbsp; χ²crítico(5 g.l., 5%) = 11.07</div>
+                <p>Como D=16.14 &gt; 11.07, <strong>rejeita-se a hipótese de homocedasticidade</strong> — as regiões não têm a mesma variância, o que é esperado dado o desvio padrão variar de 6.94 a 24.49 entre elas.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="calc-a1">
+          <div class="wrap">
+            <div class="eyebrow">07 · Ferramenta</div>
+            <h2>Calculadora · ANOVA de 1 fator + método de Scheffé</h2>
+            <p class="intro">Informe os dados brutos de cada grupo (valores separados por vírgula; grupos separados por ponto e vírgula) e α — a calculadora devolve a tabela ANOVA, a decisão, e a matriz de contrastes de Scheffé para todos os pares.</p>
+
+            <div class="gen-box">
+              <div class="gen-field">
+                <label for="a1Data">Dados por grupo — grupos separados por ";", valores por ","</label>
+                <textarea id="a1Data" rows="3" style="width:100%; font-family:var(--mono); font-size:14px; padding:10px; border-radius:8px; border:1px solid var(--line); background:var(--white); color:var(--ink);">2.46,2.27,2.72;2.85,2.61,2.64;2.44,2.35,2.59;2.51,2.17,2.54</textarea>
+              </div>
+              <div class="gen-row" style="align-items:flex-end; margin-top:12px;">
+                <div class="gen-field"><label for="a1Alpha">α (%)</label><input type="number" id="a1Alpha" value="5" min="0.1" max="50" step="0.1"></div>
+              </div>
+              <button class="sim-btn" id="a1Btn">Calcular ANOVA + Scheffé</button>
+              <div class="gen-output" id="a1Output">Clique para calcular.</div>
+            </div>
+
+            <div class="flow-note" style="margin-top:16px;">Os valores pré-preenchidos reproduzem o Exercício 1 desta página (preço de aspirinas por região).</div>
+          </div>
+        </section>
+
+        <div class="module-footer">
+          <div class="wrap">
+            <div class="refs">
+              FISHER, R.A. — Statistical Methods for Research Workers, 1925 · DEVORE, J.L. — Probabilidade e Estatística para Engenharia e Ciências, Thomson, 2006 · BUSSAB, W.O.; MORETTIN, P.A. — Estatística Básica, 10ª ed., Saraiva, 2024 · SCHEFFÉ, H. — A method for judging all contrasts in the analysis of variance, Biometrika, 1953 · BARTLETT, M.S. — Properties of sufficiency and statistical tests, Proc. Royal Society A, 1937 · BOX, G.E.P.; HUNTER, J.S.; HUNTER, W.G. — Statistics for Experimenters, 2ª ed., Wiley, 2005
+            </div>
+            <div class="credit">Guia de estudo baseado no módulo "Análise de Variância — um fator" de PRO 3200 — Estatística, EP-USP.</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ================= END MODULE: ANOVA 1 FATOR ================= -->
+
+      <!-- ================= MODULE: ANOVA 2 FATORES (P3) ================= -->
+      <div class="module-page" data-module="anova-2-fatores" id="page-anova-2-fatores" hidden>
+
+        <div class="page-subnav">
+          <div class="page-subnav-inner">
+            <span class="psn-title">P3 · Análise de Variância com 2 Fatores</span>
+            <div class="navlinks">
+              <button class="navlink" data-target="intro-a2">Introdução</button>
+              <button class="navlink" data-target="semreplica-a2">Sem réplica</button>
+              <button class="navlink" data-target="exemplo-a2">Exemplo sem réplica</button>
+              <button class="navlink" data-target="comreplica-a2">Com réplicas</button>
+              <button class="navlink" data-target="exemplo2-a2">Exemplo com réplicas</button>
+              <button class="navlink" data-target="calc-a2">Calculadora</button>
+            </div>
+          </div>
+        </div>
+
+        <header class="hero" id="inicio-a2">
+          <div class="wrap hero-grid">
+            <div>
+              <div class="eyebrow">P3 · Módulo 2 · Profas. Celma de Oliveira Ribeiro e Linda Lee Ho</div>
+              <h1>Na prática, quase nunca é só um fator. <em>E se dois deles atuarem ao mesmo tempo?</em></h1>
+              <p class="lede">A ANOVA de dois fatores testa simultaneamente o efeito de dois fatores (A e B) sobre a variável de interesse — com ou sem réplicas em cada combinação de níveis. Com réplicas, surge uma terceira pergunta: os dois fatores interagem entre si?</p>
+              <div class="hero-meta">
+                <span><strong>Depto.</strong> Engenharia de Produção — USP</span>
+                <span><strong>Módulo</strong> Análise de Variância com 2 Fatores</span>
+              </div>
+            </div>
+            <div id="heroA2" aria-hidden="true"></div>
+          </div>
+        </header>
+
+        <section class="section reveal" id="intro-a2">
+          <div class="wrap">
+            <div class="eyebrow">01 · De um fator para muitos</div>
+            <h2>Níveis, combinações e a questão da réplica</h2>
+            <p class="intro">Na prática, raramente há experimentos com um único fator — o mais comum é ter inúmeros fatores atuando simultaneamente. Aqui abordamos apenas o caso de dois fatores, em duas situações: sem réplicas e com réplicas.</p>
+
+            <p style="color:var(--ink-soft); font-size:16.5px;">As suposições já conhecidas — normalidade, homocedasticidade e observações independentes — são mantidas. No caso de um fator, tínhamos k populações; agora, com dois fatores, cada um respectivamente com k1 e k2 populações (chamadas de <strong>níveis</strong>), combinadas, temos k1×k2 situações possíveis.</p>
+
+            <div class="def-grid" style="margin-top:8px;">
+              <div class="def-card">
+                <span class="tag">Uma observação por combinação</span>
+                <h3>Experimento sem réplica</h3>
+                <p>Se em cada cenário (combinação de nível de A com nível de B) apenas uma única unidade amostral é empregada, diz-se que é um experimento sem réplica.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Várias observações por combinação</span>
+                <h3>Experimento com réplicas</h3>
+                <p>Se cada combinação de níveis de A e B tem n&gt;1 observações, o experimento tem réplicas — o que permite testar, além dos dois fatores, se eles <strong>interagem</strong> entre si.</p>
+              </div>
+            </div>
+
+            <div class="callout" style="margin-top:8px;">
+              <div class="eyebrow">Convenção de notação</div>
+              <p>Em planejamento de experimentos, usam-se as primeiras letras do alfabeto (maiúsculas) para denotar os fatores. Ao longo deste módulo, Fator A terá I níveis (A1,...,AI) e Fator B terá J níveis (B1,...,BJ).</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="semreplica-a2">
+          <div class="wrap">
+            <div class="eyebrow">02 · ANOVA de 2 fatores sem réplica</div>
+            <h2>Duas hipóteses nulas, testadas ao mesmo tempo</h2>
+            <p class="intro">Considere a matriz de dados de um caso geral, com I níveis do fator A (linhas) e J níveis do fator B (colunas), uma observação por célula:</p>
+
+            <table class="datatab">
+              <caption>Matriz de dados — 2 fatores sem réplica</caption>
+              <thead><tr><th></th><th>B1</th><th>B2</th><th>...</th><th>BJ</th><th>Média</th></tr></thead>
+              <tbody>
+                <tr><td>A1</td><td>x11</td><td>x12</td><td>...</td><td>x1J</td><td>XA1</td></tr>
+                <tr><td>A2</td><td>x21</td><td>x22</td><td>...</td><td>x2J</td><td>XA2</td></tr>
+                <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                <tr><td>AI</td><td>xI1</td><td>xI2</td><td>...</td><td>xIJ</td><td>XAI</td></tr>
+                <tr><td>Média</td><td>XB1</td><td>XB2</td><td>...</td><td>XBJ</td><td>X</td></tr>
+              </tbody>
+            </table>
+
+            <p style="color:var(--ink-soft); font-size:16.5px; margin-top:10px;">com XAi a média marginal da linha i, XBj a média marginal da coluna j, e X a média geral. Neste caso, duas hipóteses nulas podem ser testadas:</p>
+
+            <div class="formula-box">
+              <div class="f">H0A: µA1=...=µAI &nbsp;&nbsp;·&nbsp;&nbsp; H0B: µB1=...=µBJ</div>
+              <div class="f-note">H1A: ∃ um par (i,j) | µAi≠µAj &nbsp;·&nbsp; H1B: ∃ um par (i,j) | µBi≠µBj</div>
+            </div>
+
+            <p class="intro" style="margin-top:20px;">Em notação de modelos lineares, os dados são escritos como Xij = µ + αi + βj + eij, com Σαi=Σβj=0 e eij~N(0,σ²) — o que torna as hipóteses equivalentes a H0A: α1=...=αI=0 e H0B: β1=...=βJ=0.</p>
+
+            <h3 style="margin-top:28px; margin-bottom:14px; font-size:19px;">Tabela da ANOVA — 2 fatores sem réplica</h3>
+
+            <table class="datatab">
+              <caption>Tabela ANOVA — 2 fatores, sem réplica</caption>
+              <thead><tr><th>FV</th><th>Soma de Quadrados</th><th>G.L.</th><th>QM</th><th>Estatística</th></tr></thead>
+              <tbody>
+                <tr><td>A</td><td>SQA = JΣ(XAi−X)²</td><td>I−1</td><td>SA² = SQA/(I−1)</td><td>FA = SA²/SR²</td></tr>
+                <tr><td>B</td><td>SQB = IΣ(XBj−X)²</td><td>J−1</td><td>SB² = SQB/(J−1)</td><td>FB = SB²/SR²</td></tr>
+                <tr><td>Resíduo</td><td>SQR = ΣΣ(Xij−XAi−XBj+X)²</td><td>(I−1)(J−1)</td><td>SR² = SQR/[(I−1)(J−1)]</td><td></td></tr>
+                <tr><td>Total</td><td>SQT = ΣΣ(Xij−X)²</td><td>IJ−1</td><td></td><td></td></tr>
+              </tbody>
+            </table>
+
+            <div class="flow-note">Na prática, SQR é quase sempre obtida por diferença: SQR = SQT − SQA − SQB. Escolhido α, rejeita-se H0A se FA&gt;FcA (F com I−1 e (I−1)(J−1) g.l.) e rejeita-se H0B se FB&gt;FcB (F com J−1 e (I−1)(J−1) g.l.).</div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="exemplo-a2">
+          <div class="wrap">
+            <div class="eyebrow">03 · Exemplo resolvido · preço de aspirinas, zona × tipo de loja</div>
+            <h2>O mesmo experimento do módulo anterior, agora com os dois fatores juntos</h2>
+            <p class="intro">Retomando o exemplo do preço de aspirinas: Fator A é a Zona, com 5 níveis (Norte, Sul, Oeste, Leste, Centro); Fator B é o Tipo de estabelecimento, com 3 níveis. Uma única observação por combinação — é um experimento sem réplica.</p>
+
+            <table class="datatab">
+              <caption>Preço da aspirina, por zona e tipo (com médias marginais)</caption>
+              <thead><tr><th>Zona</th><th>Tipo 1</th><th>Tipo 2</th><th>Tipo 3</th><th>Média</th></tr></thead>
+              <tbody>
+                <tr><td>Norte</td><td>53</td><td>61</td><td>51</td><td>55</td></tr>
+                <tr><td>Sul</td><td>47</td><td>55</td><td>51</td><td>51</td></tr>
+                <tr><td>Oeste</td><td>46</td><td>52</td><td>49</td><td>49</td></tr>
+                <tr><td>Leste</td><td>50</td><td>58</td><td>54</td><td>54</td></tr>
+                <tr><td>Centro</td><td>49</td><td>54</td><td>50</td><td>51</td></tr>
+                <tr><td><strong>Média</strong></td><td><strong>49</strong></td><td><strong>56</strong></td><td><strong>51</strong></td><td><strong>52</strong></td></tr>
+              </tbody>
+            </table>
+
+            <div class="qa-card" style="margin-top:20px;">
+              <div class="qlabel">(1) Hipóteses nulas e alternativas</div>
+              <p class="q">Escreva as hipóteses para os fatores Zona (A) e Tipo (B).</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">H0A: µA1=...=µA5 (as 5 zonas têm o mesmo preço médio) &nbsp;·&nbsp; H0B: µB1=µB2=µB3 (os 3 tipos têm o mesmo preço médio)</div>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(2) e (3) Médias marginais, SQs e tabela ANOVA</div>
+              <p class="q">Calcule as médias marginais de cada fator e monte a tabela ANOVA completa.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">XA (Zona): 55, 51, 49, 54, 51 &nbsp;·&nbsp; XB (Tipo): 49, 56, 51 &nbsp;·&nbsp; X = 52</div>
+                <table class="datatab" style="margin-top:10px;">
+                  <caption>Tabela ANOVA — Zona × Tipo, sem réplica</caption>
+                  <thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>Estatística</th><th>Fc (5%)</th></tr></thead>
+                  <tbody>
+                    <tr><td>A (Zona)</td><td>72</td><td>4</td><td>18</td><td>FA=18/2.75=6.545</td><td>3.84</td></tr>
+                    <tr><td>B (Tipo)</td><td>130</td><td>2</td><td>65</td><td>FB=65/2.75=23.64</td><td>4.46</td></tr>
+                    <tr><td>Resíduo</td><td>22</td><td>8</td><td>2.75</td><td></td><td></td></tr>
+                    <tr><td>Total</td><td>224</td><td>14</td><td></td><td></td><td></td></tr>
+                  </tbody>
+                </table>
+                <p style="margin-top:10px; font-size:14px; color:var(--ink-faint);">Note que SQR pode ser obtida como SQT−SQA−SQB = 224−72−130 = 22.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(4) Quais são as decisões?</div>
+              <p class="q">Compare FA e FB com os respectivos valores críticos e conclua.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">FA=6.545 &gt; FcA=3.84 → rejeita H0A &nbsp;·&nbsp; FB=23.64 &gt; FcB=4.46 → rejeita H0B</div>
+                <p>Diferentemente do exemplo do módulo anterior — em que cada fator foi testado isoladamente e nenhum se mostrou significativo — ao considerar os dois fatores <strong>simultaneamente</strong>, a variabilidade residual cai (de Sp²≈0.03 nos testes separados para uma escala muito menor de ruído aqui) e <strong>ambos os fatores se revelam relevantes</strong>: o preço da aspirina varia tanto por zona quanto por tipo de estabelecimento.</p>
+              </div>
+            </div>
+
+            <h3 style="margin-top:32px; margin-bottom:14px; font-size:19px;">Exercício proposto · remoção de manchas, marca × tratamento</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Um estudo compara 3 marcas de caneta e 4 tratamentos de lavagem, quanto à capacidade de remover manchas de um tecido (quanto menor a variável resposta, mais manchas foram removidas):</p>
+
+            <table class="datatab">
+              <caption>Mudança de cor após lavagem (sem réplica)</caption>
+              <thead><tr><th></th><th>Trat. 1</th><th>Trat. 2</th><th>Trat. 3</th><th>Trat. 4</th></tr></thead>
+              <tbody>
+                <tr><td>Marca 1</td><td>0.97</td><td>0.48</td><td>0.48</td><td>0.46</td></tr>
+                <tr><td>Marca 2</td><td>0.77</td><td>0.14</td><td>0.22</td><td>0.25</td></tr>
+                <tr><td>Marca 3</td><td>0.67</td><td>0.39</td><td>0.57</td><td>0.19</td></tr>
+              </tbody>
+            </table>
+
+            <div class="qa-card" style="margin-top:14px;">
+              <div class="qlabel">Os dois fatores são relevantes?</div>
+              <p class="q">Monte a tabela ANOVA e conclua, a 5%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <table class="datatab">
+                  <caption>Tabela ANOVA — Marca × Tratamento</caption>
+                  <thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>F</th><th>Fc (5%)</th></tr></thead>
+                  <tbody>
+                    <tr><td>A (Marca)</td><td>0.1282</td><td>2</td><td>0.0641</td><td>4.43</td><td>5.14</td></tr>
+                    <tr><td>B (Tratamento)</td><td>0.4797</td><td>3</td><td>0.1599</td><td>11.05</td><td>4.76</td></tr>
+                    <tr><td>Resíduo</td><td>0.0868</td><td>6</td><td>0.0145</td><td></td><td></td></tr>
+                    <tr><td>Total</td><td>0.6947</td><td>11</td><td></td><td></td><td></td></tr>
+                  </tbody>
+                </table>
+                <p style="margin-top:10px;">FA=4.43 &lt; 5.14 → <strong>não se rejeita H0A</strong> (a marca da caneta não altera significativamente a remoção de manchas). FB=11.05 &gt; 4.76 → <strong>rejeita-se H0B</strong> — o tratamento de lavagem é o fator que realmente importa.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="comreplica-a2">
+          <div class="wrap">
+            <div class="eyebrow">04 · Quando cada combinação tem mais de uma observação</div>
+            <h2>ANOVA de 2 fatores com réplicas — e a interação AB</h2>
+            <p class="intro">Considere agora que cada combinação de níveis de A e B tem n réplicas (caso balanceado). O modelo linear ganha um novo termo, γij, que representa a <strong>interação</strong> entre os fatores A e B:</p>
+
+            <div class="formula-box">
+              <div class="f">Xijk = µ + αi + βj + γij + eijk</div>
+              <div class="f-note">restrições: Σαi = Σβj = Σi γij = Σj γij = ΣΣ γij = 0</div>
+            </div>
+
+            <p class="intro" style="margin-top:20px;">Além das duas hipóteses já conhecidas (H0A: α1=...=αI=0 e H0B: β1=...=βJ=0), surge uma terceira, sobre a interação entre A e B:</p>
+
+            <div class="formula-box">
+              <div class="f">H0AB: γ11 = γ12 = ... = γIJ = 0 &nbsp;&nbsp;·&nbsp;&nbsp; H1AB: ∃ pelo menos um par (i,j) | γij ≠ 0</div>
+            </div>
+
+            <div class="callout teal" style="margin-top:8px;">
+              <div class="eyebrow">O que significa, na prática, existir interação</div>
+              <p>Graficamente, é mais fácil entender a interação: sem efeito de interação, o comportamento da resposta em função do fator A é semelhante independente do nível do fator B (curvas aproximadamente paralelas). Com interação, o comportamento da resposta em função de A depende do nível de B (curvas que se cruzam ou divergem). Se H0AB for verdadeira, a resposta da combinação ij pode ser estimada usando apenas α̂i e β̂j; se não for verdadeira, é preciso somar também γ̂ij.</p>
+            </div>
+
+            <h3 style="margin-top:28px; margin-bottom:14px; font-size:19px;">Tabela da ANOVA — 2 fatores com réplicas</h3>
+
+            <table class="datatab">
+              <caption>Tabela ANOVA — 2 fatores, com n réplicas por combinação</caption>
+              <thead><tr><th>FV</th><th>Soma de Quadrados</th><th>G.L.</th><th>QM</th><th>Estatística</th></tr></thead>
+              <tbody>
+                <tr><td>A</td><td>SQA = nJΣ(XAi−X)²</td><td>I−1</td><td>SA² = SQA/(I−1)</td><td>FA = SA²/SR²</td></tr>
+                <tr><td>B</td><td>SQB = nIΣ(XBj−X)²</td><td>J−1</td><td>SB² = SQB/(J−1)</td><td>FB = SB²/SR²</td></tr>
+                <tr><td>AB</td><td>SQAB = nΣΣ(Xij−XAi−XBj+X)²</td><td>(I−1)(J−1)</td><td>SAB² = SQAB/[(I−1)(J−1)]</td><td>FAB = SAB²/SR²</td></tr>
+                <tr><td>Resíduo</td><td>SQR = ΣΣΣ(Xijk−Xij)²</td><td>IJ(n−1)</td><td>SR² = SQR/[IJ(n−1)]</td><td></td></tr>
+                <tr><td>Total</td><td>SQT = ΣΣΣ(Xijk−X)²</td><td>nIJ−1</td><td></td><td></td></tr>
+              </tbody>
+            </table>
+
+            <div class="flow-note">Xij é a média das n réplicas da célula (i,j). SQR também pode ser escrita como ΣΣ(n−1)Sij², a soma das variâncias dentro de cada célula — e SQAB é, na prática, quase sempre obtida por diferença: SQAB = SQT−SQA−SQB−SQR. Rejeita-se cada hipótese quando a respectiva estatística supera o valor crítico F correspondente aos seus graus de liberdade e IJ(n−1) no denominador.</div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="exemplo2-a2">
+          <div class="wrap">
+            <div class="eyebrow">05 · Exemplo resolvido · aspirinas com réplicas, e o caso da maratona</div>
+            <h2>Interpretando uma saída de software já pronta</h2>
+            <p class="intro">Voltando ao exemplo da aspirina — agora, em vez de um único estabelecimento por combinação, o pesquisador selecionou aleatoriamente 3 estabelecimentos para cada combinação de zona e tipo:</p>
+
+            <table class="datatab">
+              <caption>Preço da aspirina, 3 réplicas por combinação zona × tipo</caption>
+              <thead><tr><th>Zona</th><th>Tipo 1</th><th>Tipo 2</th><th>Tipo 3</th></tr></thead>
+              <tbody>
+                <tr><td rowspan="3">Norte</td><td>53</td><td>53</td><td>52</td></tr>
+                <tr><td>52</td><td>56</td><td>56</td></tr>
+                <tr><td>54</td><td>56</td><td>54</td></tr>
+                <tr><td rowspan="3">Sul</td><td>41</td><td>48</td><td>48</td></tr>
+                <tr><td>46</td><td>51</td><td>48</td></tr>
+                <tr><td>45</td><td>51</td><td>45</td></tr>
+                <tr><td rowspan="3">Oeste</td><td>51</td><td>54</td><td>48</td></tr>
+                <tr><td>54</td><td>56</td><td>51</td></tr>
+                <tr><td>54</td><td>52</td><td>48</td></tr>
+              </tbody>
+            </table>
+
+            <p style="color:var(--ink-soft); font-size:16.5px; margin-top:12px;">A saída de um software forneceu a tabela ANOVA a seguir:</p>
+
+            <table class="datatab">
+              <caption>Tabela ANOVA — zona × tipo, com réplicas</caption>
+              <thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>Estatística</th><th>p-value</th><th>Valor crítico</th></tr></thead>
+              <tbody>
+                <tr><td>A (Local)</td><td>234</td><td>2</td><td>117</td><td>33.97</td><td>&lt;0.0001</td><td>3.55</td></tr>
+                <tr><td>B (Tipo)</td><td>54</td><td>2</td><td>27</td><td>7.84</td><td>0.004</td><td>3.55</td></tr>
+                <tr><td>AB</td><td>48</td><td>4</td><td>12</td><td>3.48</td><td>0.028</td><td>2.93</td></tr>
+                <tr><td>Resíduo</td><td>62</td><td>18</td><td>3.44</td><td></td><td></td><td></td></tr>
+                <tr><td>Total</td><td>398</td><td>26</td><td></td><td></td><td></td><td></td></tr>
+              </tbody>
+            </table>
+
+            <div class="qa-card" style="margin-top:20px;">
+              <div class="qlabel">(a), (b), (c) Que conclusões podem ser tiradas?</div>
+              <p class="q">Os fatores A e B são individualmente relevantes? Existe efeito de interação entre local e tipo de estabelecimento?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Todas as três estatísticas superam seu valor crítico (33.97&gt;3.55, 7.84&gt;3.55, 3.48&gt;2.93) — os três efeitos são significativos a 5%</div>
+                <p>O fator Local (A) é fortemente relevante (p&lt;0.0001), o Tipo de estabelecimento (B) também é relevante (p=0.004) — e, diferentemente do exemplo sem réplica, agora há dados suficientes para detectar <strong>interação significativa entre local e tipo</strong> (p=0.028): o efeito do tipo de estabelecimento sobre o preço não é o mesmo em todas as zonas.</p>
+              </div>
+            </div>
+
+            <h3 style="margin-top:32px; margin-bottom:14px; font-size:19px;">Exercício guiado · tempo de corredores numa maratona</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Um pesquisador quer analisar o tempo (em segundos) dos corredores que terminaram uma maratona, em função do sexo e da faixa etária — os tempos foram selecionados aleatoriamente.</p>
+
+            <table class="datatab">
+              <caption>Tabela ANOVA — sexo × faixa etária</caption>
+              <thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>F</th><th>p-value</th><th>Fcrítico</th></tr></thead>
+              <tbody>
+                <tr><td>A — Sexo</td><td>15 225 413</td><td>1</td><td>15 225 413</td><td>1.686</td><td>0.206</td><td>4.260</td></tr>
+                <tr><td>B — Faixa de idade</td><td>92 086 979</td><td>2</td><td>46 043 490</td><td>5.100</td><td>0.014</td><td>3.403</td></tr>
+                <tr><td>AB</td><td>21 042 069</td><td>2</td><td>10 521 034</td><td>1.165</td><td>0.329</td><td>3.403</td></tr>
+                <tr><td>Resíduo</td><td>216 683 448</td><td>24</td><td>9 028 477</td><td></td><td></td><td></td></tr>
+                <tr><td>Total</td><td>345 037 909</td><td>29</td><td></td><td></td><td></td><td></td></tr>
+              </tbody>
+            </table>
+
+            <div class="qa-card">
+              <div class="qlabel">(a), (b), (c) Conclusões — os fatores são relevantes? A interação está ativa?</div>
+              <p class="q">Analise cada linha da tabela comparando F com Fcrítico (ou o p-value com α=5%).</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Sexo: F=1.686&lt;4.260 (p=0.206) → não rejeita &nbsp;·&nbsp; Faixa de idade: F=5.100&gt;3.403 (p=0.014) → rejeita &nbsp;·&nbsp; AB: F=1.165&lt;3.403 (p=0.329) → não rejeita</div>
+                <p>O sexo, isoladamente, <strong>não</strong> afeta significativamente o tempo de conclusão; a <strong>faixa etária é relevante</strong>; e não há evidência de interação entre os dois fatores — o efeito da faixa etária é semelhante para ambos os sexos.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(d) O que considerar para planejar o próximo experimento?</div>
+              <p class="q">Dado que sexo e a interação AB não se mostraram significativos, o que vale a pena reconsiderar?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <p>Como o fator Sexo e a interação AB não são significativos, um próximo experimento poderia simplificar o planejamento — por exemplo, alocando mais réplicas para as faixas etárias (o fator que de fato importa) em vez de balancear igualmente por sexo, ou aumentando o tamanho da amostra para melhorar a potência de detectar um efeito de sexo que, embora não significativo aqui, pode ainda existir e não ter sido detectado (erro do tipo II).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="calc-a2">
+          <div class="wrap">
+            <div class="eyebrow">06 · Ferramenta</div>
+            <h2>Calculadora · ANOVA de 2 fatores</h2>
+            <p class="intro">Escolha entre "sem réplica" (uma observação por combinação) e "com réplicas" (n observações por combinação), informe a matriz de dados e α.</p>
+
+            <div class="gen-box">
+              <div class="gen-row" style="align-items:flex-end;">
+                <div class="gen-field">
+                  <label for="a2Mode">Tipo de experimento</label>
+                  <select id="a2Mode" style="padding:8px; border-radius:8px; border:1px solid var(--line); font-family:var(--body); font-size:15px;">
+                    <option value="sem">Sem réplica</option>
+                    <option value="com">Com réplicas</option>
+                  </select>
+                </div>
+                <div class="gen-field"><label for="a2Alpha">α (%)</label><input type="number" id="a2Alpha" value="5" min="0.1" max="50" step="0.1"></div>
+              </div>
+              <div class="gen-field" style="margin-top:12px;">
+                <label for="a2Data">Matriz de dados — linhas (níveis de A) separadas por ";"; dentro de cada linha, células (níveis de B) separadas por ","; se houver réplicas, separe os valores de cada célula por "|"</label>
+                <textarea id="a2Data" rows="4" style="width:100%; font-family:var(--mono); font-size:13.5px; padding:10px; border-radius:8px; border:1px solid var(--line); background:var(--white); color:var(--ink);">53,61,51;47,55,51;46,52,49;50,58,54;49,54,50</textarea>
+              </div>
+              <button class="sim-btn" id="a2Btn" style="margin-top:12px;">Calcular ANOVA de 2 fatores</button>
+              <div class="gen-output" id="a2Output">Clique para calcular.</div>
+            </div>
+
+            <div class="flow-note" style="margin-top:16px;">Os valores pré-preenchidos (modo "sem réplica") reproduzem o exemplo zona × tipo desta página. Para testar o modo "com réplicas", use por exemplo: <code style="font-family:var(--mono); font-size:12.5px;">53,52,54|53,56,56|52,56,54;41,46,45|48,51,51|48,48,45;51,54,54|54,56,52|48,51,48</code></div>
+          </div>
+        </section>
+
+        <div class="module-footer">
+          <div class="wrap">
+            <div class="refs">
+              FISHER, R.A. — Statistical Methods for Research Workers, 1925 · DEVORE, J.L. — Probabilidade e Estatística para Engenharia e Ciências, Thomson, 2006 · BUSSAB, W.O.; MORETTIN, P.A. — Estatística Básica, 10ª ed., Saraiva, 2024 · BOX, G.E.P.; HUNTER, J.S.; HUNTER, W.G. — Statistics for Experimenters, 2ª ed., Wiley, 2005 · WU, C.F.J.; HAMADA, M. — Experiments: Planning, Analysis, and Parameter Design Optimization, 2ª ed., Wiley, 2009
+            </div>
+            <div class="credit">Guia de estudo baseado no módulo "Análise de Variância — dois fatores" de PRO 3200 — Estatística, EP-USP.</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ================= END MODULE: ANOVA 2 FATORES ================= -->
+
+      <!-- ================= MODULE: REGRESSÃO LINEAR SIMPLES (P3) ================= -->
+      <div class="module-page" data-module="regressao-simples" id="page-regressao-simples" hidden>
+
+        <div class="page-subnav">
+          <div class="page-subnav-inner">
+            <span class="psn-title">P3 · Regressão Linear Simples</span>
+            <div class="navlinks">
+              <button class="navlink" data-target="intro-rs">Introdução</button>
+              <button class="navlink" data-target="modelo-rs">Modelo e estimação</button>
+              <button class="navlink" data-target="avaliacao-rs">Decomposição dos desvios</button>
+              <button class="navlink" data-target="anova-rs">Tabela ANOVA e teste F</button>
+              <button class="navlink" data-target="exemplo-rs">Exemplo resolvido</button>
+              <button class="navlink" data-target="correlacao-rs">Correlação e Anscombe</button>
+              <button class="navlink" data-target="residuos-rs">Resíduos e exercícios</button>
+              <button class="navlink" data-target="calc-rs">Calculadora</button>
+            </div>
+          </div>
+        </div>
+
+        <header class="hero" id="inicio-rs">
+          <div class="wrap hero-grid">
+            <div>
+              <div class="eyebrow">P3 · Módulo 3 · Lucas L. Oliveira e Profas. Celma de Oliveira Ribeiro e Linda Lee Ho</div>
+              <h1>Duas variáveis, coletadas juntas. <em>Uma reta é suficiente para descrever a relação entre elas?</em></h1>
+              <p class="lede">A regressão linear simples propõe um modelo que relaciona uma variável resposta Y a uma variável auxiliar X, estima os coeficientes que melhor ajustam essa reta aos dados observados, e fornece as ferramentas para testar se essa relação é estatisticamente significativa.</p>
+              <div class="hero-meta">
+                <span><strong>Depto.</strong> Engenharia de Produção — USP</span>
+                <span><strong>Módulo</strong> Regressão Linear Simples</span>
+              </div>
+            </div>
+            <div id="heroRS" aria-hidden="true"></div>
+          </div>
+        </header>
+
+        <section class="section reveal" id="intro-rs">
+          <div class="wrap">
+            <div class="eyebrow">01 · Relacionando duas variáveis quantitativas</div>
+            <h2>Y é a resposta, X é a variável auxiliar</h2>
+            <p class="intro">Em muitas situações, coletamos da mesma unidade amostral duas variáveis quantitativas: X e Y. Uma delas é a variável de interesse — geralmente denotada por Y — e a outra é uma variável auxiliar, denotada por X. Queremos propor um modelo que relacione Y com X.</p>
+
+            <table class="datatab">
+              <caption>Estrutura dos dados coletados</caption>
+              <thead><tr><th>Sujeito</th><th>1</th><th>2</th><th>...</th><th>n</th></tr></thead>
+              <tbody>
+                <tr><td>X</td><td>X1</td><td>X2</td><td>...</td><td>Xn</td></tr>
+                <tr><td>Y</td><td>Y1</td><td>Y2</td><td>...</td><td>Yn</td></tr>
+              </tbody>
+            </table>
+
+            <p class="intro" style="margin-top:16px;">Algumas perguntas surgem de imediato: que tipo de modelo devemos ajustar — linear? quadrático? cúbico? exponencial? Um modo simples para começar é fazer o gráfico de dispersão entre as duas variáveis, para identificar visualmente como elas parecem estar relacionadas.</p>
+
+            <table class="datatab">
+              <caption>Exemplo motivador — altura em função do peso (10 pessoas)</caption>
+              <thead><tr><th>Pessoa</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead>
+              <tbody>
+                <tr><td>Altura (cm)</td><td>174</td><td>161</td><td>170</td><td>180</td><td>182</td><td>164</td><td>156</td><td>168</td><td>176</td><td>175</td></tr>
+                <tr><td>Peso (kg)</td><td>73</td><td>66</td><td>70</td><td>94</td><td>79</td><td>72</td><td>62</td><td>72</td><td>90</td><td>80</td></tr>
+              </tbody>
+            </table>
+
+            <div class="callout teal" style="margin-top:12px;">
+              <div class="eyebrow">O gráfico de dispersão sugere uma relação linear</div>
+              <p>Ajustando uma reta a estes dados (altura em função do peso), obtém-se Altura ≈ 118.79 + 0.68×Peso, com R²≈0.68 — uma relação linear positiva razoável, mas com dispersão considerável em torno da reta. É exatamente esta reta, e a incerteza em torno dela, que o restante do módulo ensina a estimar e testar.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="modelo-rs">
+          <div class="wrap">
+            <div class="eyebrow">02 · O modelo e a estimação dos parâmetros</div>
+            <h2>yi = β0 + β1xi + ei</h2>
+            <p class="intro">Identificada uma possível relação linear, as suposições do modelo são:</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Modelo linear</span>
+                <h3>yi = β0 + β1xi + ei</h3>
+                <p>ei ~ N(0,σ²) — condição de homocedasticidade — e E(Y|x) = β0+β1x.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Independência</span>
+                <h3>Yi independente de Yj, i≠j</h3>
+                <p>As observações da variável resposta são independentes entre si.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">X sem erro</span>
+                <h3>X é a variável auxiliar, fixa</h3>
+                <p>X é medida sem erro (ou seu erro de medição é desprezível frente ao de Y).</p>
+              </div>
+            </div>
+
+            <p class="intro" style="margin-top:20px;">β0 é chamado de <strong>coeficiente linear</strong> e β1 de <strong>coeficiente angular</strong>. Interpretação: β1 é o aumento médio da resposta Y para cada unidade de aumento em X; β0 é o valor esperado de Y quando X=0.</p>
+
+            <div class="callout" style="margin-top:8px;">
+              <div class="eyebrow">Exemplo de interpretação</div>
+              <p>Um modelo de regressão foi ajustado entre Y=Preço da ação WSD e X=índice Bovespa, obtendo Y=−5.57+0.93X. Para cada ponto que o Ibovespa cresce, o preço da ação aumenta em média R$0.93.</p>
+            </div>
+
+            <h3 style="margin-top:32px; margin-bottom:14px; font-size:19px;">Estimando os parâmetros por mínimos quadrados</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">O critério que minimiza a soma dos erros ao quadrado, f(β0,β1)=Σ[yi−(β0+β1xi)]², é usado para determinar os coeficientes. Derivando e igualando a zero, chega-se a:</p>
+
+            <div class="formula-box">
+              <div class="f">β̂1 = Σ(xi−x̄)(yi−ȳ) / Σ(xi−x̄)² &nbsp;&nbsp;·&nbsp;&nbsp; β̂0 = ȳ − β̂1 x̄</div>
+              <div class="f-note">Previsão: ŷi = β̂0 + β̂1xi = ȳ + β̂1(xi−x̄) &nbsp;·&nbsp; ŷ é maior que ȳ se xi&gt;x̄, menor se xi&lt;x̄, e igual se xi=x̄</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="avaliacao-rs">
+          <div class="wrap">
+            <div class="eyebrow">03 · O modelo complexo vale a pena?</div>
+            <h2>Comparando com um modelo mais simples</h2>
+            <p class="intro">Para julgar a vantagem do modelo mais complexo (yi=β0+β1xi+ei), compara-se com um modelo mais simples, yi=µ+ei — isto é, ignorar X e usar apenas a média de Y. No modelo complexo, o resíduo é êi=yi−ŷi; no modelo simples, êi=yi−ȳ. Resíduos "pequenos" indicam um modelo "bom".</p>
+
+            <div class="formula-box">
+              <div class="f">SQT = Σ(yi−ȳ)² &nbsp;&nbsp;(modelo simples)&nbsp;&nbsp;·&nbsp;&nbsp; SQRes = Σ(yi−ŷi)² &nbsp;&nbsp;(modelo complexo)</div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exemplo · comparando variâncias residuais</div>
+              <p class="q">Um exemplo com n=20 resultou em SQT=1373 e SQRes=563. Como compará-los, já que os modelos têm números diferentes de parâmetros?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Modelo simples (1 parâmetro): S² = SQT/(n−1) = 1373/19 = 72.26, S=8.50 &nbsp;·&nbsp; Modelo complexo (2 parâmetros): Sr² = SQRes/(n−2) = 563/18 = 31.28, Sr=5.59</div>
+                <p>Comparando as <strong>variâncias residuais</strong> (não as somas de quadrados brutas), o modelo mais complexo produziu uma redução bem mais significativa nos resíduos — de 72.26 para 31.28.</p>
+              </div>
+            </div>
+
+            <h3 style="margin-top:32px; margin-bottom:14px; font-size:19px;">Decomposição dos desvios</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Para cada observação, (yi−ȳ) = (yi−ŷi) + (ŷi−ȳ). A parcela (ŷi−ȳ) mede o quanto o modelo complexo está "longe" do modelo simples — quanto maior ela for, melhor o modelo complexo tende a ser. Pode-se demonstrar que:</p>
+
+            <div class="formula-box">
+              <div class="f">Σ(yi−ȳ)² = Σ(yi−ŷi)² + Σ(ŷi−ȳ)² &nbsp;&nbsp;→&nbsp;&nbsp; SQT = SQRes + SQReg</div>
+              <div class="f-note">SQReg = Σ(ŷi−ȳ)² = β̂1² Σ(xi−x̄)² &nbsp;·&nbsp; quanto maior |β̂1|, maior a redução em SQRes</div>
+            </div>
+
+            <p class="intro" style="margin-top:16px;">Com estes números, é usual calcular o <strong>coeficiente de determinação</strong>:</p>
+
+            <div class="formula-box">
+              <div class="f">R² = SQReg / SQT</div>
+              <div class="f-note">No exemplo anterior: R² = (1373−563)/1373 = 0.59</div>
+            </div>
+
+            <div class="callout teal" style="margin-top:8px;">
+              <div class="eyebrow">Cuidado ao avaliar apenas pelo R²</div>
+              <p>Usar somente o R² para avaliar a adequação do modelo de regressão pode levar a conclusões equivocadas — o mesmo R² pode surgir de relações muito diferentes (lineares, não lineares, com ou sem outliers). O Quarteto de Anscombe, mais adiante neste módulo, ilustra exatamente este ponto.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="anova-rs">
+          <div class="wrap">
+            <div class="eyebrow">04 · Testando se a inclinação é zero</div>
+            <h2>Tabela ANOVA e o teste H0: β1 = 0</h2>
+            <p class="intro">Como na análise de variância, as somas de quadrados podem ser organizadas numa tabela. Sempre vale SQT = SQReg + SQRes — ou seja, sempre haverá uma redução "numérica" dos resíduos ao usar um modelo de regressão. A pergunta é: essa redução compensa o uso do modelo? Se a redução for pequena, os dois modelos seriam praticamente equivalentes — e isso ocorre quando a inclinação β1 é zero ou pequena.</p>
+
+            <table class="datatab">
+              <caption>Tabela ANOVA — modelo de regressão simples</caption>
+              <thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>Estatística</th></tr></thead>
+              <tbody>
+                <tr><td>Regressão</td><td>SQReg</td><td>1</td><td>S²reg = SQReg</td><td>F = S²reg/Sr²</td></tr>
+                <tr><td>Resíduo</td><td>SQRes</td><td>n−2</td><td>Sr² = SQRes/(n−2)</td><td></td></tr>
+                <tr><td>Total</td><td>SQT</td><td>n−1</td><td>S² = SQT/(n−1)</td><td></td></tr>
+              </tbody>
+            </table>
+
+            <p style="color:var(--ink-soft); font-size:16.5px; margin-top:10px;">Precisamos estudar a distribuição de β̂1 para testar H0:β1=0. Como ei~N(0,σ²), Yi~N(β0+β1xi,σ²) e β̂1 é uma combinação linear de variáveis normais, segue que:</p>
+
+            <div class="formula-box">
+              <div class="f">β̂1 ~ N( β1, σ²/Σ(xi−x̄)² )</div>
+            </div>
+
+            <p class="intro" style="margin-top:16px;">Substituindo σ² pelo seu estimador Sr², a estatística de teste passa a seguir uma distribuição t-Student:</p>
+
+            <div class="formula-box">
+              <div class="f">t(β̂1) = β̂1 √Σ(xi−x̄)² / Sr &nbsp;&nbsp;~&nbsp;&nbsp; t-Student com (n−2) g.l.</div>
+              <div class="f-note">Rejeita-se H0 se |t(β̂1)| &gt; tα/2 &nbsp;·&nbsp; equivalentemente, t(β̂1)² = F da tabela ANOVA — os dois testes são exatamente equivalentes</div>
+            </div>
+
+            <div class="callout" style="margin-top:8px;">
+              <div class="eyebrow">Duas formas de testar a mesma hipótese</div>
+              <p>Para testar H0:β1=0, pode-se usar a estatística t(β̂1) ou a estatística F da tabela ANOVA — rejeita-se H0 se F&gt;Fc, com Fc tabelado com 1 e n−2 graus de liberdade no numerador e denominador.</p>
+            </div>
+
+            <h3 style="margin-top:28px; margin-bottom:14px; font-size:19px;">Intervalos de confiança para os coeficientes</h3>
+            <div class="formula-box">
+              <div class="f">IC(β1, 1−α) = β̂1 ± tα/2 × Sr/√Σ(xi−x̄)²</div>
+              <div class="f-note">Para β0: IC(β0, 1−α) = β̂0 ± tα/2 × Sr √[ Σxi² / (n·Σ(xi−x̄)²) ]</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="exemplo-rs">
+          <div class="wrap">
+            <div class="eyebrow">05 · Exemplo resolvido · octanagem da gasolina</div>
+            <h2>Da tabela de dados à decisão, passo a passo</h2>
+            <p class="intro">Considere dados da octanagem da gasolina (IAD) em função da porcentagem de aditivo:</p>
+
+            <table class="datatab">
+              <caption>Octanagem da gasolina em função do aditivo</caption>
+              <thead><tr><th>% de aditivo</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr></thead>
+              <tbody><tr><td>Octanagem (IAD)</td><td>80.5</td><td>81.6</td><td>82.1</td><td>83.7</td><td>83.9</td><td>85.0</td></tr></tbody>
+            </table>
+
+            <p style="color:var(--ink-soft); font-size:16.5px; margin-top:10px;">O Excel produziu a reta de regressão Y=79.7+0.8857X e a tabela ANOVA:</p>
+
+            <table class="datatab">
+              <caption>Tabela ANOVA — octanagem × aditivo</caption>
+              <thead><tr><th>FV</th><th>G.L.</th><th>SQ</th><th>QM</th><th>Fcalc</th><th>Ftabelado</th></tr></thead>
+              <tbody>
+                <tr><td>Regressão</td><td>1</td><td>13.7286</td><td>13.7286</td><td rowspan="2" style="vertical-align:middle;">156.3</td><td rowspan="2" style="vertical-align:middle;">F(α=2.5%)=12.22</td></tr>
+                <tr><td>Resíduos</td><td>4</td><td>0.3514</td><td>0.0879</td></tr>
+                <tr><td>Total</td><td>5</td><td>14.08</td><td></td><td></td><td></td></tr>
+              </tbody>
+            </table>
+
+            <div class="qa-card" style="margin-top:20px;">
+              <div class="qlabel">(a) Interprete os coeficientes do modelo</div>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <p>Para cada porcentagem de aditivo acrescida, a octanagem da gasolina aumenta em média 0.8857 (coeficiente angular). β0=79.7 seria a octanagem esperada quando o aditivo é 0% — uma extrapolação fora da faixa observada, então deve ser interpretada com cautela.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(b) Coeficiente de determinação</div>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">R² = SQReg/SQT = 13.7286/14.08 = 0.975</div>
+                <p>97.5% da variabilidade da octanagem é explicada pela porcentagem de aditivo.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(c) A octanagem pode ser vista como função linear do aditivo? (α=2.5%)</div>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">H0: β1=0 &nbsp;·&nbsp; H1: β1≠0 &nbsp;·&nbsp; Fcalc=156.3 &gt; Fcrítico=12.22 → rejeita H0</div>
+                <p>Há evidência forte de que a octanagem é, sim, uma função linear da porcentagem de aditivo.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(d) IC para o coeficiente angular (95%)</div>
+              <p class="q">Lembrando que SQReg=β̂1²Σ(xi−x̄)²=13.7286 → Σ(xi−x̄)²=13.7286/0.8857²=17.5, com t(4 g.l., 95%)=2.776.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">IC(β1) = 0.8857 ± 2.776 × √(0.0879/17.5) = 0.8857 ± 0.1966 = [0.689 ; 1.082]</div>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(e) IC para a média com 5.5% de aditivo (95%)</div>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Ŷ = 79.7+0.8857×5.5 = 84.57 &nbsp;·&nbsp; IC = 84.57 ± 2.776√[0.0879×(1/5 + (5.5−3.5)²/17.5)] = [84.03 ; 85.11]</div>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">(f) Uma futura observação com 4.5% de aditivo ficará entre 84 e 86?</div>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Ŷ = 83.69 &nbsp;·&nbsp; IC (futura obs.) = 83.69 ± 2.776√[0.0879×(1 + 1/5 + (4.5−3.5)²/17.5)] = [82.76 ; 84.64]</div>
+                <p><strong>Não</strong> — o intervalo de confiança para essa futura observação vai de 82.76 a 84.64, não entre 84 e 86. Note que este IC é mais largo que o da média, pois soma a incerteza de uma nova observação individual à incerteza da própria reta.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="correlacao-rs">
+          <div class="wrap">
+            <div class="eyebrow">06 · Uma medida-resumo da associação linear</div>
+            <h2>Coeficiente de correlação — e o Quarteto de Anscombe</h2>
+            <p class="intro">O coeficiente de correlação amostral, já visto em estatística descritiva, mede a associação entre duas variáveis quantitativas:</p>
+
+            <div class="formula-box">
+              <div class="f">r = [Σxiyi − nx̄ȳ] / √[ (Σxi²−nx̄²)(Σyi²−nȳ²) ]</div>
+            </div>
+
+            <p class="intro" style="margin-top:16px;">O teste de hipótese para existência de correlação é H0:ρ=0 contra H1:ρ≠0. É possível mostrar que:</p>
+
+            <div class="formula-box">
+              <div class="f">W = r√(n−2) / √(1−r²) &nbsp;&nbsp;~&nbsp;&nbsp; t-Student com (n−2) g.l.</div>
+              <div class="f-note">Rejeita-se H0 se |W|&gt;tα/2 &nbsp;·&nbsp; os numeradores de r e β̂1 são exatamente iguais — testar H0:ρ=0 equivale a testar H0:β1=0</div>
+            </div>
+
+            <p style="color:var(--ink-soft); font-size:16.5px;">Para testar H0:ρ=ρ0≠0, usa-se a transformação de Fisher V=½ln[(1+r)/(1−r)], que assintoticamente segue V~N(½ln[(1+ρ)/(1−ρ)], 1/(n−3)) — permitindo construir um teste Z análogo aos já vistos.</p>
+
+            <div class="callout teal" style="margin-top:8px;">
+              <div class="eyebrow">Uma relação exclusiva da regressão simples</div>
+              <p>O quadrado do coeficiente de correlação é exatamente igual ao coeficiente de determinação: r² = R². Esta relação vale apenas para o modelo de regressão simples (com uma única variável auxiliar).</p>
+            </div>
+
+            <h3 style="margin-top:32px; margin-bottom:14px; font-size:19px;">O Quarteto de Anscombe</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Um exemplo clássico (Anscombe, 1973) apresenta 4 conjuntos de dados com estatísticas descritivas quase idênticas:</p>
+
+            <table class="datatab">
+              <caption>Estatísticas — idênticas nos 4 conjuntos do Quarteto de Anscombe</caption>
+              <thead><tr><th>Estatística</th><th>Valor</th></tr></thead>
+              <tbody>
+                <tr><td>Média de X</td><td>9</td></tr>
+                <tr><td>Variância de X</td><td>11</td></tr>
+                <tr><td>Média de Y</td><td>7.50</td></tr>
+                <tr><td>Variância de Y</td><td>4.125</td></tr>
+                <tr><td>Correlação entre X e Y</td><td>0.816</td></tr>
+                <tr><td>Reta de regressão linear</td><td>y = 3.00 + 0.500x</td></tr>
+                <tr><td>Coeficiente de determinação R²</td><td>0.67</td></tr>
+              </tbody>
+            </table>
+
+            <div class="callout" style="margin-top:8px;">
+              <div class="eyebrow">Mas os gráficos de dispersão são completamente diferentes</div>
+              <p>Apesar de médias, variâncias, correlação, reta ajustada e R² serem praticamente idênticos nos 4 conjuntos, os gráficos de dispersão revelam padrões muito distintos: um conjunto é de fato aproximadamente linear; outro tem uma relação claramente curva (não linear); outro é linear com um único outlier que distorce a reta; e o último tem quase todos os X iguais, com a reta inteiramente determinada por um ponto isolado. Francis Anscombe construiu este exemplo em 1973 para demonstrar tanto a importância de visualizar os dados antes de analisá-los, quanto o efeito de outliers e observações influentes sobre as propriedades estatísticas — nenhuma estatística-resumo, incluindo o R², substitui o gráfico de dispersão.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="residuos-rs">
+          <div class="wrap">
+            <div class="eyebrow">07 · Verificando as suposições — e o que fazer quando falham</div>
+            <h2>Análise dos resíduos e regressão não linear via transformação</h2>
+            <p class="intro">Ao ajustar um modelo de regressão, várias suposições são feitas. Com os resíduos, vários gráficos podem ser construídos para verificar se essas suposições foram violadas.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Resíduo "bruto"</span>
+                <h3>êi = yi − ŷi</h3>
+                <p>A diferença entre o valor observado e o ajustado pelo modelo de regressão.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Resíduo padronizado</span>
+                <h3>zi = êi / Sr</h3>
+                <p>Espera-se ter poucos |zi|&gt;3. Atenção: no livro do Devore, os resíduos ali chamados "padronizados" são, na verdade, os resíduos "estudantizados" (studentized residuals).</p>
+              </div>
+            </div>
+
+            <p style="color:var(--ink-soft); font-size:16.5px; margin-top:8px;">Alguns gráficos úteis: êi (ou zi) versus x; êi (ou zi) versus ŷi; yi versus ŷi; e o gráfico Q-Q plot normal dos êi (ou zi).</p>
+
+            <table class="datatab" style="margin-top:8px;">
+              <caption>O que cada verificação avalia</caption>
+              <thead><tr><th>Suposição</th><th>Como verificar</th></tr></thead>
+              <tbody>
+                <tr><td>Adequação do modelo linear</td><td>Gráfico de dispersão ou gráfico dos resíduos versus x/ŷ</td></tr>
+                <tr><td>Normalidade dos erros</td><td>Gráfico de probabilidade, ou testes de Kolmogorov-Smirnov, Anderson-Darling, Shapiro-Wilks</td></tr>
+                <tr><td>Erros independentes e identicamente distribuídos</td><td>Resíduos devem ter distribuição aleatória em torno da reta, sem correlação entre si</td></tr>
+                <tr><td>Homocedasticidade</td><td>Gráfico dos resíduos versus ŷ — a dispersão não deve crescer ou diminuir sistematicamente</td></tr>
+              </tbody>
+            </table>
+
+            <div class="flow-note">Nos gráficos de resíduos, apenas um padrão totalmente aleatório em torno de zero é a situação ideal. Um "leque" que se abre ou fecha sinaliza heterocedasticidade; uma curva sistemática sinaliza que o modelo linear não é adequado; e pontos muito afastados dos demais podem ser outliers ou observações influentes.</div>
+
+            <h3 style="margin-top:32px; margin-bottom:14px; font-size:19px;">Quando a relação não é linear: transformação</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Um modelo probabilístico relacionando Y a X é <strong>intrinsecamente linear</strong> se, através de uma transformação em Y e/ou X, pode ser reduzido a um modelo linear Y* = β0 + β1X*, com Y*=f(Y) e X*=g(X).</p>
+
+            <div class="qa-card" style="margin-top:12px;">
+              <div class="qlabel">Exemplo · equação de Taylor para vida útil de ferramenta</div>
+              <p class="q">A equação de Taylor expressa o tempo de vida de uma ferramenta y em função do tempo de corte x pelo modelo y=αxᵝε (multiplicativo). Dados coletados (X=tempo de corte, Y=vida útil):</p>
+              <table class="datatab" style="margin-top:6px;">
+                <thead><tr><th>X</th><td>600</td><td>600</td><td>600</td><td>600</td><td>500</td><td>500</td><td>500</td><td>500</td><td>400</td><td>400</td><td>400</td><td>400</td></tr></thead>
+                <tbody><tr><th>Y</th><td>2.35</td><td>2.65</td><td>3</td><td>3.6</td><td>6.4</td><td>7.8</td><td>9.8</td><td>16.5</td><td>21.5</td><td>24.5</td><td>26</td><td>33</td></tr></tbody>
+              </table>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <p><strong>(a)</strong> Aplicando ln em ambos os lados: ln(y) = ln(α) + β ln(x) + ln(ε) — um modelo linear em X*=ln(x) e Y*=ln(y). Ajustando por mínimos quadrados aos 12 pontos transformados:</p>
+                <div class="verdict">β̂ = −5.40 &nbsp;·&nbsp; ln(α̂) = 35.67 → α̂ ≈ 3.1×10¹⁵ &nbsp;·&nbsp; modelo: ŷ = 3.1×10¹⁵ · x⁻⁵·⁴⁰</div>
+                <p><strong>(b)</strong> R²=0.922 e F=118.8 (com 1 e 10 g.l.) — muito acima de qualquer valor crítico usual, indicando um ajuste linear excelente na escala transformada (ln-ln), coerente com o forte decaimento da vida útil da ferramenta conforme a velocidade de corte aumenta. <strong>(c)</strong> A análise de resíduos deve ser feita sobre os resíduos do modelo transformado (ln(y) vs ln(x)), não sobre a escala original — os mesmos gráficos e critérios desta seção se aplicam.</p>
+              </div>
+            </div>
+
+            <h3 style="margin-top:32px; margin-bottom:14px; font-size:19px;">Exercícios propostos</h3>
+
+            <div class="qa-card">
+              <div class="qlabel">PIB per capita da China (2005–2016), X=0,1,...,11</div>
+              <p class="q">Ajuste um modelo linear e teste a hipótese da regressão ser significativa a 1%.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Ŷ = 1547.86 + 648.01·X &nbsp;·&nbsp; R²=0.986 &nbsp;·&nbsp; F=714.7 &gt; Fcrítico(1,10; 1%)=10.04 → rejeita H0</div>
+                <p>Cada ano adicional está associado a um aumento médio de US$648 no PIB per capita chinês no período — uma tendência de crescimento fortíssima e altamente significativa (R²=98.6%).</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">PIB per capita dos EUA (2005–2016), X=0,1,...,11</div>
+              <p class="q">Ajuste, preveja o PIB per capita de 2020 (X*=15) e construa um IC de 95% para o valor médio previsto.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Ŷ = 44346.91 + 1101.85·X &nbsp;·&nbsp; Ŷ2020 = 44346.91+1101.85×15 = 60874.66</div>
+                <p>Com n=12, t(10 g.l., 95%)=2.228, Sr²=1 278 465.6, X̄=5.5, Σ(xi−x̄)²=143: IC = 60874.66 ± 2.228×√[1278465.6×(1/12+(15−5.5)²/143)] = [58 745.3 ; 63 004.0].</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">PIB per capita × consumo de eletricidade per capita (15 países)</div>
+              <p class="q">Calcule a correlação, ajuste o modelo, teste a significância a 1%, construa um IC (95%) para o coeficiente angular, e preveja para um país com PIB per capita de US$35 000.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">r = 0.806 &nbsp;·&nbsp; Ŷ = 1666.29 + 0.1435·X &nbsp;·&nbsp; R²=0.650 &nbsp;·&nbsp; F=24.12 &gt; Fcrítico(1,13; 1%)=9.07 → rejeita H0</div>
+                <p>IC(β1, 95%) = 0.1435 ± 2.160×√(4 852 361/5 683 367 827) ≈ [0.080 ; 0.207]. Para um país com PIB per capita de US$35 000: Ŷ = 6688.8 kWh, com IC (95%) ≈ [5419.8 ; 7957.8] kWh.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="calc-rs">
+          <div class="wrap">
+            <div class="eyebrow">08 · Ferramenta</div>
+            <h2>Calculadora · regressão linear simples</h2>
+            <p class="intro">Informe os pares (x,y) — um par por linha, valores separados por vírgula — e, opcionalmente, um valor de x* para obter a previsão com intervalo de confiança.</p>
+
+            <div class="gen-box">
+              <div class="gen-field">
+                <label for="rsData">Pares (x,y) — um por linha</label>
+                <textarea id="rsData" rows="7" style="width:100%; font-family:var(--mono); font-size:14px; padding:10px; border-radius:8px; border:1px solid var(--line); background:var(--white); color:var(--ink);">1,80.5
+2,81.6
+3,82.1
+4,83.7
+5,83.9
+6,85.0</textarea>
+              </div>
+              <div class="gen-row" style="align-items:flex-end; margin-top:12px;">
+                <div class="gen-field"><label for="rsAlpha">α (%)</label><input type="number" id="rsAlpha" value="5" min="0.1" max="50" step="0.1"></div>
+                <div class="gen-field"><label for="rsXstar">x* (opcional, para previsão)</label><input type="number" id="rsXstar" step="any" placeholder="ex: 5.5"></div>
+              </div>
+              <button class="sim-btn" id="rsBtn">Calcular regressão</button>
+              <div class="gen-output" id="rsOutput">Clique para calcular.</div>
+            </div>
+
+            <div class="flow-note" style="margin-top:16px;">Os valores pré-preenchidos reproduzem o exemplo da octanagem da gasolina desta página.</div>
+          </div>
+        </section>
+
+        <div class="module-footer">
+          <div class="wrap">
+            <div class="refs">
+              DEVORE, J.L. — Probabilidade e Estatística para Engenharia e Ciências, Thomson, 2006 · BUSSAB, W.O.; MORETTIN, P.A. — Estatística Básica, 10ª ed., Saraiva, 2024 · ANSCOMBE, F.J. — Graphs in Statistical Analysis, The American Statistician, 27(1), 1973 · MONTGOMERY, D.C.; PECK, E.A.; VINING, G.G. — Introduction to Linear Regression Analysis, 5ª ed., Wiley, 2012
+            </div>
+            <div class="credit">Guia de estudo baseado no módulo "Regressão Simples" de PRO 3200 — Estatística, EP-USP.</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ================= END MODULE: REGRESSÃO LINEAR SIMPLES ================= -->
+
+      <!-- ================= MODULE: REGRESSÃO LINEAR MÚLTIPLA (P3) ================= -->
+      <div class="module-page" data-module="regressao-multipla" id="page-regressao-multipla" hidden>
+
+        <div class="page-subnav">
+          <div class="page-subnav-inner">
+            <span class="psn-title">P3 · Regressão Linear Múltipla</span>
+            <div class="navlinks">
+              <button class="navlink" data-target="intro-rm">Introdução</button>
+              <button class="navlink" data-target="estimacao-rm">Estimação e Tabela ANOVA</button>
+              <button class="navlink" data-target="teste-rm">Teste por parâmetro</button>
+              <button class="navlink" data-target="selecao-rm">Seleção do modelo</button>
+              <button class="navlink" data-target="especiais-rm">Casos especiais</button>
+              <button class="navlink" data-target="calc-rm">Calculadora</button>
+            </div>
+          </div>
+        </div>
+
+        <header class="hero" id="inicio-rm">
+          <div class="wrap hero-grid">
+            <div>
+              <div class="eyebrow">P3 · Módulo 4 · Lucas L. Oliveira e Profas. Celma de Oliveira Ribeiro e Linda Lee Ho</div>
+              <h1>Uma variável auxiliar raramente é suficiente. <em>E se X1, X2, ..., Xk atuarem todas ao mesmo tempo?</em></h1>
+              <p class="lede">A regressão múltipla estende o modelo de regressão simples para várias variáveis auxiliares coletadas simultaneamente — e traz consigo uma nova pergunta, tão importante quanto estimar os coeficientes: qual subconjunto de variáveis deve compor o modelo final?</p>
+              <div class="hero-meta">
+                <span><strong>Depto.</strong> Engenharia de Produção — USP</span>
+                <span><strong>Módulo</strong> Regressão Linear Múltipla</span>
+              </div>
+            </div>
+            <div id="heroRM" aria-hidden="true"></div>
+          </div>
+        </header>
+
+        <section class="section reveal" id="intro-rm">
+          <div class="wrap">
+            <div class="eyebrow">01 · De uma para várias variáveis auxiliares</div>
+            <h2>Y = β0 + β1X1 + β2X2 + ... + βkXk + e</h2>
+            <p class="intro">Na prática, é mais comum coletar da mesma unidade amostral muitas variáveis auxiliares X1,X2,...,Xk e uma variável resposta Y. Quer-se propor um modelo linear que relacione Y com todas elas simultaneamente.</p>
+
+            <table class="datatab">
+              <caption>Estrutura dos dados — k variáveis auxiliares</caption>
+              <thead><tr><th>Sujeito</th><th>1</th><th>2</th><th>...</th><th>n</th></tr></thead>
+              <tbody>
+                <tr><td>X1</td><td>X11</td><td>X12</td><td>...</td><td>X1n</td></tr>
+                <tr><td>X2</td><td>X21</td><td>X22</td><td>...</td><td>X2n</td></tr>
+                <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                <tr><td>Xk</td><td>Xk1</td><td>Xk2</td><td>...</td><td>Xkn</td></tr>
+                <tr><td>Y</td><td>Y1</td><td>Y2</td><td>...</td><td>Yn</td></tr>
+              </tbody>
+            </table>
+
+            <h3 style="margin-top:28px; margin-bottom:14px; font-size:19px;">Interpretando os coeficientes — resistência ao cisalhamento</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Num estudo de resistência ao cisalhamento (y, em gm), consideraram-se como variáveis auxiliares: x1=força (gm), x2=potência (mW), x3=temperatura (°C), x4=tempo (ms). Um modelo linear foi ajustado, obtendo-se:</p>
+
+            <div class="formula-box">
+              <div class="f">Ŷ = −37.48 + 0.22x1 + 0.450x2 + 0.13x3 + 0.26x4</div>
+            </div>
+
+            <table class="datatab" style="margin-top:12px;">
+              <caption>Interpretação de cada coeficiente, mantendo os demais fixos</caption>
+              <thead><tr><th>Coeficiente</th><th>Interpretação</th></tr></thead>
+              <tbody>
+                <tr><td>β̂3 = 0.13</td><td>Aumento médio de 0.13 gm na resistência, associado a um aumento de 1°C na temperatura, mantendo fixos os valores das demais variáveis auxiliares.</td></tr>
+                <tr><td>β̂4 = 0.26</td><td>Aumento médio de 0.26 gm quando há um aumento de 1 ms no tempo, mantendo fixos os valores das demais variáveis auxiliares.</td></tr>
+              </tbody>
+            </table>
+
+            <div class="callout teal" style="margin-top:12px;">
+              <div class="eyebrow">A chave da regressão múltipla: "mantendo os demais fixos"</div>
+              <p>Interpretação similar pode ser feita para os demais coeficientes estimados. A diferença essencial em relação à regressão simples é que cada βi mede o efeito de Xi sobre Y <strong>controlando</strong> pelas demais variáveis do modelo — não seu efeito isolado.</p>
+            </div>
+
+            <div class="callout" style="margin-top:8px;">
+              <div class="eyebrow">Uma recomendação prática</div>
+              <p>Em situações reais, é comum ter variáveis auxiliares X1,...,Xk medidas em unidades/escalas muito variadas. Se um modelo for ajustado sem atentar a este detalhe, a interpretação dos coeficientes pode ficar prejudicada. Uma possibilidade é padronizar as variáveis auxiliares, Zi=(Xi−X̄i)/SXi, ou centrá-las em torno da média, X'i=Xi−X̄i, para tornar os coeficientes comparáveis entre si.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="estimacao-rm">
+          <div class="wrap">
+            <div class="eyebrow">02 · Mínimos quadrados em notação matricial</div>
+            <h2>β̂ = (X'X)⁻¹X'Y</h2>
+            <p class="intro">Como na regressão simples, os parâmetros são estimados pelo método dos mínimos quadrados: minimiza-se f(β0,...,βk)=Σ[yi−(β0+β1x1i+...+βkxki)]². A solução do sistema ∂f/∂βi=0 é mais compacta em notação matricial:</p>
+
+            <div class="formula-box">
+              <div class="f">Y = Xβ + e &nbsp;&nbsp;·&nbsp;&nbsp; β̂ = (X'X)⁻¹X'Y &nbsp;&nbsp;·&nbsp;&nbsp; Var(β̂) = (X'X)⁻¹σ²</div>
+              <div class="f-note">X é a matriz do modelo, com uma coluna de 1's (para β0) seguida das colunas X1,...,Xk &nbsp;·&nbsp; β̂i ~ N(βi, Diiσ²), onde Dii é o (i+1)-ésimo elemento da diagonal de (X'X)⁻¹</div>
+            </div>
+
+            <h3 style="margin-top:28px; margin-bottom:14px; font-size:19px;">Tabela ANOVA — teste conjunto de todos os coeficientes</h3>
+
+            <table class="datatab">
+              <caption>Tabela ANOVA — modelo de regressão múltipla</caption>
+              <thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>Estatística</th></tr></thead>
+              <tbody>
+                <tr><td>Regressão</td><td>SQReg</td><td>k</td><td>S²reg = SQReg/k</td><td>F = S²reg/Sr²</td></tr>
+                <tr><td>Resíduo</td><td>SQRes</td><td>n−1−k</td><td>Sr² = SQRes/(n−1−k)</td><td></td></tr>
+                <tr><td>Total</td><td>SQT</td><td>n−1</td><td>S² = SQT/(n−1)</td><td></td></tr>
+              </tbody>
+            </table>
+
+            <div class="flow-note">SQT=Σ(yi−ȳ)², SQReg=Σ(ŷi−ȳ)² e SQRes=Σ(yi−ŷi)², exatamente como na regressão simples. A diferença está apenas nos graus de liberdade: a regressão agora "consome" k graus de liberdade (um por variável auxiliar), não apenas 1.</div>
+
+            <div class="formula-box" style="margin-top:8px;">
+              <div class="f">H0: β1 = β2 = ... = βk = 0 &nbsp;&nbsp;·&nbsp;&nbsp; H1: ∃ algum i tal que βi ≠ 0</div>
+              <div class="f-note">Rejeita-se H0 se F&gt;Fc, com Fc tabelado com k e (n−1−k) g.l. no numerador e denominador. Rejeitada H0, é interessante identificar quais βi são diferentes de zero — quais variáveis auxiliares são "relevantes".</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="teste-rm">
+          <div class="wrap">
+            <div class="eyebrow">03 · Testando cada coeficiente individualmente</div>
+            <h2>H0: βi = βi0</h2>
+            <p class="intro">Como em regressão simples, σ² é desconhecida e é estimada por Sr² (a partir da tabela ANOVA). Segue que:</p>
+
+            <div class="formula-box">
+              <div class="f">(β̂i − βi0) / √(Dii Sr²) &nbsp;&nbsp;~&nbsp;&nbsp; t-Student com (n−1−k) g.l.</div>
+              <div class="f-note">Rejeita-se H0 se |β̂i−βi0| / √(Dii Sr²) &gt; tα/2 &nbsp;·&nbsp; no caso usual de H0:βi=0, o critério se reduz a rejeitar se |β̂i| / √(Dii Sr²) &gt; tα/2</div>
+            </div>
+
+            <div class="callout" style="margin-top:8px;">
+              <div class="eyebrow">O que este teste responde — e o que não responde</div>
+              <p>Cada teste individual verifica se aquele βi específico é significativo, controlando pelas demais variáveis já presentes no modelo. Ele não diz se aquele é o melhor subconjunto de variáveis possível — essa é uma pergunta diferente, tratada na próxima seção.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="selecao-rm">
+          <div class="wrap">
+            <div class="eyebrow">04 · Qual deve ser o melhor modelo?</div>
+            <h2>Seleção de modelo e o teste F-parcial</h2>
+            <p class="intro">Com k variáveis explicativas coletadas, quantos modelos-candidato existem? Modelo 1: Y=µ (constante, sem nenhuma variável); modelos com uma única variável auxiliar (k modelos); modelos com duas variáveis (vários); ... até o modelo com todas as k variáveis — um total de 2ᵏ modelos possíveis, sendo o Modelo 1 o mais simples. Dependendo de k, é inviável avaliar todos os modelos-candidato.</p>
+
+            <div class="def-grid" style="margin-top:8px;">
+              <div class="def-card">
+                <span class="tag">Propriedade 1</span>
+                <h3>SQT é constante</h3>
+                <p>SQT não depende do número de variáveis explicativas incluídas no modelo.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Propriedade 2</span>
+                <h3>SQRegk* cresce, nunca decresce</h3>
+                <p>Se A1⊂A2⊂...⊂Ai são subconjuntos encaixados de variáveis, então SQRegA1≤SQRegA2≤...≤SQRegAi e, consequentemente, R²A1≤R²A2≤...≤R²Ai.</p>
+              </div>
+            </div>
+
+            <p class="intro" style="margin-top:8px;">Ou seja: a regressão ajustada com Aj+1 vai sempre apresentar SQReg maior ou igual (e R² maior ou igual) que a ajustada com Aj. Comparar apenas os valores de SQReg e R² não é, portanto, um bom critério — é preciso avaliar se o incremento em SQReg (ou a redução em SQRes) foi <strong>significativo</strong>. Isto é feito pelo teste do F-parcial, respeitando o princípio da parcimônia.</p>
+
+            <h3 style="margin-top:28px; margin-bottom:14px; font-size:19px;">Exemplo — dois candidatos, X1 e X2</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Considere um modelo com apenas 2 variáveis, X1 e X2. Existem 4 modelos possíveis: M1:Y=µ; M2:Y=f(X1); M3:Y=f(X2); M4:Y=f(X1,X2). Pelo princípio da parcimônia, começa-se com um dos modelos mais simples — M2 ou M3, escolhendo a variável de maior correlação com Y (suponha X1, selecionando M2).</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Passo 1</span>
+                <h3>Testar H01: β1=0</h3>
+                <p>Se H01 for verdadeira, o modelo final é M1 — a variável de maior correlação não é significativa, então qualquer outra (com correlação menor) também não seria.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Passo 2</span>
+                <h3>Testar H02: β2=0 | β1≠0</h3>
+                <p>Se H01 for falsa, verifica-se se incluir X2 melhora o modelo — decidindo entre M2 e M4.</p>
+              </div>
+            </div>
+
+            <div class="formula-box" style="margin-top:8px;">
+              <div class="f">Fparcial = (SQReg4 − SQReg2) / Sr4²</div>
+              <div class="f-note">O numerador mede o "lucro" de incluir X2 no modelo; o denominador é a estimativa da variância do modelo mais completo ("cheio"). Rejeita-se H02 se Fparcial &gt; Fc, com Fc tabelado com 1 e (n−3) g.l.</div>
+            </div>
+
+            <p style="color:var(--ink-soft); font-size:16.5px;">Se H02 for verdadeira, M2 e M4 são "equivalentes" — o modelo final é M2. Se for falsa, houve uma melhoria real ao incluir X2 — o modelo final é M4.</p>
+
+            <div class="callout teal" style="margin-top:8px;">
+              <div class="eyebrow">Generalizando para dois modelos aninhados quaisquer</div>
+              <p>Sejam Aj⊂Ai dois subconjuntos de variáveis auxiliares, com j e j+p variáveis respectivamente. A estatística é Fparcial=(SQRegAi−SQRegAj)/Sr²i, com graus de liberdade p (numerador) e n−1−(j+p) (denominador). O modelo com Ai é melhor que o modelo com Aj se Fparcial&gt;Fc — caso contrário, os dois modelos são equivalentes, e o mais simples deve ser preferido.</p>
+            </div>
+
+            <h3 style="margin-top:28px; margin-bottom:14px; font-size:19px;">Quando há muitas variáveis: métodos automáticos</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Quando o número de variáveis auxiliares é relativamente grande, escolher o modelo manualmente pode não ser eficiente — métodos como backward, forward e stepwise são amplamente empregados:</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Backward</span>
+                <h3>Do modelo completo para o simples</h3>
+                <p>Inicia-se com o modelo completo (todas as variáveis) e vai excluindo as variáveis menos significativas até satisfazer algum critério de parada.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Forward</span>
+                <h3>Do modelo simples para o completo</h3>
+                <p>Inicia-se com um modelo simples (uma variável) e vai incluindo variáveis até satisfazer algum critério de parada.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Stepwise</span>
+                <h3>Uma mistura dos dois métodos</h3>
+                <p>Inicia-se simples e vai incluindo variáveis segundo algum critério; após cada inclusão, verifica-se se as variáveis já presentes ainda devem permanecer, ou podem ser excluídas.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="especiais-rm">
+          <div class="wrap">
+            <div class="eyebrow">05 · Além de variáveis quantitativas contínuas</div>
+            <h2>Variáveis dummy e regressão polinomial</h2>
+            <p class="intro">Até aqui, as variáveis auxiliares consideradas eram quantitativas contínuas. É comum, porém, incluir variáveis auxiliares qualitativas — chamadas de <strong>variáveis dummy</strong>.</p>
+
+            <div class="callout" style="margin-top:8px;">
+              <div class="eyebrow">Exemplo mais simples — duas categorias</div>
+              <p>Considere Y=tempo de percurso, X1=distância entre os locais, e X2=0 se automóvel, 1 se caminhão. No modelo Y=β0+β1X1+β2X2: β0+β1x1 é o tempo médio se for automóvel; β0+β1x1+β2 é o tempo médio se for caminhão; e β2 mede a diferença de tempo médio entre caminhão e automóvel, mantendo a distância X1 fixa.</p>
+            </div>
+
+            <div class="formula-box">
+              <div class="f">Uma variável qualitativa com k categorias exige (k−1) variáveis dummy</div>
+            </div>
+
+            <p style="color:var(--ink-soft); font-size:16.5px;">Exemplo com 3 categorias: X2=meio de transporte (ônibus, trem, automóvel), com ônibus como categoria de referência:</p>
+
+            <div class="formula-box">
+              <div class="f">X2.1 = 1 se automóvel, 0 caso contrário &nbsp;&nbsp;·&nbsp;&nbsp; X2.2 = 1 se trem, 0 caso contrário</div>
+              <div class="f-note">Modelo: Y = β0 + β1X1 + β2.1X2.1 + β2.2X2.2</div>
+            </div>
+
+            <table class="datatab" style="margin-top:8px;">
+              <caption>Interpretação, mantendo a distância X1 fixa</caption>
+              <thead><tr><th>Quantidade</th><th>Interpretação</th></tr></thead>
+              <tbody>
+                <tr><td>β0+β1x1+β2.1</td><td>Tempo médio se for automóvel</td></tr>
+                <tr><td>β0+β1x1+β2.2</td><td>Tempo médio se for trem</td></tr>
+                <tr><td>β0+β1x1</td><td>Tempo médio se for ônibus (categoria de referência)</td></tr>
+                <tr><td>β2.1</td><td>Diferença de tempo médio entre ônibus e automóvel</td></tr>
+                <tr><td>β2.2</td><td>Diferença de tempo médio entre ônibus e trem</td></tr>
+              </tbody>
+            </table>
+
+            <h3 style="margin-top:28px; margin-bottom:14px; font-size:19px;">Regressão polinomial</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Um segundo caso especial: usar potências da mesma variável X como se fossem variáveis auxiliares diferentes.</p>
+
+            <div class="formula-box">
+              <div class="f">Y = β0 + β1X + β2X² + ... + βkXᵏ</div>
+              <div class="f-note">Todos os procedimentos apresentados neste módulo — estimação por mínimos quadrados, tabela ANOVA, testes t e F, seleção de modelo — se aplicam da mesma forma, tratando X,X²,...,Xᵏ como k variáveis auxiliares.</div>
+            </div>
+
+            <div class="callout teal" style="margin-top:8px;">
+              <div class="eyebrow">Para ir além</div>
+              <p>Regressão é um tópico extenso — para mais detalhes, consulte DRAPER & SMITH, Applied Regression Analysis (Wiley, 1998) ou CHATTERJEE & HADI, Regression Analysis by Example (Wiley, 2013).</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="calc-rm">
+          <div class="wrap">
+            <div class="eyebrow">06 · Ferramenta</div>
+            <h2>Calculadora · regressão linear múltipla</h2>
+            <p class="intro">Informe os valores de Y e das variáveis auxiliares X1,...,Xk — a calculadora resolve β̂=(X'X)⁻¹X'Y, monta a tabela ANOVA e testa cada coeficiente individualmente.</p>
+
+            <div class="gen-box">
+              <div class="gen-field">
+                <label for="rmY">Y — valores separados por vírgula</label>
+                <textarea id="rmY" rows="2" style="width:100%; font-family:var(--mono); font-size:14px; padding:10px; border-radius:8px; border:1px solid var(--line); background:var(--white); color:var(--ink);">-37.48,25.02,49.42,75.68,88.02</textarea>
+              </div>
+              <div class="gen-field" style="margin-top:10px;">
+                <label for="rmX">X1,...,Xk — uma linha por observação, valores separados por vírgula (mesma ordem de Y)</label>
+                <textarea id="rmX" rows="5" style="width:100%; font-family:var(--mono); font-size:14px; padding:10px; border-radius:8px; border:1px solid var(--line); background:var(--white); color:var(--ink);">0,0
+100,50
+200,100
+300,150
+400,200</textarea>
+              </div>
+              <div class="gen-row" style="align-items:flex-end; margin-top:12px;">
+                <div class="gen-field"><label for="rmAlpha">α (%)</label><input type="number" id="rmAlpha" value="5" min="0.1" max="50" step="0.1"></div>
+              </div>
+              <button class="sim-btn" id="rmBtn">Calcular regressão múltipla</button>
+              <div class="gen-output" id="rmOutput">Clique para calcular.</div>
+            </div>
+
+            <div class="flow-note" style="margin-top:16px;">Os valores pré-preenchidos são apenas ilustrativos (2 variáveis auxiliares, relação exata) — substitua pelos seus próprios dados. O número de linhas de X deve ser igual ao número de valores de Y, e todas as linhas de X devem ter o mesmo número de colunas (k).</div>
+          </div>
+        </section>
+
+        <div class="module-footer">
+          <div class="wrap">
+            <div class="refs">
+              DEVORE, J.L. — Probabilidade e Estatística para Engenharia e Ciências, Thomson, 2006 · BUSSAB, W.O.; MORETTIN, P.A. — Estatística Básica, 10ª ed., Saraiva, 2024 · DRAPER, N.R.; SMITH, H. — Applied Regression Analysis, 3ª ed., Wiley, 1998 · CHATTERJEE, S.; HADI, A.S. — Regression Analysis by Example, 5ª ed., Wiley, 2013
+            </div>
+            <div class="credit">Guia de estudo baseado no módulo "Regressão Múltipla" de PRO 3200 — Estatística, EP-USP.</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ================= END MODULE: REGRESSÃO LINEAR MÚLTIPLA ================= -->
     </div>
   </div>
 </div>
@@ -4322,7 +5855,11 @@
     {id:'teste-hipotese', group:'P2', title:'Teste de Hipóteses'},
     {id:'teste-hipotese-2-parametros', group:'P2', title:'Teste de Hipóteses (2 parâmetros)'},
     {id:'teste-aderencia', group:'P2', title:'Teste de Aderência'},
-    {id:'teste-associacao', group:'P2', title:'Teste de Associação'}
+    {id:'teste-associacao', group:'P2', title:'Teste de Associação'},
+    {id:'anova-1-fator', group:'P3', title:'Análise de Variância com Um Fator'},
+    {id:'anova-2-fatores', group:'P3', title:'Análise de Variância com 2 Fatores'},
+    {id:'regressao-simples', group:'P3', title:'Regressão Linear Simples'},
+    {id:'regressao-multipla', group:'P3', title:'Regressão Linear Múltipla'}
   ];
 
   const nav = document.getElementById('moduleNav');
@@ -4444,6 +5981,83 @@
     const term = 1 - 2/(9*df) + z*Math.sqrt(2/(9*df));
     return df*Math.pow(term,3);
   }
+  // Regularized incomplete beta function (Numerical Recipes) — powers the F-distribution quantile below
+  function logGammaFn(x){
+    const cof=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+    let y=x, tmp=x+5.5;
+    tmp -= (x+0.5)*Math.log(tmp);
+    let ser=1.000000000190015;
+    for(let j=0;j<6;j++){ y+=1; ser+=cof[j]/y; }
+    return -tmp+Math.log(2.5066282746310005*ser/x);
+  }
+  function betacf(x,a,b){
+    const MAXIT=200, EPS=3e-9, FPMIN=1e-300;
+    const qab=a+b, qap=a+1, qam=a-1;
+    let c=1, d=1-qab*x/qap;
+    if(Math.abs(d)<FPMIN) d=FPMIN;
+    d=1/d; let h=d;
+    for(let m=1;m<=MAXIT;m++){
+      const m2=2*m;
+      let aa=m*(b-m)*x/((qam+m2)*(a+m2));
+      d=1+aa*d; if(Math.abs(d)<FPMIN) d=FPMIN;
+      c=1+aa/c; if(Math.abs(c)<FPMIN) c=FPMIN;
+      d=1/d; h*=d*c;
+      aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
+      d=1+aa*d; if(Math.abs(d)<FPMIN) d=FPMIN;
+      c=1+aa/c; if(Math.abs(c)<FPMIN) c=FPMIN;
+      d=1/d; const delta=d*c; h*=delta;
+      if(Math.abs(delta-1)<EPS) break;
+    }
+    return h;
+  }
+  function betai(x,a,b){
+    if(x<=0) return 0; if(x>=1) return 1;
+    const bt = Math.exp(logGammaFn(a+b)-logGammaFn(a)-logGammaFn(b)+a*Math.log(x)+b*Math.log(1-x));
+    if(x < (a+1)/(a+b+2)) return bt*betacf(x,a,b)/a;
+    return 1-bt*betacf(1-x,b,a)/b;
+  }
+  function fCDF(F, d1, d2){
+    if(F<=0) return 0;
+    const x = d1*F/(d1*F+d2);
+    return betai(x, d1/2, d2/2);
+  }
+  // bisection over the F-CDF — returns Fc such that P(F<=Fc)=p (i.e. the usual upper-tail critical value when p=1-alpha)
+  function fQuantile(p, d1, d2){
+    let lo=1e-6, hi=1e5;
+    for(let i=0;i<100;i++){
+      const mid=(lo+hi)/2;
+      if(fCDF(mid,d1,d2)<p) lo=mid; else hi=mid;
+    }
+    return (lo+hi)/2;
+  }
+  // Small dense-matrix helpers (arrays of arrays) — used by the multiple regression calculator
+  function matTranspose(A){ return A[0].map((_,j)=>A.map(row=>row[j])); }
+  function matMul(A,B){
+    const r=A.length, c=B[0].length, inner=B.length;
+    const R = Array.from({length:r}, ()=>new Array(c).fill(0));
+    for(let i=0;i<r;i++) for(let j=0;j<c;j++){ let s=0; for(let k=0;k<inner;k++) s+=A[i][k]*B[k][j]; R[i][j]=s; }
+    return R;
+  }
+  // Gauss-Jordan inverse of a square matrix
+  function matInverse(A){
+    const n = A.length;
+    const M = A.map((row,i)=> row.concat(Array.from({length:n},(_,j)=>i===j?1:0)));
+    for(let col=0; col<n; col++){
+      let pivotRow = col;
+      for(let r=col+1;r<n;r++){ if(Math.abs(M[r][col])>Math.abs(M[pivotRow][col])) pivotRow=r; }
+      if(Math.abs(M[pivotRow][col])<1e-12) throw new Error('Matriz singular — variáveis colineares ou dados insuficientes.');
+      if(pivotRow!==col){ const tmp=M[col]; M[col]=M[pivotRow]; M[pivotRow]=tmp; }
+      const pivot = M[col][col];
+      for(let j=0;j<2*n;j++) M[col][j]/=pivot;
+      for(let r=0;r<n;r++){
+        if(r===col) continue;
+        const factor = M[r][col];
+        if(factor===0) continue;
+        for(let j=0;j<2*n;j++) M[r][j]-=factor*M[col][j];
+      }
+    }
+    return M.map(row=>row.slice(n));
+  }
   function fmt(x, d){ if(!isFinite(x)) return '—'; d = (d===undefined)?4:d; return Number(x.toFixed(d)).toString(); }
   function parseNums(str){ return str.split(',').map(s=>parseFloat(s.trim())).filter(v=>!isNaN(v)); }
   function mean(arr){ return arr.reduce((a,b)=>a+b,0)/arr.length; }
@@ -4468,6 +6082,10 @@
     else if(id==='teste-hipotese-2-parametros') initHeroHT2();
     else if(id==='teste-aderencia') initHeroTA();
     else if(id==='teste-associacao') initHeroAS();
+    else if(id==='anova-1-fator') initHeroA1();
+    else if(id==='anova-2-fatores') initHeroA2();
+    else if(id==='regressao-simples') initHeroRS();
+    else if(id==='regressao-multipla') initHeroRM();
   }
 
   function initHeroViz(){
@@ -4680,6 +6298,112 @@
     pulse();
     heroState.asInterval && clearInterval(heroState.asInterval);
     heroState.asInterval = setInterval(pulse, 1700);
+  }
+
+  function initHeroA1(){
+    const el = document.getElementById('heroA1');
+    if(!el || el.dataset.init) return; el.dataset.init = '1';
+    let svg = '<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
+    svg += `<line x1="25" y1="270" x2="275" y2="270" stroke="var(--ink-faint)" stroke-width="1.5"/>`;
+    svg += '<g id="a1Groups"></g></svg>';
+    el.innerHTML = svg;
+    const g = el.querySelector('#a1Groups');
+    const centers = [80,150,220];
+    function pulse(){
+      g.innerHTML = '';
+      const spread = 12 + Math.random()*8;
+      centers.forEach((cx,gi)=>{
+        const cy = 90 + Math.random()*30;
+        g.innerHTML += `<line x1="${cx}" y1="55" x2="${cx}" y2="270" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"/>`;
+        for(let i=0;i<6;i++){
+          const x = cx + (Math.random()-0.5)*spread;
+          const y = cy + (Math.random()-0.5)*70;
+          g.innerHTML += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5" fill="${gi===1?'var(--amber)':'var(--teal)'}" opacity="0.82"/>`;
+        }
+        g.innerHTML += `<circle cx="${cx}" cy="${cy}" r="3" fill="var(--rust)"/>`;
+      });
+    }
+    pulse();
+    heroState.a1Interval && clearInterval(heroState.a1Interval);
+    heroState.a1Interval = setInterval(pulse, 2200);
+  }
+
+  function initHeroA2(){
+    const el = document.getElementById('heroA2');
+    if(!el || el.dataset.init) return; el.dataset.init = '1';
+    const rows=3, cols=4, pad=26, cw=(300-2*pad)/cols, ch=(300-2*pad)/rows;
+    let svg = '<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><g id="a2Cells"></g></svg>';
+    el.innerHTML = svg;
+    const g = el.querySelector('#a2Cells');
+    function pulse(){
+      g.innerHTML = '';
+      for(let r=0;r<rows;r++){
+        const rowBias = Math.random()*0.5;
+        for(let c=0;c<cols;c++){
+          const x = pad + c*cw, y = pad + r*ch;
+          const intensity = 0.12 + rowBias*0.5 + Math.random()*0.35;
+          const color = r===1 ? 'var(--amber)' : 'var(--teal)';
+          g.innerHTML += `<rect x="${(x+4).toFixed(1)}" y="${(y+4).toFixed(1)}" width="${(cw-8).toFixed(1)}" height="${(ch-8).toFixed(1)}" fill="${color}" opacity="${Math.min(intensity,0.92).toFixed(2)}" rx="6"/>`;
+        }
+      }
+    }
+    pulse();
+    heroState.a2Interval && clearInterval(heroState.a2Interval);
+    heroState.a2Interval = setInterval(pulse, 1900);
+  }
+
+  function initHeroRS(){
+    const el = document.getElementById('heroRS');
+    if(!el || el.dataset.init) return; el.dataset.init = '1';
+    let svg = '<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
+    svg += `<line x1="25" y1="270" x2="280" y2="270" stroke="var(--ink-faint)" stroke-width="1.5"/><line x1="25" y1="270" x2="25" y2="30" stroke="var(--ink-faint)" stroke-width="1.5"/>`;
+    svg += '<g id="rsDots"></g><line id="rsLine" x1="35" y1="250" x2="270" y2="60" stroke="var(--rust)" stroke-width="2.5"/></svg>';
+    el.innerHTML = svg;
+    const g = el.querySelector('#rsDots'), line = el.querySelector('#rsLine');
+    function pulse(){
+      g.innerHTML = '';
+      const slope = -1.6 - Math.random()*0.8;
+      const y0 = 245 + Math.random()*10;
+      for(let i=0;i<12;i++){
+        const x = 40 + i*20 + (Math.random()-0.5)*6;
+        const yline = y0 + slope*(x-40);
+        const y = yline + (Math.random()-0.5)*36;
+        g.innerHTML += `<circle cx="${x.toFixed(1)}" cy="${Math.max(35,Math.min(265,y)).toFixed(1)}" r="4.5" fill="var(--teal)" opacity="0.82"/>`;
+      }
+      line.setAttribute('y1', y0.toFixed(1));
+      line.setAttribute('y2', (y0+slope*230).toFixed(1));
+    }
+    pulse();
+    heroState.rsInterval && clearInterval(heroState.rsInterval);
+    heroState.rsInterval = setInterval(pulse, 2300);
+  }
+
+  function initHeroRM(){
+    const el = document.getElementById('heroRM');
+    if(!el || el.dataset.init) return; el.dataset.init = '1';
+    let svg = '<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
+    svg += `<line x1="25" y1="270" x2="280" y2="270" stroke="var(--ink-faint)" stroke-width="1.5"/><line x1="25" y1="270" x2="25" y2="30" stroke="var(--ink-faint)" stroke-width="1.5"/>`;
+    svg += '<g id="rmLines"></g></svg>';
+    el.innerHTML = svg;
+    const g = el.querySelector('#rmLines');
+    const colors = ['var(--teal)','var(--amber)','var(--rust)'];
+    function pulse(){
+      g.innerHTML = '';
+      colors.forEach((c,ci)=>{
+        const slope = -0.6 - Math.random()*1.4;
+        const y0 = 100 + ci*40 + Math.random()*20;
+        const x1=40, x2=265;
+        g.innerHTML += `<line x1="${x1}" y1="${y0.toFixed(1)}" x2="${x2}" y2="${(y0+slope*(x2-x1)).toFixed(1)}" stroke="${c}" stroke-width="2.5" opacity="0.85"/>`;
+        for(let i=0;i<5;i++){
+          const x = x1 + (i/4)*(x2-x1) + (Math.random()-0.5)*8;
+          const y = y0 + slope*(x-x1) + (Math.random()-0.5)*14;
+          g.innerHTML += `<circle cx="${x.toFixed(1)}" cy="${Math.max(35,Math.min(265,y)).toFixed(1)}" r="4" fill="${c}" opacity="0.75"/>`;
+        }
+      });
+    }
+    pulse();
+    heroState.rmInterval && clearInterval(heroState.rmInterval);
+    heroState.rmInterval = setInterval(pulse, 2400);
   }
 
   /* ============================================================
@@ -5383,6 +7107,267 @@
       const reject = Q > crit;
       let html = `n = ${fmt(n,0)} &nbsp;·&nbsp; (I,J) = (${I},${J}) &nbsp;·&nbsp; g = (${I}−1)(${J}−1) = ${df} &nbsp;·&nbsp; Q = ${fmt(Q,3)} &nbsp;·&nbsp; χ²crit = ${fmt(crit,3)}`;
       html += `<div class="decision-pill ${reject?'reject':'accept'}">${reject?'Rejeita H0':'Aceita H0'}</div>`;
+      out.innerHTML = html;
+    });
+  })();
+
+  /* ============================================================
+     MODULE 10: ANOVA de 1 fator + método de Scheffé
+     ============================================================ */
+  (function(){
+    const btn = document.getElementById('a1Btn');
+    if(!btn) return;
+    btn.addEventListener('click', ()=>{
+      const raw = document.getElementById('a1Data').value;
+      const alpha = parseFloat(document.getElementById('a1Alpha').value)/100;
+      const out = document.getElementById('a1Output');
+      const groups = raw.split(';').map(g=>parseNums(g)).filter(g=>g.length>0);
+      if(groups.length < 2){ out.textContent = 'Informe ao menos 2 grupos (separados por ";").'; return; }
+      if(groups.some(g=>g.length<2)){ out.textContent = 'Cada grupo precisa de ao menos 2 observações.'; return; }
+      const k = groups.length;
+      const ns = groups.map(g=>g.length);
+      const means = groups.map(mean);
+      const vars = groups.map(variance);
+      const n = ns.reduce((a,b)=>a+b,0);
+      const Xbar = groups.reduce((s,g)=>s+g.reduce((a,b)=>a+b,0),0)/n;
+      const SQE = means.reduce((s,m,i)=>s+ns[i]*Math.pow(m-Xbar,2),0);
+      const dfE = k-1;
+      const Se2 = SQE/dfE;
+      const SQD = vars.reduce((s,v,i)=>s+(ns[i]-1)*v,0);
+      const dfD = n-k;
+      const Sp2 = SQD/dfD;
+      const F = Se2/Sp2;
+      const Fc = fQuantile(1-alpha, dfE, dfD);
+      const reject = F > Fc;
+
+      let html = `<table class="datatab" style="margin-top:0;"><caption>Tabela ANOVA</caption>`;
+      html += `<thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>F</th></tr></thead><tbody>`;
+      html += `<tr><td>Entre grupos</td><td>${fmt(SQE,4)}</td><td>${dfE}</td><td>${fmt(Se2,4)}</td><td rowspan="2" style="vertical-align:middle;">${fmt(F,4)}</td></tr>`;
+      html += `<tr><td>Dentro dos grupos</td><td>${fmt(SQD,4)}</td><td>${dfD}</td><td>${fmt(Sp2,4)}</td></tr>`;
+      html += `<tr><td>Total</td><td>${fmt(SQE+SQD,4)}</td><td>${dfE+dfD}</td><td></td><td></td></tr>`;
+      html += `</tbody></table>`;
+      html += `<div style="margin-top:10px; font-family:var(--mono); font-size:14px;">k=${k} grupos &nbsp;·&nbsp; n=${n} &nbsp;·&nbsp; Fcrítico(${dfE},${dfD}; ${fmt(alpha*100,1)}%) = ${fmt(Fc,4)}</div>`;
+      html += `<div class="decision-pill ${reject?'reject':'accept'}">${reject?'Rejeita H0':'Aceita H0'}</div>`;
+
+      let header = '<tr><th>Média</th>' + Array.from({length:k-1},(_,j)=>`Grupo ${j+1}`).map(t=>`<th>${t}</th>`).join('') + '</tr>';
+      let rows = '';
+      for(let i=1;i<k;i++){
+        let cells = '';
+        for(let j=0;j<i;j++){
+          const delta = Math.sqrt(dfE*Fc*Sp2*(1/ns[i]+1/ns[j]));
+          const diff = Math.abs(means[i]-means[j]);
+          const sig = diff > delta;
+          cells += `<td${sig?' style="font-weight:700;color:var(--rust);"':''}>${fmt(diff,3)}${sig?' *':''}</td>`;
+        }
+        rows += `<tr><td>Grupo ${i+1} (${fmt(means[i],3)})</td>${cells}</tr>`;
+      }
+      html += `<table class="datatab" style="margin-top:16px;"><caption>Método de Scheffé — pares marcados com * têm |Xi−Xj| maior que δij e são considerados diferentes</caption><thead>${header}</thead><tbody>${rows}</tbody></table>`;
+
+      out.innerHTML = html;
+    });
+  })();
+
+  /* ============================================================
+     MODULE 11: ANOVA de 2 fatores (sem réplica / com réplicas)
+     ============================================================ */
+  (function(){
+    const btn = document.getElementById('a2Btn');
+    if(!btn) return;
+    btn.addEventListener('click', ()=>{
+      const mode = document.getElementById('a2Mode').value;
+      const raw = document.getElementById('a2Data').value;
+      const alpha = parseFloat(document.getElementById('a2Alpha').value)/100;
+      const out = document.getElementById('a2Output');
+      const rowsRaw = raw.split(';').map(r=>r.trim()).filter(r=>r.length>0);
+      if(rowsRaw.length < 2){ out.textContent = 'Informe ao menos 2 níveis do fator A (linhas separadas por ";").'; return; }
+
+      if(mode === 'sem'){
+        const M = rowsRaw.map(r=>parseNums(r));
+        const I = M.length, J = M[0].length;
+        if(J < 2 || !M.every(r=>r.length===J)){ out.textContent = 'Todas as linhas devem ter o mesmo número de colunas (≥2), separadas por ",".'; return; }
+        const XAi = M.map(mean);
+        const XBj = []; for(let j=0;j<J;j++){ XBj.push(mean(M.map(r=>r[j]))); }
+        const Xbar = M.reduce((s,r)=>s+r.reduce((a,b)=>a+b,0),0)/(I*J);
+        const SQA = J*XAi.reduce((s,x)=>s+Math.pow(x-Xbar,2),0);
+        const SQB = I*XBj.reduce((s,x)=>s+Math.pow(x-Xbar,2),0);
+        const SQT = M.reduce((s,r)=>s+r.reduce((a,x)=>a+Math.pow(x-Xbar,2),0),0);
+        const SQR = SQT-SQA-SQB;
+        const dfA=I-1, dfB=J-1, dfR=(I-1)*(J-1), dfT=I*J-1;
+        const QMA=SQA/dfA, QMB=SQB/dfB, QMR=SQR/dfR;
+        const FA=QMA/QMR, FB=QMB/QMR;
+        const FcA=fQuantile(1-alpha,dfA,dfR), FcB=fQuantile(1-alpha,dfB,dfR);
+        const rejA=FA>FcA, rejB=FB>FcB;
+
+        let html = `<table class="datatab" style="margin-top:0;"><caption>Tabela ANOVA — 2 fatores, sem réplica (I=${I}, J=${J})</caption>`;
+        html += `<thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>F</th><th>Fcrítico</th></tr></thead><tbody>`;
+        html += `<tr><td>A</td><td>${fmt(SQA,4)}</td><td>${dfA}</td><td>${fmt(QMA,4)}</td><td>${fmt(FA,4)}</td><td>${fmt(FcA,4)}</td></tr>`;
+        html += `<tr><td>B</td><td>${fmt(SQB,4)}</td><td>${dfB}</td><td>${fmt(QMB,4)}</td><td>${fmt(FB,4)}</td><td>${fmt(FcB,4)}</td></tr>`;
+        html += `<tr><td>Resíduo</td><td>${fmt(SQR,4)}</td><td>${dfR}</td><td>${fmt(QMR,4)}</td><td></td><td></td></tr>`;
+        html += `<tr><td>Total</td><td>${fmt(SQT,4)}</td><td>${dfT}</td><td></td><td></td><td></td></tr>`;
+        html += `</tbody></table>`;
+        html += `<div style="margin-top:10px;">A: <span class="decision-pill ${rejA?'reject':'accept'}">${rejA?'Rejeita H0A':'Aceita H0A'}</span> &nbsp; B: <span class="decision-pill ${rejB?'reject':'accept'}">${rejB?'Rejeita H0B':'Aceita H0B'}</span></div>`;
+        out.innerHTML = html;
+
+      } else {
+        const M = rowsRaw.map(r=>r.split('|').map(c=>parseNums(c)));
+        const I = M.length, J = M[0].length;
+        if(J < 2 || !M.every(r=>r.length===J)){ out.textContent = 'Todas as linhas devem ter o mesmo número de células (≥2), separadas por "|".'; return; }
+        const n = M[0][0].length;
+        if(n < 2 || !M.every(r=>r.every(c=>c.length===n))){ out.textContent = 'Cada célula precisa do mesmo número de réplicas (≥2), separadas por ",".'; return; }
+
+        const Xij = M.map(r=>r.map(mean));
+        const XAi = Xij.map(r=>mean(r));
+        const XBj = []; for(let j=0;j<J;j++){ XBj.push(mean(Xij.map(r=>r[j]))); }
+        const allVals = []; M.forEach(r=>r.forEach(c=>c.forEach(v=>allVals.push(v))));
+        const Xbar = mean(allVals);
+
+        const SQA = n*J*XAi.reduce((s,x)=>s+Math.pow(x-Xbar,2),0);
+        const SQB = n*I*XBj.reduce((s,x)=>s+Math.pow(x-Xbar,2),0);
+        const SQT = allVals.reduce((s,v)=>s+Math.pow(v-Xbar,2),0);
+        let SQR = 0;
+        M.forEach((r,i)=>r.forEach((c,j)=>{ c.forEach(v=>{ SQR += Math.pow(v-Xij[i][j],2); }); }));
+        const SQAB = SQT-SQA-SQB-SQR;
+
+        const dfA=I-1, dfB=J-1, dfAB=(I-1)*(J-1), dfR=I*J*(n-1), dfT=n*I*J-1;
+        const QMA=SQA/dfA, QMB=SQB/dfB, QMAB=SQAB/dfAB, QMR=SQR/dfR;
+        const FA=QMA/QMR, FB=QMB/QMR, FAB=QMAB/QMR;
+        const FcA=fQuantile(1-alpha,dfA,dfR), FcB=fQuantile(1-alpha,dfB,dfR), FcAB=fQuantile(1-alpha,dfAB,dfR);
+        const rejA=FA>FcA, rejB=FB>FcB, rejAB=FAB>FcAB;
+
+        let html = `<table class="datatab" style="margin-top:0;"><caption>Tabela ANOVA — 2 fatores, com réplicas (I=${I}, J=${J}, n=${n})</caption>`;
+        html += `<thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>F</th><th>Fcrítico</th></tr></thead><tbody>`;
+        html += `<tr><td>A</td><td>${fmt(SQA,4)}</td><td>${dfA}</td><td>${fmt(QMA,4)}</td><td>${fmt(FA,4)}</td><td>${fmt(FcA,4)}</td></tr>`;
+        html += `<tr><td>B</td><td>${fmt(SQB,4)}</td><td>${dfB}</td><td>${fmt(QMB,4)}</td><td>${fmt(FB,4)}</td><td>${fmt(FcB,4)}</td></tr>`;
+        html += `<tr><td>AB</td><td>${fmt(SQAB,4)}</td><td>${dfAB}</td><td>${fmt(QMAB,4)}</td><td>${fmt(FAB,4)}</td><td>${fmt(FcAB,4)}</td></tr>`;
+        html += `<tr><td>Resíduo</td><td>${fmt(SQR,4)}</td><td>${dfR}</td><td>${fmt(QMR,4)}</td><td></td><td></td></tr>`;
+        html += `<tr><td>Total</td><td>${fmt(SQT,4)}</td><td>${dfT}</td><td></td><td></td><td></td></tr>`;
+        html += `</tbody></table>`;
+        html += `<div style="margin-top:10px;">A: <span class="decision-pill ${rejA?'reject':'accept'}">${rejA?'Rejeita H0A':'Aceita H0A'}</span> &nbsp; B: <span class="decision-pill ${rejB?'reject':'accept'}">${rejB?'Rejeita H0B':'Aceita H0B'}</span> &nbsp; AB: <span class="decision-pill ${rejAB?'reject':'accept'}">${rejAB?'Rejeita H0AB':'Aceita H0AB'}</span></div>`;
+        out.innerHTML = html;
+      }
+    });
+  })();
+
+  /* ============================================================
+     MODULE 12: regressão linear simples
+     ============================================================ */
+  (function(){
+    const btn = document.getElementById('rsBtn');
+    if(!btn) return;
+    btn.addEventListener('click', ()=>{
+      const out = document.getElementById('rsOutput');
+      const lines = document.getElementById('rsData').value.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
+      const pairs = lines.map(l=>parseNums(l)).filter(p=>p.length>=2);
+      if(pairs.length < 3){ out.textContent = 'Informe ao menos 3 pares (x,y), um por linha.'; return; }
+      const alpha = parseFloat(document.getElementById('rsAlpha').value)/100;
+      const xstarRaw = document.getElementById('rsXstar').value;
+      const xstar = xstarRaw==='' ? null : parseFloat(xstarRaw);
+      const n = pairs.length;
+      const X = pairs.map(p=>p[0]), Y = pairs.map(p=>p[1]);
+      const xbar = mean(X), ybar = mean(Y);
+      const Sxx = X.reduce((s,x)=>s+Math.pow(x-xbar,2),0);
+      const Sxy = X.reduce((s,x,i)=>s+(x-xbar)*(Y[i]-ybar),0);
+      const Syy = Y.reduce((s,y)=>s+Math.pow(y-ybar,2),0);
+      if(Sxx===0){ out.textContent = 'Todos os valores de x são iguais — não é possível ajustar uma reta.'; return; }
+      const b1 = Sxy/Sxx, b0 = ybar - b1*xbar;
+      const yhat = X.map(x=>b0+b1*x);
+      const SQT = Syy;
+      const SQRes = Y.reduce((s,y,i)=>s+Math.pow(y-yhat[i],2),0);
+      const SQReg = SQT-SQRes;
+      const dfReg=1, dfRes=n-2;
+      const Sr2 = SQRes/dfRes;
+      const F = SQReg/Sr2;
+      const Fc = fQuantile(1-alpha, dfReg, dfRes);
+      const R2 = SQReg/SQT;
+      const r = Sxy/Math.sqrt(Sxx*Syy);
+      const tcrit = tQuantile(1-alpha/2, dfRes);
+      const seB1 = Math.sqrt(Sr2/Sxx);
+      const reject = F > Fc;
+
+      let html = `<table class="datatab" style="margin-top:0;"><caption>Tabela ANOVA</caption>`;
+      html += `<thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>F</th></tr></thead><tbody>`;
+      html += `<tr><td>Regressão</td><td>${fmt(SQReg,4)}</td><td>${dfReg}</td><td>${fmt(SQReg,4)}</td><td rowspan="2" style="vertical-align:middle;">${fmt(F,4)}</td></tr>`;
+      html += `<tr><td>Resíduo</td><td>${fmt(SQRes,4)}</td><td>${dfRes}</td><td>${fmt(Sr2,4)}</td></tr>`;
+      html += `<tr><td>Total</td><td>${fmt(SQT,4)}</td><td>${n-1}</td><td></td><td></td></tr>`;
+      html += `</tbody></table>`;
+      html += `<div style="margin-top:10px; font-family:var(--mono); font-size:14px;">ŷ = ${fmt(b0,4)} + ${fmt(b1,4)}·x &nbsp;·&nbsp; R² = ${fmt(R2,4)} &nbsp;·&nbsp; r = ${fmt(r,4)}</div>`;
+      html += `<div style="margin-top:6px; font-family:var(--mono); font-size:14px;">Fcrítico(${dfReg},${dfRes}; ${fmt(alpha*100,1)}%) = ${fmt(Fc,4)} &nbsp;·&nbsp; H0: β1=0</div>`;
+      html += `<div class="decision-pill ${reject?'reject':'accept'}">${reject?'Rejeita H0 — regressão significativa':'Aceita H0 — regressão não significativa'}</div>`;
+      html += `<div style="margin-top:10px;">IC(β1, ${fmt((1-alpha)*100,1)}%) = ${fmt(b1,4)} ± ${fmt(tcrit,3)}×${fmt(seB1,4)} = [${fmt(b1-tcrit*seB1,4)} ; ${fmt(b1+tcrit*seB1,4)}]</div>`;
+
+      if(xstar!==null && !isNaN(xstar)){
+        const yhatStar = b0+b1*xstar;
+        const seMean = Math.sqrt(Sr2*(1/n+Math.pow(xstar-xbar,2)/Sxx));
+        const seFut = Math.sqrt(Sr2*(1+1/n+Math.pow(xstar-xbar,2)/Sxx));
+        html += `<div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--line);">Previsão em x*=${fmt(xstar,4)}: ŷ* = ${fmt(yhatStar,4)}</div>`;
+        html += `<div>IC para a média: ${fmt(yhatStar,4)} ± ${fmt(tcrit,3)}×${fmt(seMean,4)} = [${fmt(yhatStar-tcrit*seMean,4)} ; ${fmt(yhatStar+tcrit*seMean,4)}]</div>`;
+        html += `<div>IC para uma futura observação: ${fmt(yhatStar,4)} ± ${fmt(tcrit,3)}×${fmt(seFut,4)} = [${fmt(yhatStar-tcrit*seFut,4)} ; ${fmt(yhatStar+tcrit*seFut,4)}]</div>`;
+      }
+      out.innerHTML = html;
+    });
+  })();
+
+  /* ============================================================
+     MODULE 13: regressão linear múltipla
+     ============================================================ */
+  (function(){
+    const btn = document.getElementById('rmBtn');
+    if(!btn) return;
+    btn.addEventListener('click', ()=>{
+      const out = document.getElementById('rmOutput');
+      const Y = parseNums(document.getElementById('rmY').value);
+      const Xrows = document.getElementById('rmX').value.split(/[;\n]/).map(l=>l.trim()).filter(l=>l.length>0).map(l=>parseNums(l));
+      const alpha = parseFloat(document.getElementById('rmAlpha').value)/100;
+      const n = Y.length;
+      if(n < 3 || Xrows.length !== n){ out.textContent = 'O número de linhas de X deve ser igual ao número de valores de Y (mínimo 3 observações).'; return; }
+      const k = Xrows[0].length;
+      if(k < 1 || !Xrows.every(r=>r.length===k)){ out.textContent = 'Todas as linhas de X devem ter o mesmo número de colunas (k≥1).'; return; }
+      const dfRes = n-1-k;
+      if(dfRes < 1){ out.textContent = 'Poucas observações para o número de variáveis — aumente n ou reduza k.'; return; }
+
+      const Xd = Xrows.map(r=>[1,...r]);
+      const Yc = Y.map(y=>[y]);
+      let beta, invXtX;
+      try{
+        const Xt = matTranspose(Xd);
+        const XtX = matMul(Xt,Xd);
+        const XtY = matMul(Xt,Yc);
+        invXtX = matInverse(XtX);
+        beta = matMul(invXtX, XtY).map(r=>r[0]);
+      } catch(e){ out.textContent = e.message || 'Não foi possível resolver o sistema — verifique os dados (colunas colineares?).'; return; }
+
+      const yhat = Xd.map(row=>row.reduce((s,x,j)=>s+x*beta[j],0));
+      const ybar = mean(Y);
+      const SQT = Y.reduce((s,y)=>s+Math.pow(y-ybar,2),0);
+      const SQRes = Y.reduce((s,y,i)=>s+Math.pow(y-yhat[i],2),0);
+      const SQReg = SQT-SQRes;
+      const dfReg = k;
+      const Sr2 = SQRes/dfRes;
+      const F = (SQReg/dfReg)/Sr2;
+      const Fc = fQuantile(1-alpha, dfReg, dfRes);
+      const R2 = SQReg/SQT;
+      const tcrit = tQuantile(1-alpha/2, dfRes);
+      const reject = F > Fc;
+
+      let html = `<table class="datatab" style="margin-top:0;"><caption>Tabela ANOVA — k=${k} variáveis auxiliares</caption>`;
+      html += `<thead><tr><th>FV</th><th>SQ</th><th>G.L.</th><th>QM</th><th>F</th></tr></thead><tbody>`;
+      html += `<tr><td>Regressão</td><td>${fmt(SQReg,4)}</td><td>${dfReg}</td><td>${fmt(SQReg/dfReg,4)}</td><td rowspan="2" style="vertical-align:middle;">${fmt(F,4)}</td></tr>`;
+      html += `<tr><td>Resíduo</td><td>${fmt(SQRes,4)}</td><td>${dfRes}</td><td>${fmt(Sr2,4)}</td></tr>`;
+      html += `<tr><td>Total</td><td>${fmt(SQT,4)}</td><td>${n-1}</td><td></td><td></td></tr>`;
+      html += `</tbody></table>`;
+      html += `<div style="margin-top:10px; font-family:var(--mono); font-size:14px;">R² = ${fmt(R2,4)} &nbsp;·&nbsp; Fcrítico(${dfReg},${dfRes}; ${fmt(alpha*100,1)}%) = ${fmt(Fc,4)} &nbsp;·&nbsp; H0: β1=...=β${k}=0</div>`;
+      html += `<div class="decision-pill ${reject?'reject':'accept'}">${reject?'Rejeita H0 — regressão significativa':'Aceita H0 — regressão não significativa'}</div>`;
+
+      let rows = '';
+      for(let i=0;i<beta.length;i++){
+        const se = Math.sqrt(invXtX[i][i]*Sr2);
+        const t = beta[i]/se;
+        const sig = Math.abs(t) > tcrit;
+        rows += `<tr><td>${i===0?'β0 (intercepto)':'β'+i}</td><td>${fmt(beta[i],4)}</td><td>${fmt(se,4)}</td><td>${fmt(t,3)}</td><td${sig?' style="font-weight:700;color:var(--teal-deep);"':''}>${sig?'Significativo *':'Não significativo'}</td></tr>`;
+      }
+      html += `<table class="datatab" style="margin-top:16px;"><caption>Teste individual de cada coeficiente (t crítico = ${fmt(tcrit,3)})</caption>`;
+      html += `<thead><tr><th>Coeficiente</th><th>Estimativa</th><th>Erro padrão</th><th>t</th><th>Decisão (H0: βi=0)</th></tr></thead><tbody>${rows}</tbody></table>`;
+
       out.innerHTML = html;
     });
   })();
