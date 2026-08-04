@@ -1,0 +1,3272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRO 3200 — Estatística · Guia de estudo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --paper: #EEF0E9;
+    --paper-2: #E6E9DF;
+    --ink: #14213D;
+    --ink-soft: #4E5A70;
+    --ink-faint: #8A93A3;
+    --teal: #1F5C55;
+    --teal-deep: #143E39;
+    --amber: #B9800A;
+    --amber-soft: #EFD9A6;
+    --rust: #B34B31;
+    --rust-soft: #F0DAD1;
+    --line: #D3D6C8;
+    --white: #FBFBF8;
+    --shadow: 0 1px 2px rgba(20,33,61,0.06), 0 8px 24px rgba(20,33,61,0.06);
+    --radius: 14px;
+    --display: "Space Grotesk", sans-serif;
+    --body: "Newsreader", Georgia, serif;
+    --mono: "IBM Plex Mono", monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:18px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{
+    font-family:var(--display);
+    font-weight:600;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+    margin:0;
+  }
+
+  a{color:var(--teal); text-decoration-thickness:1px;}
+  a:focus-visible, button:focus-visible, .tab:focus-visible, .qa-toggle:focus-visible, .module-link:focus-visible{
+    outline:3px solid var(--amber);
+    outline-offset:2px;
+    border-radius:4px;
+  }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--teal);
+    display:inline-block;
+  }
+
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- APP SHELL ---------- */
+  .app{ display:flex; align-items:stretch; min-height:100vh; }
+
+  .sidebar{
+    width:272px; flex:0 0 272px;
+    background:var(--paper-2); border-right:1px solid var(--line);
+    position:sticky; top:0; align-self:flex-start; height:100vh; overflow-y:auto;
+    padding:26px 0 40px;
+    display:flex; flex-direction:column;
+  }
+  .sidebar-brand{ padding:0 22px 20px; border-bottom:1px solid var(--line); margin-bottom:20px; }
+  .brand-mark{ font-family:var(--display); font-weight:700; font-size:16px; letter-spacing:.01em; }
+  .brand-sub{ font-family:var(--mono); font-size:11px; color:var(--ink-faint); margin-top:4px; }
+
+  .module-group{ padding:0 14px; margin-bottom:26px; }
+  .group-label{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-faint); padding:0 10px 8px;
+  }
+  .module-link{
+    width:100%; display:flex; align-items:center; gap:10px;
+    background:none; border:none; text-align:left; cursor:pointer;
+    padding:10px 10px; border-radius:9px; font-family:var(--body); font-size:15.5px; color:var(--ink-soft);
+    transition:background .15s, color .15s;
+  }
+  .module-link:hover{ background:rgba(31,92,85,0.08); color:var(--ink); }
+  .module-link.active{ background:var(--ink); color:var(--white); }
+  .module-link.active .ml-index{ color:var(--amber); }
+  .ml-index{ font-family:var(--mono); font-size:11px; color:var(--teal); flex:0 0 auto; }
+  .ml-title{ flex:1; line-height:1.28; }
+  .ml-tag{
+    font-family:var(--mono); font-size:9px; text-transform:uppercase; letter-spacing:.04em;
+    color:var(--ink-faint); background:rgba(20,33,61,0.06); padding:3px 7px; border-radius:999px; flex:0 0 auto;
+  }
+  .module-link.active .ml-tag{ background:rgba(255,255,255,0.16); color:var(--paper); }
+  .module-link[data-status="soon"]{ opacity:0.82; }
+
+  .sidebar-foot{
+    margin-top:auto; padding:16px 22px 0; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:11px; color:var(--ink-faint); line-height:1.7;
+  }
+
+  .main-col{ flex:1; min-width:0; }
+
+  .mobile-topbar{ display:none; }
+  .sidebar-scrim{ display:none; }
+
+  @media (max-width:900px){
+    .app{ display:block; }
+    .sidebar{
+      position:fixed; left:0; top:0; height:100vh; width:82vw; max-width:300px; z-index:90;
+      transform:translateX(-100%); transition:transform .25s ease; box-shadow:var(--shadow);
+    }
+    .sidebar.open{ transform:translateX(0); }
+    .sidebar-scrim{
+      display:block; position:fixed; inset:0; background:rgba(20,33,61,0.35); z-index:80;
+      opacity:0; pointer-events:none; transition:opacity .2s;
+    }
+    .sidebar-scrim.show{ opacity:1; pointer-events:auto; }
+    .mobile-topbar{
+      display:flex; align-items:center; gap:12px; height:56px; padding:0 18px;
+      border-bottom:1px solid var(--line); background:var(--paper); position:sticky; top:0; z-index:60;
+    }
+    .mobile-topbar .brand-mark{ font-size:14px; }
+    .hamburger{
+      background:var(--white); border:1px solid var(--line); border-radius:8px;
+      padding:8px 12px; cursor:pointer; font-family:var(--mono); font-size:13px; color:var(--ink);
+    }
+  }
+
+  /* ---------- PAGE SUBNAV (per module) ---------- */
+  .page-subnav{
+    position:sticky; top:0; z-index:40;
+    background:rgba(238,240,233,0.92); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .page-subnav-inner{
+    max-width:1080px; margin:0 auto; padding:0 28px;
+    display:flex; align-items:center; gap:22px; height:52px;
+  }
+  .psn-title{ font-family:var(--mono); font-size:12.5px; font-weight:600; color:var(--ink); white-space:nowrap; }
+  .navlinks{ display:flex; gap:18px; overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none; }
+  .navlinks::-webkit-scrollbar{display:none;}
+  .navlinks .navlink{
+    font-family:var(--mono); font-size:12.5px; color:var(--ink-soft);
+    background:none; border:none; padding:4px 2px; margin:0; cursor:pointer;
+    white-space:nowrap; border-bottom:2px solid transparent; transition:color .15s, border-color .15s;
+  }
+  .navlinks .navlink:hover, .navlinks .navlink.active{ color:var(--ink); border-color:var(--amber); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; padding:64px 0 60px; overflow:hidden;
+    background: radial-gradient(ellipse 900px 500px at 78% -10%, rgba(31,92,85,0.10), transparent 60%), var(--paper);
+  }
+  .hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:center; }
+  .hero h1{ font-size:clamp(1.9rem, 3.6vw, 2.9rem); line-height:1.08; margin:16px 0 20px; }
+  .hero h1 em{ font-style:normal; color:var(--teal); }
+  .hero p.lede{ font-size:18.5px; color:var(--ink-soft); max-width:46ch; margin:0 0 26px; }
+  .hero-meta{ display:flex; gap:22px; flex-wrap:wrap; font-family:var(--mono); font-size:12.5px; color:var(--ink-faint); }
+  .hero-meta strong{ color:var(--ink-soft); font-weight:600; }
+
+  #heroViz{
+    aspect-ratio:1/1; background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); display:grid; grid-template-columns:repeat(11, 1fr); gap:6%; padding:10%; place-items:center;
+  }
+  #heroViz .d{ width:100%; aspect-ratio:1/1; border-radius:50%; background:var(--line); transition:background .4s ease, transform .4s ease; }
+  #heroViz .d.on{ background:var(--amber); transform:scale(1.25); }
+
+  @media (max-width:820px){
+    .hero-grid{grid-template-columns:1fr;}
+    #heroViz, #heroBars, #heroTarget{max-width:320px; margin:0 auto;}
+  }
+
+  #heroBars{
+    aspect-ratio:1/1; background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); display:flex; align-items:flex-end; justify-content:center; gap:5%; padding:14% 10% 12%;
+  }
+  #heroBars .b{ flex:1; background:var(--line); border-radius:5px 5px 0 0; transition:height .7s cubic-bezier(.2,.9,.3,1.05), background .7s; min-height:6%; }
+  #heroBars .b.hi{ background:var(--amber); }
+
+  /* ---------- SECTIONS ---------- */
+  .section{ padding:72px 0; border-bottom:1px solid var(--line); }
+  .section.alt{ background:var(--paper-2); }
+  .section h2{ font-size:clamp(1.5rem, 2.6vw, 2.1rem); margin-bottom:20px; }
+  .section .intro{ color:var(--ink-soft); max-width:64ch; font-size:18px; margin-bottom:36px; }
+  .section .intro:last-child{margin-bottom:0;}
+
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* ---------- FLUXOGRAMA ---------- */
+  .flow{ display:flex; align-items:stretch; justify-content:space-between; gap:0; margin-top:8px; flex-wrap:wrap; }
+  .flow-box{ background:var(--white); border:1px solid var(--line); border-radius:10px; padding:20px 18px; flex:1 1 150px; min-width:130px; box-shadow:var(--shadow); }
+  .flow-box .fb-label{ font-family:var(--mono); font-size:11px; color:var(--teal); letter-spacing:.08em; text-transform:uppercase;}
+  .flow-box .fb-title{ font-family:var(--display); font-weight:600; font-size:17px; margin-top:6px;}
+  .flow-arrow{ display:flex; align-items:center; justify-content:center; flex:0 0 34px; color:var(--ink-faint); font-size:20px; }
+  @media (max-width:760px){ .flow{flex-direction:column;} .flow-arrow{transform:rotate(90deg); flex:0 0 24px;} }
+  .flow-note{ margin-top:18px; font-family:var(--mono); font-size:13px; color:var(--ink-soft); border-left:3px solid var(--teal); padding-left:14px; }
+
+  /* ---------- CONCEITOS DIAGRAM ---------- */
+  .concept-chain{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:40px; }
+  .cc-node{ font-family:var(--display); font-weight:600; font-size:15px; background:var(--white); border:1.5px solid var(--ink); border-radius:999px; padding:9px 18px; }
+  .cc-node.hi{ border-color:var(--teal); color:var(--teal); }
+  .cc-op{ font-family:var(--mono); font-size:12px; color:var(--ink-faint); }
+  .cc-arrow{ color:var(--ink-faint); }
+
+  .def-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:760px){ .def-grid{grid-template-columns:1fr;} }
+  .def-card{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:22px 24px; }
+  .def-card h3{ font-size:16px; margin-bottom:8px; }
+  .def-card p{ margin:0; color:var(--ink-soft); font-size:16.5px; }
+  .def-card .tag{ font-family:var(--mono); font-size:11px; color:var(--teal); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; display:block; }
+
+  /* ---------- CALLOUT / WARN ---------- */
+  .callout{ background:var(--rust-soft); border:1px solid rgba(179,75,49,0.35); border-radius:var(--radius); padding:26px 28px; margin-top:8px; }
+  .callout .eyebrow{ color:var(--rust); }
+  .callout .eyebrow::before{ background:var(--rust); }
+  .callout p{ margin:0 0 10px; color:var(--ink); }
+  .callout p:last-child{margin-bottom:0;}
+
+  /* ---------- TIPOS (comparison) ---------- */
+  .compare{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:760px){ .compare{grid-template-columns:1fr;} }
+  .compare-card{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:28px; }
+  .compare-card.p{ border-top:4px solid var(--teal); }
+  .compare-card.np{ border-top:4px solid var(--amber); }
+  .compare-card h3{ font-size:20px; margin-bottom:10px; }
+  .compare-card ul{ margin:16px 0 0; padding-left:20px; color:var(--ink-soft); }
+  .compare-card li{ margin-bottom:6px; }
+  .compare-card .verdict{ margin-top:16px; font-family:var(--mono); font-size:13px; padding:10px 12px; border-radius:8px; }
+  .compare-card.p .verdict{ background:#E4EEEC; color:var(--teal-deep); }
+  .compare-card.np .verdict{ background:var(--amber-soft); color:#6B4A02; }
+
+  /* ---------- SIMULADOR ---------- */
+  .sim-tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+  .tab{ font-family:var(--mono); font-size:13.5px; cursor:pointer; background:var(--white); border:1px solid var(--line); color:var(--ink-soft); padding:10px 16px; border-radius:999px; transition:all .15s; }
+  .tab:hover{ border-color:var(--teal); color:var(--teal); }
+  .tab.active{ background:var(--ink); border-color:var(--ink); color:var(--white); }
+
+  .sim-layout{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:32px; align-items:start; }
+  @media (max-width:860px){ .sim-layout{grid-template-columns:1fr;} }
+
+  .sim-board{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); }
+  #popGrid{ display:grid; grid-template-columns:repeat(12, 1fr); gap:6px; }
+  .pdot{ aspect-ratio:1/1; border-radius:50%; background:var(--line); transition:transform .35s cubic-bezier(.2,.9,.3,1.3), background .35s; position:relative; }
+  .pdot[data-stratum="0"]{ background:#CFE0DC; }
+  .pdot[data-stratum="1"]{ background:#E7DCC2; }
+  .pdot[data-stratum="2"]{ background:#E6D2CB; }
+  .pdot.selected{ background:var(--amber) !important; transform:scale(1.3); box-shadow:0 0 0 2px rgba(185,128,10,0.25); }
+
+  .sim-legend{ display:flex; gap:18px; margin-top:16px; flex-wrap:wrap; font-family:var(--mono); font-size:12px; color:var(--ink-faint); }
+  .sim-legend .sw{ width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:6px; vertical-align:middle; }
+
+  .sim-panel h3{ font-size:19px; margin-bottom:10px; }
+  .sim-panel p{ color:var(--ink-soft); margin:0 0 16px; }
+  .sim-btn{ font-family:var(--display); font-weight:600; font-size:15px; background:var(--teal); color:var(--white); border:none; border-radius:10px; padding:13px 22px; cursor:pointer; transition:background .15s, transform .1s; }
+  .sim-btn:hover{ background:var(--teal-deep); }
+  .sim-btn:active{ transform:scale(0.98); }
+
+  .sim-example{ margin-top:22px; background:var(--paper-2); border:1px solid var(--line); border-radius:10px; padding:16px 18px; }
+  .sim-example .tag{ font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--teal); display:block; margin-bottom:6px;}
+  .sim-example p{ margin:0; font-size:15.5px; color:var(--ink); }
+
+  .sim-readout{ font-family:var(--mono); font-size:13px; color:var(--ink-faint); margin-top:14px; min-height:20px; }
+
+  /* ---------- RANDOM TABLE ---------- */
+  .rt-layout{ display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start; }
+  @media (max-width:860px){ .rt-layout{grid-template-columns:1fr;} }
+  table.randtab{ width:100%; border-collapse:collapse; font-family:var(--mono); font-size:12.5px; background:var(--white); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  table.randtab th, table.randtab td{ padding:6px 8px; text-align:center; border-bottom:1px solid var(--line); }
+  table.randtab th{ background:var(--paper-2); color:var(--teal); font-weight:600; }
+  table.randtab td.rowhead{ color:var(--ink-faint); background:var(--paper-2); font-weight:600; }
+
+  .gen-box{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:24px; }
+  .gen-row{ display:flex; gap:14px; margin-bottom:18px; flex-wrap:wrap; }
+  .gen-field label{ display:block; font-family:var(--mono); font-size:11px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; }
+  .gen-field input{ width:90px; font-family:var(--mono); font-size:15px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink); }
+  .gen-output{ margin-top:16px; font-family:var(--mono); font-size:15px; color:var(--teal-deep); min-height:28px; line-height:1.7; word-break:break-word; }
+  .gen-output .num{ display:inline-block; background:var(--amber-soft); color:#6B4A02; padding:2px 9px; border-radius:6px; margin:2px 3px 2px 0; font-weight:600; }
+
+  /* ---------- ESTRAT X CONGLOM ---------- */
+  .vs-grid{ display:grid; grid-template-columns:1fr auto 1fr; gap:0; align-items:stretch; }
+  @media (max-width:760px){ .vs-grid{grid-template-columns:1fr;} }
+  .vs-card{ background:var(--white); border:1px solid var(--line); padding:26px; }
+  .vs-card:first-child{ border-radius:var(--radius) 0 0 var(--radius); }
+  .vs-card:last-child{ border-radius:0 var(--radius) var(--radius) 0; }
+  @media (max-width:760px){
+    .vs-card:first-child{ border-radius:var(--radius) var(--radius) 0 0; }
+    .vs-card:last-child{ border-radius:0 0 var(--radius) var(--radius); border-top:none; }
+  }
+  .vs-divider{ display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:14px; color:var(--ink-faint); background:var(--paper-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:0 18px; }
+  @media (max-width:760px){ .vs-divider{padding:10px; border-left:1px solid var(--line); border-right:1px solid var(--line); border-top:none;} }
+  .vs-card h3{ font-size:18px; margin-bottom:12px; }
+  .vs-card p{ color:var(--ink-soft); font-size:16px; }
+
+  /* ---------- NAO PROBABILISTICA CARDS ---------- */
+  .np-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  @media (max-width:860px){ .np-grid{grid-template-columns:1fr;} }
+  .np-card{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:24px; }
+  .np-card .n{ font-family:var(--display); font-size:13px; color:var(--amber); font-weight:700; letter-spacing:.05em; }
+  .np-card h3{ font-size:17px; margin:8px 0 10px; }
+  .np-card p{ margin:0; color:var(--ink-soft); font-size:15.5px; }
+
+  /* ---------- CASOS FAMOSOS ---------- */
+  .case-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:760px){ .case-grid{grid-template-columns:1fr;} }
+  .case-card{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:26px; position:relative; }
+  .case-year{ font-family:var(--display); font-size:30px; font-weight:700; color:var(--rust); }
+  .case-card h3{ font-size:17px; margin:6px 0 12px; }
+  .case-card p{ color:var(--ink-soft); margin:0 0 8px; font-size:15.5px; }
+  .case-vs{ font-family:var(--mono); font-size:13px; color:var(--ink); background:var(--paper-2); padding:8px 12px; border-radius:8px; margin-top:10px; display:inline-block; }
+
+  /* ---------- CENSO TIMELINE ---------- */
+  .tl{ position:relative; padding-left:28px; margin-top:8px; }
+  .tl::before{ content:""; position:absolute; left:6px; top:4px; bottom:4px; width:2px; background:var(--line); }
+  .tl-item{ position:relative; padding-bottom:26px; }
+  .tl-item::before{ content:""; position:absolute; left:-28px; top:4px; width:10px; height:10px; border-radius:50%; background:var(--teal); border:2px solid var(--paper); box-shadow:0 0 0 1px var(--teal); }
+  .tl-item .yr{ font-family:var(--mono); font-weight:600; color:var(--teal); font-size:14px; }
+  .tl-item p{ margin:4px 0 0; color:var(--ink-soft); }
+
+  .curio{ margin-top:32px; background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius); padding:20px 24px; font-size:15.5px; color:var(--ink-soft); }
+  .curio .eyebrow{margin-bottom:10px;}
+
+  /* ---------- QUIZ ---------- */
+  .qa-card{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:24px 26px; margin-bottom:16px; }
+  .qa-card .qlabel{ font-family:var(--mono); font-size:12px; color:var(--amber); text-transform:uppercase; letter-spacing:.06em; }
+  .qa-card p.q{ margin:8px 0 16px; font-size:17px; }
+  .qa-toggle{ font-family:var(--mono); font-size:13px; background:none; border:1px solid var(--ink); color:var(--ink); padding:8px 16px; border-radius:999px; cursor:pointer; }
+  .qa-toggle:hover{ background:var(--ink); color:var(--white); }
+  .qa-answer{ display:none; margin-top:16px; padding-top:16px; border-top:1px dashed var(--line); }
+  .qa-answer.show{ display:block; }
+  .qa-answer .verdict{ font-family:var(--display); font-weight:600; color:var(--teal); font-size:16px; margin-bottom:6px; }
+  .qa-answer p{ margin:0; color:var(--ink-soft); }
+
+  .module-footer{ padding:48px 0 64px; }
+  .module-footer .refs{ font-family:var(--mono); font-size:12.5px; color:var(--ink-faint); line-height:1.9; }
+  .module-footer .credit{ font-family:var(--mono); font-size:12px; color:var(--ink-faint); border-top:1px solid var(--line); padding-top:18px; margin-top:18px; }
+
+  /* ---------- PLACEHOLDER PAGE ---------- */
+  .placeholder-wrap{ padding:110px 0 80px; }
+  .placeholder-dots{ margin-top:40px; display:grid; grid-template-columns:repeat(16,1fr); gap:8px; max-width:520px; }
+  .placeholder-dots .pd{ aspect-ratio:1/1; border-radius:50%; background:var(--line); opacity:.55; }
+
+  /* ================================================================
+     MODULE 2 ADDITIONS — Estatística Descritiva
+     ================================================================ */
+
+  /* ---------- teal callout variant (insight, not warning) ---------- */
+  .callout.teal{ background:#E4EEEC; border-color:rgba(31,92,85,0.3); }
+  .callout.teal .eyebrow{ color:var(--teal); }
+  .callout.teal .eyebrow::before{ background:var(--teal); }
+
+  /* ---------- formula box ---------- */
+  .formula-box{
+    background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px 26px; margin:18px 0; overflow-x:auto;
+  }
+  .formula-box .f{ font-family:var(--mono); font-size:16px; color:var(--teal-deep); text-align:center; white-space:nowrap; }
+  .formula-box .f-note{ font-family:var(--mono); font-size:12px; color:var(--ink-faint); margin-top:10px; text-align:center; }
+
+  /* ---------- plain data tables ---------- */
+  table.datatab{ width:100%; border-collapse:collapse; font-family:var(--body); font-size:16px; background:var(--white); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  table.datatab caption{ text-align:left; font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--teal); padding:12px 14px 0; }
+  table.datatab th, table.datatab td{ padding:10px 14px; text-align:center; border-bottom:1px solid var(--line); }
+  table.datatab thead th{ background:var(--paper-2); color:var(--ink); font-family:var(--display); font-weight:600; font-size:14px; border-bottom:2px solid var(--teal); }
+  table.datatab td:first-child, table.datatab th:first-child{ text-align:left; }
+  table.datatab tr:last-child td{ border-bottom:none; font-weight:600; background:var(--paper-2); }
+  .table-pair{ display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+  @media (max-width:760px){ .table-pair{grid-template-columns:1fr;} }
+
+  /* ---------- classificador de variáveis (mini-game) ---------- */
+  .classify-game{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:30px; box-shadow:var(--shadow); text-align:center; }
+  .cz-score{ font-family:var(--mono); font-size:12px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px; }
+  .cz-prompt{ font-family:var(--display); font-weight:600; font-size:26px; margin:6px 0 26px; color:var(--ink); min-height:36px; }
+  .cz-options{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; max-width:640px; margin:0 auto; }
+  @media (max-width:640px){ .cz-options{grid-template-columns:1fr 1fr;} }
+  .cz-btn{
+    font-family:var(--mono); font-size:14px; background:var(--paper); border:1.5px solid var(--line); color:var(--ink-soft);
+    padding:14px 10px; border-radius:10px; cursor:pointer; transition:all .15s;
+  }
+  .cz-btn:hover{ border-color:var(--teal); color:var(--teal); }
+  .cz-btn.correct{ background:#E4EEEC; border-color:var(--teal); color:var(--teal-deep); }
+  .cz-btn.wrong{ background:var(--rust-soft); border-color:var(--rust); color:var(--rust); }
+  .cz-feedback{ margin-top:20px; font-family:var(--mono); font-size:13.5px; color:var(--ink-soft); min-height:20px; }
+
+  /* ---------- chart gallery ---------- */
+  .gallery-label{ font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); margin:28px 0 14px; }
+  .gallery-label:first-child{ margin-top:0; }
+  .chart-card{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:20px; }
+  .chart-icon{ height:64px; display:flex; align-items:flex-end; justify-content:center; margin-bottom:14px; }
+  .chart-card h3{ font-size:16px; margin-bottom:6px; }
+  .chart-card p{ margin:0; color:var(--ink-soft); font-size:14.5px; }
+  .chart-card .caution{ margin-top:10px; font-family:var(--mono); font-size:11.5px; color:var(--rust); }
+
+  /* ---------- box-plot / outlier tool ---------- */
+  .bt-layout{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:32px; align-items:start; }
+  @media (max-width:860px){ .bt-layout{grid-template-columns:1fr;} }
+  .bt-input textarea{
+    width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--line);
+    border-radius:8px; background:var(--paper); color:var(--ink); resize:vertical; min-height:90px;
+  }
+  .bt-presets{ display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+  .bt-preset{ font-family:var(--mono); font-size:12px; background:none; border:1px solid var(--line); color:var(--ink-soft); padding:6px 12px; border-radius:999px; cursor:pointer; }
+  .bt-preset:hover{ border-color:var(--teal); color:var(--teal); }
+  .stat-pills{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .stat-pill{ font-family:var(--mono); font-size:12.5px; background:var(--paper-2); border:1px solid var(--line); border-radius:8px; padding:6px 11px; color:var(--ink-soft); }
+  .stat-pill strong{ color:var(--ink); }
+  .bt-board{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); }
+  .bt-outliers{ margin-top:14px; font-family:var(--mono); font-size:13px; color:var(--rust); min-height:18px; }
+  .bt-outliers.ok{ color:var(--teal); }
+
+  /* ---------- correlation simulator ---------- */
+  .corr-layout{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:32px; align-items:start; }
+  @media (max-width:860px){ .corr-layout{grid-template-columns:1fr;} }
+  .corr-board{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); }
+  .corr-panel h3{ font-size:19px; margin-bottom:10px; }
+  .corr-panel p{ color:var(--ink-soft); margin:0 0 16px; }
+  .corr-slider-row{ margin-bottom:18px; }
+  .corr-slider-row label{ display:flex; justify-content:space-between; font-family:var(--mono); font-size:12px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+  .corr-slider-row label span{ color:var(--teal); font-weight:600; }
+  .corr-slider-row input[type="range"]{ width:100%; accent-color:var(--teal); }
+  .corr-readout{ font-family:var(--mono); font-size:14px; color:var(--teal-deep); margin-top:14px; min-height:22px; }
+
+  /* ---------- formula callout for outlier fences ---------- */
+  .fence-note{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+  .fence-note span{ font-family:var(--mono); font-size:12.5px; background:var(--paper-2); border:1px solid var(--line); border-radius:8px; padding:8px 12px; color:var(--ink-soft); }
+
+  /* ================================================================
+     MODULE 3 ADDITIONS — Estimação Pontual de Parâmetros
+     ================================================================ */
+
+  /* ---------- hero target viz (bullseye: dispersão de estimativas) ---------- */
+  #heroTarget{
+    aspect-ratio:1/1; background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); display:flex; align-items:center; justify-content:center; padding:6%;
+  }
+  #heroTarget svg{ width:100%; height:100%; }
+
+  /* ---------- preset buttons for the likelihood simulator (visually identical to .bt-preset, separate namespace) ---------- */
+  .mle-preset{ font-family:var(--mono); font-size:12px; background:none; border:1px solid var(--line); color:var(--ink-soft); padding:6px 12px; border-radius:999px; cursor:pointer; }
+  .mle-preset:hover{ border-color:var(--teal); color:var(--teal); }
+
+</style>
+</head>
+<body>
+
+<div class="sidebar-scrim" id="scrim"></div>
+
+<div class="mobile-topbar">
+  <button class="hamburger" id="hamburger" aria-label="Abrir menu de módulos">☰ Módulos</button>
+  <div class="brand-mark">PRO 3200</div>
+</div>
+
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-mark">PRO&nbsp;3200</div>
+      <div class="brand-sub">Estatística · EP-USP</div>
+    </div>
+    <nav id="moduleNav"></nav>
+    <div class="sidebar-foot">Guia de estudo vivo — novos módulos entram conforme os slides chegam.</div>
+  </aside>
+
+  <div class="main-col">
+    <div class="module-stage" id="moduleStage">
+
+      <!-- ================= MODULE: INTRO E AMOSTRAGEM (READY) ================= -->
+      <div class="module-page" data-module="intro-amostragem" id="page-intro-amostragem">
+
+        <div class="page-subnav">
+          <div class="page-subnav-inner">
+            <span class="psn-title">P1 · Introdução e Amostragem</span>
+            <div class="navlinks">
+              <button class="navlink" data-target="fluxo">Fluxo</button>
+              <button class="navlink" data-target="conceitos">Conceitos</button>
+              <button class="navlink" data-target="tipos">Tipos</button>
+              <button class="navlink" data-target="simulador">Simulador</button>
+              <button class="navlink" data-target="aleatorios">Sorteio</button>
+              <button class="navlink" data-target="nao-probabilistica">Não prob.</button>
+              <button class="navlink" data-target="casos-famosos">Casos</button>
+              <button class="navlink" data-target="censo">Censo</button>
+              <button class="navlink" data-target="exercicios">Exercícios</button>
+            </div>
+          </div>
+        </div>
+
+        <header class="hero" id="inicio">
+          <div class="wrap hero-grid">
+            <div>
+              <div class="eyebrow">Preliminares · Profas. Linda Lee Ho e Celma de Oliveira Ribeiro</div>
+              <h1>Ninguém consegue perguntar para todo mundo. <em>A estatística existe para isso.</em></h1>
+              <p class="lede">Antes de estimar médias, testar hipóteses ou ajustar um modelo de regressão, existe uma pergunta que decide tudo: <strong>como foi escolhida a amostra?</strong> Este guia cobre os fundamentos de amostragem — o primeiro módulo da disciplina.</p>
+              <div class="hero-meta">
+                <span><strong>Depto.</strong> Engenharia de Produção — USP</span>
+                <span><strong>Módulo</strong> Introdução e Amostragem</span>
+              </div>
+            </div>
+            <div id="heroViz" aria-hidden="true"></div>
+          </div>
+        </header>
+
+        <section class="section reveal" id="fluxo">
+          <div class="wrap">
+            <div class="eyebrow">01 · O caminho da pesquisa</div>
+            <h2>Do objetivo à conclusão — e de volta ao objetivo</h2>
+            <p class="intro">Toda investigação estatística segue o mesmo ciclo. Pular uma etapa — sair coletando dados sem planejamento, por exemplo — é a causa mais comum de conclusões erradas.</p>
+
+            <div class="flow">
+              <div class="flow-box"><div class="fb-label">1</div><div class="fb-title">Objetivo</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box"><div class="fb-label">2</div><div class="fb-title">Planejamento<br><span style="font-weight:400;font-size:13px;color:var(--ink-soft);">instrumento de coleta, plano amostral</span></div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box"><div class="fb-label">3</div><div class="fb-title">Coleta</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box"><div class="fb-label">4</div><div class="fb-title">Análise</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box"><div class="fb-label">5</div><div class="fb-title">Conclusões</div></div>
+            </div>
+            <div class="flow-note">As conclusões alimentam de volta o objetivo: a pesquisa é um ciclo, não uma linha reta.</div>
+
+            <div class="def-grid" style="margin-top:36px;">
+              <div class="def-card">
+                <span class="tag">Instrumento de coleta</span>
+                <h3>Nem sempre é trivial de construir</h3>
+                <p>Pode ser um questionário estruturado (que precisa ser testado em campo antes de ir a sério), um instrumento propriamente dito — balança, aparelho especial, sempre calibrado — ou um experimento planejado.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Por que isso importa</span>
+                <h3>O plano amostral mora aqui</h3>
+                <p>É na etapa de planejamento que se decide quem será perguntado e como. Um erro aqui não se corrige depois — nem com a melhor análise estatística do mundo.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="conceitos">
+          <div class="wrap">
+            <div class="eyebrow">02 · Vocabulário essencial</div>
+            <h2>População, amostra e inferência</h2>
+            <p class="intro">Cinco palavras carregam praticamente todo o vocabulário de amostragem. Depois delas, o resto é método.</p>
+
+            <div class="concept-chain">
+              <div class="cc-node hi">População</div>
+              <span class="cc-arrow">→</span>
+              <span class="cc-op">amostragem</span>
+              <span class="cc-arrow">→</span>
+              <div class="cc-node hi">Amostra</div>
+              <span class="cc-arrow">→</span>
+              <span class="cc-op">estatística descritiva</span>
+              <span class="cc-arrow">→</span>
+              <div class="cc-node">Informação</div>
+              <span class="cc-arrow">→</span>
+              <span class="cc-op">inferência</span>
+              <span class="cc-arrow">→</span>
+              <div class="cc-node hi">Conclusões sobre a população</div>
+            </div>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Unidade amostral</span>
+                <h3>A unidade que entra na lista</h3>
+                <p>Depende da natureza da população. Exemplo clássico: um domicílio, ou um corpo de prova em um teste de material.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Unidade observacional</span>
+                <h3>De quem a informação é coletada</h3>
+                <p>Um domicílio pode ser a unidade amostral, mas cada morador dentro dele é uma unidade observacional — uma amostral pode gerar várias observacionais.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">População homogênea</span>
+                <h3>Só a variação natural importa</h3>
+                <p>Ex.: QI médio dos alunos da Poli. Grupo socioeconômico, religião ou gênero não mudam o que está sendo medido.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">População heterogênea</span>
+                <h3>Existe variação além da natural</h3>
+                <p>Ex.: satisfação com o ambiente da Poli pode diferir entre homens e mulheres — a população talvez precise ser dividida em grupos.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="cuidado">
+          <div class="wrap">
+            <div class="eyebrow">03 · Atenção</div>
+            <h2>Quando a amostra mente</h2>
+            <p class="intro">Um erro clássico: deixar o entrevistador escolher a unidade amostral. Ele tende a escolher a mais fácil — o domicílio mais próximo, o voluntário mais disponível.</p>
+            <div class="callout">
+              <div class="eyebrow">Exemplo</div>
+              <p>Uma pesquisa quer entender a satisfação de quem trabalha em um hospital. Em vez de sortear funcionários, aceita apenas voluntários dispostos a responder.</p>
+              <p><strong>O problema:</strong> talvez sejam justamente os mais insatisfeitos — ou os mais satisfeitos, não há como saber — que queiram participar. A amostra deixa de refletir a população hospitalar inteira. Ela está viciada, mesmo que ninguém tenha feito nada "errado" de propósito.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="tipos">
+          <div class="wrap">
+            <div class="eyebrow">04 · Dois caminhos</div>
+            <h2>Probabilística × Não probabilística</h2>
+            <p class="intro">A diferença entre as duas famílias de amostragem não é sutil: uma permite calcular o erro amostral e generalizar para a população; a outra, não.</p>
+            <div class="compare">
+              <div class="compare-card p">
+                <h3>Probabilística</h3>
+                <p>Todo elemento da população tem uma probabilidade conhecida e não nula de entrar na amostra.</p>
+                <ul>
+                  <li>Casual (aleatória) simples</li>
+                  <li>Sistemática</li>
+                  <li>Estratificada</li>
+                  <li>Conglomerados</li>
+                </ul>
+                <div class="verdict">Permite inferência + cálculo do erro amostral</div>
+              </div>
+              <div class="compare-card np">
+                <h3>Não probabilística</h3>
+                <p>Mais rápida e barata — muito usada em pesquisa de mercado e internet — mas sem garantias estatísticas.</p>
+                <ul>
+                  <li>A esmo / voluntários</li>
+                  <li>Intencional</li>
+                  <li>Por cotas</li>
+                </ul>
+                <div class="verdict">Resultados podem ser viciados — não generalizam</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="simulador">
+          <div class="wrap">
+            <div class="eyebrow">05 · Veja funcionando</div>
+            <h2>Simulador de amostragem</h2>
+            <p class="intro">Uma "população" de 120 elementos, dividida em três grupos de cor (estratos) e seis blocos espaciais (conglomerados). Escolha um método e sorteie — repare em <em>como</em> os pontos são escolhidos, não só em quantos.</p>
+
+            <div class="sim-tabs" role="tablist">
+              <button class="tab active" data-method="aas">Casual simples</button>
+              <button class="tab" data-method="sist">Sistemática</button>
+              <button class="tab" data-method="estrat">Estratificada</button>
+              <button class="tab" data-method="cong">Conglomerados</button>
+            </div>
+
+            <div class="sim-layout">
+              <div class="sim-board">
+                <div id="popGrid"></div>
+                <div class="sim-legend">
+                  <span><span class="sw" style="background:var(--line)"></span>não sorteado</span>
+                  <span><span class="sw" style="background:var(--amber)"></span>na amostra</span>
+                </div>
+                <div class="sim-readout" id="simReadout"></div>
+              </div>
+              <div class="sim-panel">
+                <h3 id="simTitle">Amostra casual (aleatória) simples</h3>
+                <p id="simDesc">Cada uma das 120 unidades tem exatamente a mesma probabilidade de ser sorteada — como números tirados de uma urna. Toda a inferência ensinada em cursos de estatística parte dessa suposição.</p>
+                <button class="sim-btn" id="simDraw">Sortear amostra</button>
+                <div class="sim-example" id="simExample">
+                  <span class="tag">Exemplo real</span>
+                  <p>Selecionar 5 alunos de uma população de 900 usando uma tabela de números aleatórios: linha 3, colunas 7–9 → alunos 246, 828, 716, 751, 188.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="aleatorios">
+          <div class="wrap">
+            <div class="eyebrow">06 · Da tabela ao software</div>
+            <h2>Como sortear, de fato</h2>
+            <p class="intro">Antes do computador, o sorteio vinha de uma tabela de números aleatórios: escolhe-se uma linha e coluna de partida e lê-se em sequência. Hoje, um gerador de pseudoaleatórios faz o mesmo em milissegundos — o princípio é idêntico.</p>
+
+            <div class="rt-layout">
+              <div>
+                <p style="font-family:var(--mono); font-size:12px; color:var(--ink-faint); margin-bottom:10px;">TRECHO DA TABELA · linha 9, coluna 5 → 1, 0, 0, 1, 8, 4, 7, 0, 1, 3</p>
+                <table class="randtab">
+                  <thead><tr><th></th><th>1</th><th>5</th><th>9</th><th>13</th><th>17</th></tr></thead>
+                  <tbody id="randTabBody"></tbody>
+                </table>
+              </div>
+              <div class="gen-box">
+                <span class="tag" style="font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--teal); letter-spacing:.06em;">Gerador de pseudoaleatórios</span>
+                <div class="gen-row" style="margin-top:12px;">
+                  <div class="gen-field">
+                    <label for="popSize">Tamanho da população (N)</label>
+                    <input type="number" id="popSize" value="900" min="1" max="999999">
+                  </div>
+                  <div class="gen-field">
+                    <label for="sampSize">Tamanho da amostra (n)</label>
+                    <input type="number" id="sampSize" value="5" min="1" max="50">
+                  </div>
+                </div>
+                <button class="sim-btn" id="genBtn">Sortear números</button>
+                <div class="gen-output" id="genOutput">Clique para sortear.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="estrat-vs-cong">
+          <div class="wrap">
+            <div class="eyebrow">07 · Não confunda</div>
+            <h2>Estratificada × Conglomerados</h2>
+            <p class="intro">Os dois métodos dividem a população em grupos — mas com lógicas opostas.</p>
+            <div class="vs-grid">
+              <div class="vs-card">
+                <h3>Estratificada</h3>
+                <p>Estratos <strong>homogêneos dentro</strong>, <strong>heterogêneos entre</strong> si. O critério é escolhido pelo pesquisador — sexo, idade, renda. De cada estrato, sorteia-se uma amostra aleatória simples.</p>
+              </div>
+              <div class="vs-divider">VS</div>
+              <div class="vs-card">
+                <h3>Conglomerados</h3>
+                <p>Clusters <strong>heterogêneos dentro</strong>, <strong>homogêneos entre</strong> si — cada um é uma miniatura da população. O critério é uma divisão natural: bairro, quarteirão, setor censitário. Sorteiam-se clusters inteiros.</p>
+              </div>
+            </div>
+            <div class="sim-example" style="margin-top:24px;">
+              <span class="tag">Por que o Brasil usa tanto conglomerados</span>
+              <p>Raramente existe uma lista de referência de moradores por bairro. O que existe é o mapa da cidade — daí sortear quarteirões inteiros ser mais viável do que sortear pessoas.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="nao-probabilistica">
+          <div class="wrap">
+            <div class="eyebrow">08 · O outro caminho</div>
+            <h2>Amostragem não probabilística</h2>
+            <p class="intro">Mais rápida, mais barata — e sem base para generalizar. Usada quando a probabilística é inviável no prazo ou no orçamento disponível.</p>
+            <div class="np-grid">
+              <div class="np-card">
+                <div class="n">A ESMO / VOLUNTÁRIOS</div>
+                <h3>Sem sorteio formal</h3>
+                <p>Retira-se "o mais aleatório possível" — útil para material contínuo e homogêneo (gases, líquidos, minérios) ou para quem se voluntaria a responder um formulário.</p>
+              </div>
+              <div class="np-card">
+                <div class="n">INTENCIONAL</div>
+                <h3>Escolha deliberada</h3>
+                <p>O pesquisador seleciona elementos que julga representativos. Risco elevado de viés — a escolha reflete as preferências de quem pesquisa.</p>
+              </div>
+              <div class="np-card">
+                <div class="n">POR COTAS</div>
+                <h3>Proporcional, mas sem sorteio</h3>
+                <p>Cotas por sexo, renda, escolaridade são definidas a partir de dados como o IBGE. Parecida com a estratificada proporcional, mas o entrevistador escolhe livremente dentro de cada cota — geralmente em locais movimentados.</p>
+              </div>
+            </div>
+            <div class="callout" style="margin-top:24px;">
+              <div class="eyebrow">Pesquisa eleitoral no Brasil</div>
+              <p>A maioria usa cotas: o país é grande, o prazo costumeiro é de cerca de 2 dias e cerca de 2000 eleitores são entrevistados, e os dados perdem validade rápido. Quando o resultado da pesquisa coincide com o da eleição, isso é <strong>coincidência estatística</strong> — não garantia do método.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="casos-famosos">
+          <div class="wrap">
+            <div class="eyebrow">09 · Quando erram feio</div>
+            <h2>Casos famosos de previsão errada</h2>
+            <p class="intro">A amostragem não probabilística já custou caro a quem tentou prever eleições.</p>
+            <div class="case-grid">
+              <div class="case-card">
+                <div class="case-year">1936</div>
+                <h3>Eleição presidencial nos EUA</h3>
+                <p>Uma pesquisa de grande alcance, construída a partir de listas de assinantes de revista, donos de telefone e de automóvel, apontava vitória de Alfred Landon.</p>
+                <div class="case-vs">Previsto: Landon &nbsp;·&nbsp; Eleito: Franklin Roosevelt</div>
+              </div>
+              <div class="case-card">
+                <div class="case-year">1985</div>
+                <h3>Prefeitura de São Paulo</h3>
+                <p>Pesquisas de opinião indicavam a vitória de Fernando Henrique Cardoso na disputa pela prefeitura paulistana.</p>
+                <div class="case-vs">Previsto: FHC &nbsp;·&nbsp; Eleito: Jânio Quadros</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="censo">
+          <div class="wrap">
+            <div class="eyebrow">10 · O maior censo é o Censo</div>
+            <h2>Uma linha do tempo do censo no Brasil</h2>
+            <div class="tl">
+              <div class="tl-item"><span class="yr">2238 A.C.</span><p>Primeiro registro de censo, na China.</p></div>
+              <div class="tl-item"><span class="yr">Séc. VIII A.C.</span><p>Gregos e romanos já praticavam contagens populacionais.</p></div>
+              <div class="tl-item"><span class="yr">1872</span><p>Primeiro censo demográfico do Brasil.</p></div>
+              <div class="tl-item"><span class="yr">1936</span><p>Criação do IBGE.</p></div>
+              <div class="tl-item"><span class="yr">1940 em diante</span><p>Censo estabelecido a cada 10 anos: 1940, 1950, 1960, 1970, 1981, 1991, 2001, 2011, 2022.</p></div>
+              <div class="tl-item"><span class="yr">1996 e 2007</span><p>Recontagens intermediárias — a de 1996 seguiu a criação de mais de 1500 municípios novos após o censo de 1991.</p></div>
+              <div class="tl-item"><span class="yr">2022</span><p>Último censo brasileiro realizado.</p></div>
+            </div>
+            <div class="curio">
+              <div class="eyebrow">Curiosidade</div>
+              O termo <strong>"variância"</strong> foi cunhado nos anos 1930 por Sir Ronald Fisher. Para quem quiser conhecer a história da estatística fora da sala de aula, a sugestão de leitura da disciplina é <em>"Uma Senhora Toma Chá"</em>, de David Salsburg.
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="exercicios">
+          <div class="wrap">
+            <div class="eyebrow">11 · Teste você mesmo</div>
+            <h2>Identifique o tipo de amostragem</h2>
+            <p class="intro">Os quatro casos abaixo aparecem no material da disciplina. Tente classificar antes de revelar a resposta.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Caso A</div>
+              <p class="q">Uma comissão para avaliar uma política pública seleciona aleatoriamente: 4 pessoas brancas, 3 pardas e 4 negras.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Amostra estratificada</div>
+                <p>A população foi dividida em grupos (raça/cor) definidos pelo pesquisador antes do sorteio, com sorteio aleatório dentro de cada grupo.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Caso B</div>
+              <p class="q">Um professor escreve o número USP de cada aluno em papéis, coloca numa caixa, mistura e sorteia 10 nomes.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Amostra aleatória simples</div>
+                <p>Todos os elementos têm a mesma probabilidade de serem sorteados, sem qualquer divisão prévia em grupos.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Caso C</div>
+              <p class="q">Um processo de controle de qualidade analisa uma peça a cada 100 peças produzidas.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Amostra sistemática</div>
+                <p>Seleção em intervalo regular (k = 100) ao longo da ordem natural de produção — a marca registrada da amostragem sistemática.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Caso D</div>
+              <p class="q">Ruas identificadas de A a F; sorteiam-se duas ruas (B e F) e depois 50% dos domicílios de cada uma dessas ruas.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Amostra por conglomerados em 2 estágios</div>
+                <p>1º estágio: sorteio aleatório das ruas (conglomerados). 2º estágio: sorteio aleatório dos domicílios dentro das ruas escolhidas.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="module-footer">
+          <div class="wrap">
+            <div class="refs">
+              DEVORE, J.L. — Probabilidade e Estatística para Engenharia e Ciências, Thomson, 2006 · BUSSAB, W.O.; MORETTIN, P.A. — Estatística Básica, 10ª ed., Saraiva, 2024 · COSTA NETO, P.L.O. — Estatística, Edgard Blucher, 1977 · MEYER, P.L. — Probabilidade: Aplicações à Estatística, LTC, 1977 · RUNGER, G.C.; MONTGOMERY, D.C. — Estatística Aplicada e Probabilidade para Engenharia, LTC, 2003 · LOHR, S.L. — Sampling: Design and Analysis, 2ª ed., Cengage, 2010 · BOLFARINE, H.; BUSSAB, W.O. — Elementos de Amostragem, Edgard Blucher, 2005
+            </div>
+            <div class="credit">Guia de estudo baseado no módulo "Introdução e Amostragem" de PRO 3200 — Estatística, EP-USP.</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ================= END MODULE: INTRO E AMOSTRAGEM ================= -->
+
+      <!-- ================= MODULE: ESTATÍSTICA DESCRITIVA (READY) ================= -->
+      <div class="module-page" data-module="estatistica-descritiva" id="page-estatistica-descritiva" hidden>
+
+        <div class="page-subnav">
+          <div class="page-subnav-inner">
+            <span class="psn-title">P1 · Estatística Descritiva</span>
+            <div class="navlinks">
+              <button class="navlink" data-target="variaveis-ed">Variáveis</button>
+              <button class="navlink" data-target="tabelas-ed">Tabelas</button>
+              <button class="navlink" data-target="graficos-ed">Gráficos</button>
+              <button class="navlink" data-target="posicao-ed">Posição</button>
+              <button class="navlink" data-target="dispersao-ed">Dispersão</button>
+              <button class="navlink" data-target="correlacao-ed">Correlação</button>
+              <button class="navlink" data-target="exercicios-ed">Exercícios</button>
+            </div>
+          </div>
+        </div>
+
+        <header class="hero" id="inicio-ed">
+          <div class="wrap hero-grid">
+            <div>
+              <div class="eyebrow">Módulo 2 · Profas. Celma de Oliveira Ribeiro e Linda Lee Ho</div>
+              <h1>A amostra já foi coletada. <em>Agora ela precisa contar uma história.</em></h1>
+              <p class="lede">Estatística descritiva é o meio-campo entre coletar dados e tirar conclusões: organizar variáveis, montar tabelas e gráficos, e resumir tudo em um punhado de números — sem distorcer o que eles realmente dizem.</p>
+              <div class="hero-meta">
+                <span><strong>Depto.</strong> Engenharia de Produção — USP</span>
+                <span><strong>Módulo</strong> Estatística Descritiva</span>
+              </div>
+            </div>
+            <div id="heroBars" aria-hidden="true"></div>
+          </div>
+        </header>
+
+        <section class="section reveal" id="variaveis-ed">
+          <div class="wrap">
+            <div class="eyebrow">01 · Antes de tabular</div>
+            <h2>Classificação de variáveis</h2>
+            <p class="intro">Variáveis são as características associadas aos elementos de uma população. Antes de escolher tabela, gráfico ou medida resumo, é preciso saber que tipo de variável está em jogo — isso decide o método certo.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Qualitativa · Nominal</span>
+                <h3>Categorias sem ordem</h3>
+                <p>Sexo, cor dos olhos, sabor de sorvete — categorias que podem trocar de posição sem perder sentido.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Qualitativa · Ordinal</span>
+                <h3>Categorias com ordem</h3>
+                <p>Classe social, grau de instrução — existe uma hierarquia natural entre as categorias, mesmo sem uma escala numérica exata.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Quantitativa · Discreta</span>
+                <h3>Contagens</h3>
+                <p>Número de acidentes, número de pessoas infectadas — valores inteiros, resultado de uma contagem.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Quantitativa · Contínua</span>
+                <h3>Medidas</h3>
+                <p>Peso, altura — podem assumir qualquer valor dentro de um intervalo, limitado só pela precisão do instrumento.</p>
+              </div>
+            </div>
+
+            <div class="callout teal" style="margin-top:28px;">
+              <div class="eyebrow">Regra que não tem volta</div>
+              <p>Sempre é possível transformar uma variável quantitativa em qualitativa (agrupando idade em faixas, por exemplo). <strong>O contrário não é possível.</strong> E quando essa transformação acontece, geralmente há perda de informação — reconhecer o tipo certo de variável muda a escolha do método estatístico adequado.</p>
+            </div>
+
+            <h3 style="margin-top:40px; margin-bottom:16px; font-size:19px;">Classifique você mesmo</h3>
+            <div class="classify-game">
+              <div class="cz-score" id="czScore">Acertos: 0 / 0</div>
+              <div class="cz-prompt" id="czPrompt">—</div>
+              <div class="cz-options">
+                <button class="cz-btn" data-answer="nominal">Nominal</button>
+                <button class="cz-btn" data-answer="ordinal">Ordinal</button>
+                <button class="cz-btn" data-answer="discreta">Discreta</button>
+                <button class="cz-btn" data-answer="continua">Contínua</button>
+              </div>
+              <div class="cz-feedback" id="czFeedback">Clique em uma categoria para começar.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="tabelas-ed">
+          <div class="wrap">
+            <div class="eyebrow">02 · Organizando os dados</div>
+            <h2>Tabelas de frequência e de contingência</h2>
+            <p class="intro">De modo geral existem dois tipos de tabela: a de frequência simples, feita variável por variável, e a de contingência, que cruza duas variáveis ao mesmo tempo.</p>
+
+            <div class="table-pair">
+              <div>
+                <table class="datatab">
+                  <caption>Filiação a entidade de classe (qualitativa nominal)</caption>
+                  <thead><tr><th>Filiação</th><th>Absoluta</th><th>Relativa</th><th>Percentual</th></tr></thead>
+                  <tbody>
+                    <tr><td>Possui</td><td>12</td><td>0.6</td><td>60</td></tr>
+                    <tr><td>Não possui</td><td>8</td><td>0.4</td><td>40</td></tr>
+                    <tr><td>Total</td><td>20</td><td>1.0</td><td>100</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <table class="datatab">
+                  <caption>Passageiros por voo (quantitativa discreta, agrupada)</caption>
+                  <thead><tr><th>Passageiros</th><th>Frequência (dias)</th></tr></thead>
+                  <tbody>
+                    <tr><td>50 a 59</td><td>3</td></tr>
+                    <tr><td>60 a 69</td><td>7</td></tr>
+                    <tr><td>70 a 79</td><td>18</td></tr>
+                    <tr><td>80 a 89</td><td>12</td></tr>
+                    <tr><td>90 a 99</td><td>8</td></tr>
+                    <tr><td>100 a 109</td><td>2</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="formula-box">
+              <div class="f">K ≈ √n &nbsp;&nbsp;·&nbsp;&nbsp; H = (Max − Min) / K</div>
+              <div class="f-note">K = número de classes sugerido para n observações · H = amplitude de cada classe</div>
+            </div>
+            <p style="color:var(--ink-soft); font-size:15.5px;">No exemplo dos passageiros: K = 6 classes, H = 10. Não existe uma única forma certa de construir a tabela — o objetivo é ser informativa, nem com poucas nem com classes demais.</p>
+
+            <h3 style="margin-top:40px; margin-bottom:14px; font-size:19px;">Tabela de contingência</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px; margin-bottom:20px;">Cruza duas variáveis qualitativas para investigar associação entre elas — por exemplo, preferência por partido político em função do gênero.</p>
+            <table class="datatab">
+              <caption>Partido político × gênero</caption>
+              <thead><tr><th></th><th>Democrata</th><th>Independente</th><th>Republicano</th><th>Total</th></tr></thead>
+              <tbody>
+                <tr><td>Mulheres</td><td>279</td><td>73</td><td>225</td><td>577</td></tr>
+                <tr><td>Homens</td><td>165</td><td>47</td><td>191</td><td>403</td></tr>
+                <tr><td>Total</td><td>444</td><td>120</td><td>416</td><td>980</td></tr>
+              </tbody>
+            </table>
+            <div class="def-grid" style="margin-top:20px;">
+              <div class="def-card">
+                <span class="tag">Pergunta 1</span>
+                <h3>Mesma distribuição?</h3>
+                <p>A distribuição de preferência pelos partidos é a mesma entre homens e mulheres?</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Pergunta 2</span>
+                <h3>Existe associação?</h3>
+                <p>Existe alguma associação entre preferência por partido e o gênero do eleitor? O grau de dependência será visto mais adiante, com o coeficiente de χ².</p>
+              </div>
+            </div>
+            <div class="callout" style="margin-top:24px;">
+              <div class="eyebrow">Normas ABNT para tabelas</div>
+              <p>Título e fonte sempre presentes · cabeçalho separado por linha horizontal · linha horizontal ao final · sem necessidade de linhas internas separando cada linha.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="graficos-ed">
+          <div class="wrap">
+            <div class="eyebrow">03 · Ver antes de calcular</div>
+            <h2>Qual gráfico usar?</h2>
+            <p class="intro">O tipo de variável decide o tipo de gráfico. Escolher errado não é só questão de estética — pode esconder ou distorcer a informação.</p>
+
+            <div class="gallery-label">Para variáveis qualitativas</div>
+            <div class="np-grid">
+              <div class="chart-card">
+                <div class="chart-icon">
+                  <svg width="90" height="60" viewBox="0 0 90 60"><rect x="4" y="30" width="16" height="26" fill="var(--teal)"/><rect x="27" y="14" width="16" height="42" fill="var(--amber)"/><rect x="50" y="22" width="16" height="34" fill="var(--teal)"/><rect x="73" y="6" width="13" height="50" fill="var(--amber)"/></svg>
+                </div>
+                <h3>Gráfico de barras</h3>
+                <p>Um retângulo por categoria; altura proporcional à frequência. Não apresenta inconveniências — a opção mais segura.</p>
+              </div>
+              <div class="chart-card">
+                <div class="chart-icon">
+                  <svg width="90" height="60" viewBox="0 0 90 60"><rect x="4" y="8" width="16" height="48" fill="var(--teal)"/><rect x="27" y="22" width="16" height="34" fill="var(--teal)"/><rect x="50" y="36" width="16" height="20" fill="var(--teal)"/><rect x="73" y="46" width="13" height="10" fill="var(--teal)"/><polyline points="12,50 35,30 58,18 79,8" fill="none" stroke="var(--amber)" stroke-width="2.5"/></svg>
+                </div>
+                <h3>Gráfico de Pareto</h3>
+                <p>Barras em ordem decrescente de frequência, com uma linha de percentual acumulado. Batizado em homenagem a Vilfredo Pareto (1848–1923).</p>
+              </div>
+              <div class="chart-card">
+                <div class="chart-icon">
+                  <div style="width:54px;height:54px;border-radius:50%;background:conic-gradient(var(--teal) 0 40%, var(--amber) 40% 65%, var(--rust) 65% 100%);"></div>
+                </div>
+                <h3>Gráfico de setores</h3>
+                <p>Diagrama circular — cada fatia é uma categoria.</p>
+                <div class="caution">Cuidado: ruim com muitas categorias ou frequências parecidas.</div>
+              </div>
+            </div>
+
+            <div class="gallery-label">Para variáveis quantitativas</div>
+            <div class="np-grid">
+              <div class="chart-card">
+                <div class="chart-icon">
+                  <svg width="90" height="60" viewBox="0 0 90 60"><rect x="2" y="46" width="16" height="10" fill="var(--teal)"/><rect x="18" y="30" width="16" height="26" fill="var(--teal)"/><rect x="34" y="10" width="16" height="46" fill="var(--amber)"/><rect x="50" y="24" width="16" height="32" fill="var(--teal)"/><rect x="66" y="40" width="16" height="16" fill="var(--teal)"/></svg>
+                </div>
+                <h3>Histograma</h3>
+                <p>Dados agrupados em K classes de amplitude H, barras coladas. Ajuda a identificar a distribuição de probabilidade da variável.</p>
+              </div>
+              <div class="chart-card">
+                <div class="chart-icon">
+                  <svg width="90" height="60" viewBox="0 0 90 60"><circle cx="14" cy="44" r="4" fill="var(--teal)"/><circle cx="30" cy="30" r="4" fill="var(--teal)"/><circle cx="46" cy="34" r="4" fill="var(--amber)"/><circle cx="58" cy="18" r="4" fill="var(--teal)"/><circle cx="72" cy="24" r="4" fill="var(--amber)"/><circle cx="82" cy="10" r="4" fill="var(--teal)"/></svg>
+                </div>
+                <h3>Diagrama de dispersão</h3>
+                <p>Relaciona duas variáveis quantitativas — a base visual da correlação, adiante neste módulo.</p>
+              </div>
+              <div class="chart-card">
+                <div class="chart-icon">
+                  <svg width="90" height="60" viewBox="0 0 90 60"><polyline points="4,40 18,20 32,34 46,14 60,28 74,8 88,22" fill="none" stroke="var(--teal)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h3>Série temporal</h3>
+                <p>Quando as observações são coletadas ao longo do tempo — o eixo horizontal é sempre o tempo.</p>
+              </div>
+            </div>
+
+            <div class="callout" style="margin-top:28px;">
+              <div class="eyebrow">Normas ABNT para gráficos</div>
+              <p>Eixos nominados · escalas claras e corretas · tipo de gráfico escolhido com cuidado · título e fonte sempre presentes. O box-plot — talvez o mais útil de todos — aparece na próxima seção.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="posicao-ed">
+          <div class="wrap">
+            <div class="eyebrow">04 · Resumindo em um número</div>
+            <h2>Média, moda e mediana</h2>
+            <p class="intro">Medidas resumo só se aplicam a dados quantitativos. O objetivo é descrever um conjunto inteiro de dados em "poucos" números — as medidas de posição dizem onde os dados se concentram.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Média amostral</span>
+                <h3>A soma dividida pelo total</h3>
+                <p>X̄ = (ΣXᵢ)/n para dados individuais; com dados agrupados em K classes, X̄ = (Σfᵢ Xᵢ)/(Σfᵢ), onde Xᵢ é o ponto médio da classe e fᵢ, sua frequência.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Moda amostral (Mo)</span>
+                <h3>O valor mais frequente</h3>
+                <p>É a única medida de posição que também serve para dados qualitativos. Pode haver mais de uma moda — distribuição bimodal — ou, em dados contínuos, uma classe modal.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Mediana amostral (Md)</span>
+                <h3>O elemento central</h3>
+                <p>Com os dados ordenados: se n é ímpar, é o valor central; se n é par, é a média dos dois valores centrais. Pelo menos 50% dos dados ficam de cada lado.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Interpretação</span>
+                <h3>Qual delas usar?</h3>
+                <p>Depende da forma da distribuição — veja a robustez da mediana logo abaixo, e a checagem de simetria mais adiante.</p>
+              </div>
+            </div>
+
+            <div class="qa-card" style="margin-top:32px;">
+              <div class="qlabel">Exemplo 1 · n ímpar</div>
+              <p class="q">Dados: {14, 8, 10, 5, 7}. Qual a mediana?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Md = 8</div>
+                <p>Ordenados: {5, 7, 8, 10, 14}. Dois elementos menores e dois maiores que 8 — ele é o centro.</p>
+              </div>
+            </div>
+            <div class="qa-card">
+              <div class="qlabel">Exemplo 2 · n par</div>
+              <p class="q">Dados: {8, 10, 5, 7, 15, 14}. Qual a mediana?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Md = 9</div>
+                <p>Ordenados: {5, 7, 8, 10, 14, 15}. Md = (8+10)/2 = 9 — a média dos dois elementos centrais.</p>
+              </div>
+            </div>
+
+            <div class="callout teal">
+              <div class="eyebrow">Mediana: uma medida robusta</div>
+              <p>Salários de diretores (em R$ 1.000): {2.5; 4; 22.5; 3; 5}. Média amostral = R$ 7.400 — puxada para cima por um único valor. Mediana amostral = R$ 4.000 — não é afetada por valores extremos. Para esse conjunto, a mediana resume melhor "o salário típico".</p>
+            </div>
+
+            <h3 style="margin-top:40px; margin-bottom:14px; font-size:19px;">Quantis e percentis</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">O quantil amostral de ordem p, q(p), é o número tal que 100p% das observações são menores que ele. q(0.50) é a mediana; q(0.25), o primeiro quartil Q1; q(0.75), o terceiro quartil Q3.</p>
+
+            <div class="formula-box">
+              <div class="f">i = (p / 100) · n</div>
+              <div class="f-note">se i não é inteiro → arredonde para cima; o percentil é essa posição · se i é inteiro → o percentil é a média entre as posições i e i+1</div>
+            </div>
+
+            <div class="gen-box" style="margin-top:24px;">
+              <span class="tag" style="font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--teal); letter-spacing:.06em;">Calculadora de quantis</span>
+              <div class="gen-row" style="margin-top:12px; align-items:flex-end;">
+                <div class="gen-field" style="flex:2; min-width:260px;">
+                  <label for="qtDataInput">Dados (separados por vírgula)</label>
+                  <input type="text" id="qtDataInput" value="2710,2755,2850,2880,2880,2890,2920,2940,2950,3050,3130,3325" style="width:100%;">
+                </div>
+                <div class="gen-field">
+                  <label for="qtP">Percentil (p)</label>
+                  <input type="number" id="qtP" value="85" min="1" max="99">
+                </div>
+              </div>
+              <button class="sim-btn" id="qtBtn">Calcular quantil</button>
+              <div class="gen-output" id="qtOutput">Clique para calcular.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="dispersao-ed">
+          <div class="wrap">
+            <div class="eyebrow">05 · Média sozinha não basta</div>
+            <h2>Dispersão, quartis e outliers</h2>
+            <p class="intro">Dois conjuntos podem ter a mesma média e serem completamente diferentes. É preciso medir o quanto os dados se espalham ao redor do centro.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Amplitude</span>
+                <h3>Máximo menos mínimo</h3>
+                <p>Ex.: {1, 5, 2, 14, 3, 11} → amplitude = 14 − 1 = 13. Simples, mas ignora tudo o que acontece entre os extremos.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Variância (S²) e desvio padrão (S)</span>
+                <h3>Distância quadrática média ao centro</h3>
+                <p>S² = Σ(Xᵢ − X̄)²/(n−1). S é a raiz de S² — e volta às unidades originais (se Xᵢ é medido em km, S² é em km² e S, em km).</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Coeficiente de variação</span>
+                <h3>Dispersão sem efeito da unidade</h3>
+                <p>CV = S / X̄. Permite comparar a variabilidade de conjuntos medidos em unidades ou escalas diferentes.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Intervalo interquartílico (IQ)</span>
+                <h3>Onde vive a metade do meio</h3>
+                <p>IQ = Q3 − Q1. Entre o primeiro e o terceiro quartil há pelo menos 50% dos dados. Quanto maior o IQ, maior a dispersão.</p>
+              </div>
+            </div>
+
+            <div class="qa-card" style="margin-top:32px;">
+              <div class="qlabel">Exemplo · Intervalo interquartílico</div>
+              <p class="q">Conjunto A = {3,7,8,12,14,17,30,37,70} · Conjunto B = {3,5,5,12,17,30,30,30,70}. Qual tem maior dispersão pelo IQ?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">A: Q1=7.5, Q3=33.5, IQ=26 &nbsp;·&nbsp; B: Q1=5, Q3=30, IQ=25</div>
+                <p>Praticamente empatados — A tem IQ ligeiramente maior, mesmo com médias e amplitudes que poderiam sugerir outra leitura.</p>
+              </div>
+            </div>
+
+            <h3 style="margin-top:40px; margin-bottom:14px; font-size:19px;">Outliers</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Um valor X* é considerado:</p>
+            <div class="fence-note">
+              <span><strong>possível outlier</strong> se X* &lt; Q1 − 1.5·IQ ou X* &gt; Q3 + 1.5·IQ</span>
+              <span><strong>provável outlier</strong> se X* &lt; Q1 − 3·IQ ou X* &gt; Q3 + 3·IQ</span>
+            </div>
+
+            <div class="bt-layout" style="margin-top:28px;">
+              <div class="bt-input">
+                <span class="tag" style="font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--teal); letter-spacing:.06em; display:block; margin-bottom:8px;">Detector de outliers e box-plot</span>
+                <textarea id="btData">40,52,55,60,70,75,86,90,90,90,94,94,95,98,100,115,125,150</textarea>
+                <div class="bt-presets">
+                  <button class="bt-preset" data-preset="ex1">Dados do exercício</button>
+                  <button class="bt-preset" data-preset="ratos">Sobrevivência dos ratos (n=72)</button>
+                </div>
+                <button class="sim-btn" id="btAnalyze">Analisar amostra</button>
+                <div class="stat-pills" id="btStats"></div>
+                <div class="bt-outliers" id="btOutliers"></div>
+              </div>
+              <div class="bt-board">
+                <div id="btSvgWrap"></div>
+              </div>
+            </div>
+
+            <h3 style="margin-top:40px; margin-bottom:14px; font-size:19px;">Simetria da distribuição</h3>
+            <p style="color:var(--ink-soft); font-size:16.5px;">Dá para avaliar a simetria sem nem traçar o histograma: a distribuição é aproximadamente simétrica quando</p>
+            <div class="formula-box">
+              <div class="f">Q2−X₁ ≈ Xₙ−Q2 &nbsp;&nbsp;·&nbsp;&nbsp; Q2−Q1 ≈ Q3−Q2 &nbsp;&nbsp;·&nbsp;&nbsp; Q1−X₁ ≈ Xₙ−Q3</div>
+            </div>
+            <div class="flow-note">Por que isso importa: quando a distribuição é simétrica, média e mediana coincidem e os dois lados reagem da mesma forma a valores extremos. Quando não é, a mediana (e o IQ) costumam descrever os dados de forma mais confiável do que a média (e o desvio padrão).</div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="correlacao-ed">
+          <div class="wrap">
+            <div class="eyebrow">06 · Duas variáveis, uma relação</div>
+            <h2>Correlação amostral</h2>
+            <p class="intro">Mede a relação linear entre duas variáveis quantitativas coletadas nos mesmos n elementos.</p>
+
+            <div class="formula-box">
+              <div class="f">r(X,Y) = [ ΣXᵢYᵢ − nX̄Ȳ ] / √[ (ΣXᵢ² − nX̄²)(ΣYᵢ² − nȲ²) ]</div>
+              <div class="f-note">r ∈ [−1, 1]</div>
+            </div>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">r &gt; 0</span>
+                <h3>Mesma direção</h3>
+                <p>Se X cresce, Y também cresce.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">r &lt; 0</span>
+                <h3>Direções opostas</h3>
+                <p>Se X cresce, Y decresce.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">r ≈ 0</span>
+                <h3>Sem relação linear</h3>
+                <p>As duas variáveis não são correlacionadas — pelo menos não linearmente.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Exemplo real</span>
+                <h3>Altura × peso de 5 crianças</h3>
+                <p>Alturas 64, 66, 70, 85, 54 cm e pesos correspondentes 7.4, 7.9, 8.1, 10.4, 6.0 kg → r = 0.997, uma correlação quase perfeita.</p>
+              </div>
+            </div>
+
+            <div class="corr-layout" style="margin-top:28px;">
+              <div class="corr-board">
+                <div id="corrSvgWrap"></div>
+              </div>
+              <div class="corr-panel">
+                <h3>Simulador de correlação</h3>
+                <p>Escolha uma correlação-alvo e gere uma amostra de 40 pontos — repare em como a nuvem muda de formato conforme r se aproxima de −1, 0 ou 1.</p>
+                <div class="corr-slider-row">
+                  <label>Correlação-alvo <span id="corrTargetLabel">0.7</span></label>
+                  <input type="range" id="corrTarget" min="-1" max="1" step="0.1" value="0.7">
+                </div>
+                <button class="sim-btn" id="corrGen">Gerar amostra</button>
+                <div class="corr-readout" id="corrReadout"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="exercicios-ed">
+          <div class="wrap">
+            <div class="eyebrow">07 · Pratique</div>
+            <h2>Exercícios da apostila</h2>
+            <p class="intro">Os quatro casos abaixo vêm do material da disciplina. Tente resolver antes de revelar a resposta — para os dois primeiros, vale usar a calculadora de quantis e o detector de outliers acima.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 1</div>
+              <p class="q">Dados: 40 52 55 60 70 75 86 90 90 90 94 94 95 98 100 115 125 150. Determine mín, Q1, mediana, Q3, máx. A distribuição é simétrica? Há outliers?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">min=40 · Q1=70 · Md=90 · Q3=98 · max=150</div>
+                <p>Não é simétrica (a "cauda" de 100 a 150 é bem mais longa do que a de 40 a 70). Q1−1.5·IQ=28 e Q3+1.5·IQ=140 → 150 é um possível outlier, sem chegar a ser provável (o limite provável é 182).</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 2</div>
+              <p class="q">Tempo de sobrevivência (dias) de 72 ratos infectados por uma bactéria, em um experimento de laboratório. Obtenha Q1, mediana, Q3 e o intervalo interquartílico.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Q1=82.5 · Md=102.5 · Q3=151.5 · IQ=69</div>
+                <p>Não é simétrica. Limite provável de outlier: acima de 358.5; possível: entre 255 e 358.5 — vários dos ratos com sobrevivência mais longa (329, 380, 403, 511, 522, 598 dias) caem nessas faixas.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 3</div>
+              <p class="q">40 empréstimos pessoais de uma financeira, valores entre $300 e $3000. Construa a distribuição de frequências com limite inferior da 1ª classe em $300 e intervalo de classe igual a $400.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">7 classes: 300–700, 700–1100, … até 2700–3100</div>
+                <p>Aqui H=400 vem fixado pelo próprio enunciado (em vez de calculado por K≈√n). Depois: monte o histograma e calcule média, desvio padrão, CV, mediana e moda a partir dos dados agrupados (frequência de cada classe × ponto médio).</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 4</div>
+              <p class="q">Altura (cm) e peso (kg) de 5 crianças: (64, 7.4), (66, 7.9), (70, 8.1), (85, 10.4), (54, 6.0). Calcule a correlação amostral.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">r ≈ 0.997</div>
+                <p>Correlação positiva e muito forte: nesta amostra, crianças mais altas têm peso consistentemente maior. Vale conferir no diagrama de dispersão do simulador acima.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="module-footer">
+          <div class="wrap">
+            <div class="refs">
+              DEVORE, J.L. — Probabilidade e Estatística para Engenharia e Ciências, Thomson, 2006 · BUSSAB, W.O.; MORETTIN, P.A. — Estatística Básica, 10ª ed., Saraiva, 2024 · COSTA NETO, P.L.O. — Estatística, Edgard Blucher, 1977 · TUKEY, J.W. — Exploratory Data Analysis, Addison-Wesley, 1977
+            </div>
+            <div class="credit">Guia de estudo baseado no módulo "Conceitos básicos de análise de dados — Estatística Descritiva" de PRO 3200 — Estatística, EP-USP.</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ================= END MODULE: ESTATÍSTICA DESCRITIVA ================= -->
+
+      <!-- ================= MODULE: ESTIMAÇÃO PONTUAL DE PARÂMETROS (READY) ================= -->
+      <div class="module-page" data-module="estimacao-pontual" id="page-estimacao-pontual" hidden>
+
+        <div class="page-subnav">
+          <div class="page-subnav-inner">
+            <span class="psn-title">P1 · Estimação Pontual de Parâmetros</span>
+            <div class="navlinks">
+              <button class="navlink" data-target="parametros-ep">Parâmetros</button>
+              <button class="navlink" data-target="propriedades-ep">Propriedades</button>
+              <button class="navlink" data-target="momentos-ep">Momentos</button>
+              <button class="navlink" data-target="verossimilhanca-ep">Verossimilhança</button>
+              <button class="navlink" data-target="minimos-quadrados-ep">Mín. Quadrados</button>
+              <button class="navlink" data-target="resumo-ep">Resumo</button>
+              <button class="navlink" data-target="exercicios-ep">Exercícios</button>
+            </div>
+          </div>
+        </div>
+
+        <header class="hero" id="inicio-ep">
+          <div class="wrap hero-grid">
+            <div>
+              <div class="eyebrow">Módulo 3 · Profas. Linda Lee Ho e Celma de Oliveira Ribeiro</div>
+              <h1>A amostra virou números. <em>Agora eles precisam virar parâmetros.</em></h1>
+              <p class="lede">Um parâmetro — µ, p, λ, β — quase nunca é conhecido. O que existe é uma amostra e, a partir dela, uma função que tenta adivinhar o valor verdadeiro: um estimador. Este módulo cobre como construir esses estimadores e como julgar se são bons.</p>
+              <div class="hero-meta">
+                <span><strong>Depto.</strong> Engenharia de Produção — USP</span>
+                <span><strong>Módulo</strong> Estimação Pontual de Parâmetros</span>
+              </div>
+            </div>
+            <div id="heroTarget" aria-hidden="true"></div>
+          </div>
+        </header>
+
+        <section class="section reveal" id="parametros-ep">
+          <div class="wrap">
+            <div class="eyebrow">01 · Do modelo aos dados</div>
+            <h2>O que é um parâmetro — e o que é um estimador</h2>
+            <p class="intro">Um parâmetro descreve uma distribuição de probabilidade ou um modelo — mas quase sempre é desconhecido. Quando isso acontece, ele precisa ser obtido a partir de observações coletadas.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Distribuições de probabilidade</span>
+                <h3>Parâmetros que descrevem X</h3>
+                <p>X ~ N(µ, σ²): µ e σ² são os parâmetros da normal. X ~ Bin(n,p): p é o parâmetro da binomial. Cada família de distribuição carrega os seus.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Modelos lineares</span>
+                <h3>Parâmetros de uma equação</h3>
+                <p>Y = α + βX: α e β são os parâmetros do modelo. W = β0 + β1X1 + ... + βkXk: cada βᵢ, i = 0,...,k, é um parâmetro a ser estimado.</p>
+              </div>
+            </div>
+
+            <div class="callout teal" style="margin-top:28px;">
+              <div class="eyebrow">A definição que sustenta tudo</div>
+              <p>Dada uma amostra aleatória simples X₁, X₂, ..., Xₙ, um <strong>estimador</strong> T de um parâmetro Θ é uma função das observações da amostra: T = g(X₁, X₂, ..., Xₙ). A média amostral X̄ = (ΣXᵢ)/n é o exemplo mais direto — ela é, ela mesma, uma função da amostra.</p>
+            </div>
+
+            <div class="def-grid" style="margin-top:24px;">
+              <div class="def-card">
+                <span class="tag">Exemplo · rebites</span>
+                <h3>Proporção de defeituosos</h3>
+                <p>Para cada elemento da amostra, define-se Xᵢ = 1 se o item for defeituoso e 0 caso contrário. O estimador da proporção p de defeituosos no lote é p̂ = (ΣXᵢ)/n — a proporção amostral.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Notação "hat"</span>
+                <h3>Separar o parâmetro do estimador</h3>
+                <p>p̂, µ̂, θ̂ são os estimadores de p, µ, θ. Como são funções da amostra aleatória, <strong>p̂, µ̂ e θ̂ são variáveis aleatórias</strong> — mudam de valor a cada nova amostra coletada.</p>
+              </div>
+            </div>
+
+            <div class="flow-note" style="margin-top:20px;">Estimador × estimativa: o estimador é a função g(X₁,...,Xₙ) — uma regra, válida antes de qualquer coleta. A estimativa é o número que essa função produz depois de aplicada a uma amostra específica.</div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="propriedades-ep">
+          <div class="wrap">
+            <div class="eyebrow">02 · O que faz um estimador ser bom</div>
+            <h2>Propriedades de um estimador</h2>
+            <p class="intro">Como θ̂ é uma variável aleatória, ela tem uma distribuição — e podemos avaliar propriedades dessa distribuição para decidir se θ̂ é um "bom" estimador de θ.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">1 · Não viciado (não viesado / justo)</span>
+                <h3>E(θ̂) = θ</h3>
+                <p>Em média, sobre todas as amostras possíveis, o estimador acerta o valor verdadeiro — não erra sistematicamente para cima nem para baixo.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">2 · Assintoticamente não viesado</span>
+                <h3>E(θ̂) → θ quando n → ∞</h3>
+                <p>O viés pode existir para amostras pequenas, mas desaparece à medida que n cresce. Exemplo: E(θ̂) = θ + θ/(n+3) é viciado, mas assintoticamente não.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">3 · Consistente</span>
+                <h3>Var(θ̂) → 0 quando n → ∞</h3>
+                <p>Com mais dados, a variabilidade do estimador desaparece — ele se aproxima cada vez mais do valor verdadeiro, amostra após amostra.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">4 · Eficiência</span>
+                <h3>Comparando dois estimadores não viciados</h3>
+                <p>Dados θ̂₁ e θ̂₂, ambos não viciados (ao menos assintoticamente) para o mesmo θ: θ̂₁ é mais eficiente que θ̂₂ se Var(θ̂₁) &lt; Var(θ̂₂).</p>
+              </div>
+            </div>
+
+            <div class="qa-card" style="margin-top:32px;">
+              <div class="qlabel">Prova · não viciado</div>
+              <p class="q">X₁,...,Xₙ é uma amostra aleatória simples de uma Bernoulli(p). O estimador p̂ = (ΣXᵢ)/n é não viciado?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Sim — E(p̂) = p</div>
+                <p>E(p̂) = E[(ΣXᵢ)/n] = [ΣE(Xᵢ)]/n = (n·p)/n = p. O estimador é justo: em média, acerta p.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Prova · consistência</div>
+              <p class="q">Esse mesmo p̂ é um estimador consistente de p?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Sim — Var(p̂) = p(1−p)/n</div>
+                <p>Var(p̂) = Var[(ΣXᵢ)/n] = [ΣVar(Xᵢ)]/n² = [n·p(1−p)]/n² = p(1−p)/n. Quando n → ∞, essa variância vai a zero — p̂ é consistente.</p>
+              </div>
+            </div>
+
+            <div class="callout" style="margin-top:24px;">
+              <div class="eyebrow">Por que isso importa na prática</div>
+              <p>Um estimador pode ser não viciado e, ainda assim, ruim — se a variância for enorme. E pode ser levemente viciado e, mesmo assim, preferível — se isso vier acompanhado de uma variância bem menor. Por isso viés e eficiência sempre são avaliados juntos, nunca isoladamente.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="momentos-ep">
+          <div class="wrap">
+            <div class="eyebrow">03 · Métodos de estimação · 1 de 3</div>
+            <h2>Método dos Momentos (MM)</h2>
+            <p class="intro">A ideia: igualar os momentos teóricos da variável aleatória aos momentos amostrais — e resolver o sistema resultante para os parâmetros.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">r-ésimo momento</span>
+                <h3>Teórico: E(Xʳ) · Amostral: (ΣXᵢʳ)/n</h3>
+                <p>O primeiro momento teórico é E(X) = µ; o amostral é X̄. O segundo momento teórico é E(X²), e assim por diante.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">r-ésimo momento centrado</span>
+                <h3>Teórico: E(X−µ)ʳ · Amostral: [Σ(Xᵢ−X̄)ʳ]/n</h3>
+                <p>O primeiro momento centrado é sempre zero. O segundo momento centrado teórico é a própria Var(X); o amostral, S²* = [Σ(Xᵢ−X̄)²]/n.</p>
+              </div>
+            </div>
+
+            <table class="datatab" style="margin-top:24px;">
+              <caption>Momentos amostrais × teóricos</caption>
+              <thead><tr><th></th><th>Amostral</th><th>Teórico</th></tr></thead>
+              <tbody>
+                <tr><td>1º momento</td><td>X̄ = (ΣXᵢ)/n</td><td>E(X)</td></tr>
+                <tr><td>2º momento</td><td>(ΣXᵢ²)/n</td><td>E(X²)</td></tr>
+                <tr><td>k-ésimo momento</td><td>(ΣXᵢᵏ)/n</td><td>E(Xᵏ)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="flow" style="margin-top:32px;">
+              <div class="flow-box"><div class="fb-label">1</div><div class="fb-title">Igualar o 1º momento<br><span style="font-weight:400;font-size:13px;color:var(--ink-soft);">amostral = teórico</span></div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box"><div class="fb-label">2</div><div class="fb-title">Igualar o 2º momento<br><span style="font-weight:400;font-size:13px;color:var(--ink-soft);">se houver 2 parâmetros</span></div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box"><div class="fb-label">3</div><div class="fb-title">Continuar<br><span style="font-weight:400;font-size:13px;color:var(--ink-soft);">até ter uma equação por parâmetro</span></div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box"><div class="fb-label">4</div><div class="fb-title">Resolver o sistema</div></div>
+            </div>
+
+            <div class="def-grid" style="margin-top:32px;">
+              <div class="def-card">
+                <span class="tag">Normal(µ, σ²)</span>
+                <h3>µ̂ = X̄</h3>
+                <p>E(X) = µ. Igualando ao primeiro momento amostral: µ̂ = (ΣXᵢ)/n.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Uniforme(0, θ)</span>
+                <h3>θ̂ = 2X̄</h3>
+                <p>Só há um parâmetro, então basta o 1º momento: E(X) = θ/2. Igualando a X̄: θ̂ = 2X̄. Para {1, 2.5, 3.5, 5}, X̄=3 → θ̂ = 6.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Exponencial(λ)</span>
+                <h3>λ̂ = 1/X̄</h3>
+                <p>E(X) = 1/λ. Igualando a X̄: λ̂ = 1/X̄. Para os mesmos dados {1, 2.5, 3.5, 5}, X̄=3 → λ̂ = 1/3.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Uniforme(θ₁, θ₂)</span>
+                <h3>Dois parâmetros, duas equações</h3>
+                <p>E(X) = (θ₁+θ₂)/2 e E(X²) = (θ₁²+θ₂²−θ₁θ₂)/3 — duas equações, igualadas aos dois primeiros momentos amostrais, resolvidas simultaneamente.</p>
+              </div>
+            </div>
+
+            <div class="callout teal" style="margin-top:24px;">
+              <div class="eyebrow">Uso prático do MM</div>
+              <p>O estimador de momentos costuma ser usado como <strong>valor inicial</strong> em métodos iterativos — como a máxima verossimilhança, quando o sistema de equações não tem solução fechada.</p>
+            </div>
+
+            <div class="gen-box" style="margin-top:28px;">
+              <span class="tag" style="font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--teal); letter-spacing:.06em;">Calculadora do método dos momentos</span>
+              <div class="gen-row" style="margin-top:12px; align-items:flex-end;">
+                <div class="gen-field" style="flex:2; min-width:240px;">
+                  <label for="mmDataInput">Dados (separados por vírgula)</label>
+                  <input type="text" id="mmDataInput" value="1, 2.5, 3.5, 5" style="width:100%;">
+                </div>
+                <div class="gen-field" style="min-width:200px;">
+                  <label for="mmDist">Distribuição assumida</label>
+                  <select id="mmDist" style="width:100%; font-family:var(--mono); font-size:14px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink);">
+                    <option value="uniforme0">Uniforme(0, θ)</option>
+                    <option value="exponencial">Exponencial(λ)</option>
+                    <option value="normal">Normal(µ, σ²)</option>
+                  </select>
+                </div>
+              </div>
+              <button class="sim-btn" id="mmBtn">Calcular estimador</button>
+              <div class="gen-output" id="mmOutput">Clique para calcular.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="verossimilhanca-ep">
+          <div class="wrap">
+            <div class="eyebrow">04 · Métodos de estimação · 2 de 3</div>
+            <h2>Método da Máxima Verossimilhança (EMV)</h2>
+            <p class="intro">Em vez de igualar momentos, este método pergunta: entre todos os valores possíveis de θ, qual deles torna a amostra observada mais provável?</p>
+
+            <div class="formula-box">
+              <div class="f">L(X₁,...,Xₙ, θ) = f(X₁,θ) × f(X₂,θ) × ... × f(Xₙ,θ)</div>
+              <div class="f-note">a função de verossimilhança mede a chance de observar essa amostra, em função de θ</div>
+            </div>
+
+            <p style="color:var(--ink-soft); font-size:16.5px;">O <strong>estimador de máxima verossimilhança</strong> (EMV) é o valor θ̂ que maximiza L(.) — na prática, quase sempre trabalhando com o logaritmo l(.) = ln L(.), porque transforma produtos em somas sem alterar o ponto de máximo.</p>
+
+            <div class="qa-card" style="margin-top:28px;">
+              <div class="qlabel">Exemplo · rebites</div>
+              <p class="q">Uma amostra de n=3 rebites forneceu 2 peças defeituosas e 1 boa. Qual o EMV de p?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">p̂ = 2/3</div>
+                <p>L(p) = p²(1−p). Derivando e igualando a zero: ∂L/∂p = 2p(1−p) − p² = 0. As raízes são p=0 e p=2/3 — a que maximiza L(.) é p = 2/3.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Caso geral · Bernoulli(p)</div>
+              <p class="q">Amostra de tamanho n de uma Bernoulli(p), com k = ΣXᵢ sucessos. Qual o EMV de p?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">p̂ = k/n = X̄</div>
+                <p>L(.) = pᵏ(1−p)ⁿ⁻ᵏ → l(.) = k·ln(p) + (n−k)·ln(1−p). Derivando: ∂l/∂p = k/p − (n−k)/(1−p) = 0 → p̂ = k/n.</p>
+              </div>
+            </div>
+
+            <div class="sim-layout" style="margin-top:32px;">
+              <div class="sim-board">
+                <div id="mleSvgWrap"></div>
+                <div class="sim-legend">
+                  <span><span class="sw" style="background:var(--teal)"></span>L(p) normalizada</span>
+                  <span><span class="sw" style="background:var(--rust)"></span>p̂ = k/n</span>
+                </div>
+              </div>
+              <div class="sim-panel">
+                <h3>Simulador de verossimilhança</h3>
+                <p>Ajuste n (tentativas) e k (sucessos observados) — a curva mostra o formato de L(p) e onde ela atinge o máximo.</p>
+                <div class="gen-row">
+                  <div class="gen-field"><label for="mleN">n</label><input type="number" id="mleN" value="3" min="1" max="200"></div>
+                  <div class="gen-field"><label for="mleK">k</label><input type="number" id="mleK" value="2" min="0" max="200"></div>
+                </div>
+                <div class="bt-presets">
+                  <button class="mle-preset" data-mle="3,2">Rebites (n=3, k=2)</button>
+                  <button class="mle-preset" data-mle="10,7">Ensaio 1 (n=10, k=7)</button>
+                  <button class="mle-preset" data-mle="10,4">Ensaio 2 (n=10, k=4)</button>
+                </div>
+                <button class="sim-btn" id="mleBtn">Plotar L(p)</button>
+                <div class="sim-readout" id="mleReadout"></div>
+              </div>
+            </div>
+
+            <div class="callout" style="margin-top:28px;">
+              <div class="eyebrow">Comentários sobre o EMV</div>
+              <p>É o método mais utilizado na prática. Os estimadores de MV costumam ser assintoticamente não viciados e consistentes, e assintoticamente têm distribuição normal — o que abre a porta para inferência estatística (intervalos de confiança, testes de hipótese).</p>
+            </div>
+
+            <div class="def-grid" style="margin-top:24px;">
+              <div class="def-card">
+                <span class="tag">Propriedade invariante</span>
+                <h3>EMV de g(θ) é g(θ̂)</h3>
+                <p>Se θ̂ é o EMV de θ, então o EMV de qualquer função g(θ) é simplesmente g(θ̂) — não é preciso refazer toda a maximização.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Exemplo</span>
+                <h3>Var(X) para uma Bernoulli</h3>
+                <p>Sabendo que p̂ é o EMV de p, o EMV de Var(X) = p(1−p) é, pela propriedade invariante, Var̂(X) = p̂(1−p̂) — sem nenhuma conta nova.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="minimos-quadrados-ep">
+          <div class="wrap">
+            <div class="eyebrow">05 · Métodos de estimação · 3 de 3</div>
+            <h2>Método dos Mínimos Quadrados (MQ)</h2>
+            <p class="intro">Usado quando Y pode ser escrito como uma reta em função de X: Y = α + βX. A ideia é minimizar a soma quadrática dos erros entre o valor observado e o valor previsto pela reta.</p>
+
+            <div class="formula-box">
+              <div class="f">eᵢ = Yᵢ − (α + βXᵢ) &nbsp;&nbsp;·&nbsp;&nbsp; Σeᵢ² = Σ[Yᵢ − (α + βXᵢ)]²</div>
+              <div class="f-note">os estimadores de α e β minimizam Σeᵢ² — resolvendo ∂(Σeᵢ²)/∂α = 0 e ∂(Σeᵢ²)/∂β = 0</div>
+            </div>
+
+            <div class="flow-note">Esse sistema será resolvido em detalhe mais adiante no curso, no tópico de Modelos de Regressão — aqui fica só o princípio: minimizar o erro ao quadrado, não o erro em si, para que erros positivos e negativos não se cancelem.</div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="resumo-ep">
+          <div class="wrap">
+            <div class="eyebrow">06 · Consulta rápida</div>
+            <h2>Estimadores pontuais mais comuns</h2>
+            <p class="intro">Uma referência direta — os métodos acima, aplicados às distribuições mais usadas no curso, costumam convergir para os mesmos estimadores.</p>
+
+            <table class="datatab">
+              <caption>Distribuição · parâmetro · estimador</caption>
+              <thead><tr><th>Distribuição</th><th>Parâmetro</th><th>Estimador</th></tr></thead>
+              <tbody>
+                <tr><td>Normal</td><td>µ</td><td>µ̂ = X̄</td></tr>
+                <tr><td>Normal</td><td>σ²</td><td>σ̂² = S²</td></tr>
+                <tr><td>Bernoulli</td><td>p</td><td>p̂ = X̄</td></tr>
+                <tr><td>Poisson</td><td>λ</td><td>λ̂ = X̄</td></tr>
+                <tr><td>Exponencial</td><td>λ</td><td>λ̂ = X̄⁻¹</td></tr>
+              </tbody>
+            </table>
+
+            <div class="callout teal" style="margin-top:28px;">
+              <div class="eyebrow">O próximo passo: erro amostral</div>
+              <p>Toda estimativa pontual erra por algum tanto: erro amostral = X̄ − µ. Como X̄ é aleatório, o erro também é. O objetivo passa a ser garantir P(|X̄ − µ| &lt; ε) = 1 − α — a lógica exata por trás dos <strong>intervalos de confiança</strong>, próximo assunto da disciplina.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="exercicios-ep">
+          <div class="wrap">
+            <div class="eyebrow">07 · Pratique</div>
+            <h2>Exercícios da apostila</h2>
+            <p class="intro">Os quatro exercícios abaixo vêm do material da disciplina. Tente resolver antes de revelar a resposta.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 1</div>
+              <p class="q">X tem densidade f(x) = (θ+1)xᶿ, 0 ≤ x ≤ 1. Determine o EMV de θ.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">θ̂ = [−n / Σln(Xᵢ)] − 1</div>
+                <p>L(.) = (θ+1)ⁿ·ΠXᵢᶿ → l(.) = n·ln(θ+1) + θ·Σln(Xᵢ). Derivando e igualando a zero: n/(θ+1) + Σln(Xᵢ) = 0 → θ̂ = −n/Σln(Xᵢ) − 1.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 2</div>
+              <p class="q">µ̂₁ e µ̂₂ são não viciados para µ, com Var(µ̂₁) = (1/3)Var(µ̂₂). Propõem-se T₁ = 0.5(µ̂₁+µ̂₂), T₂ = 0.8µ̂₁+0.2µ̂₂ e T₃ = µ̂₁. Ordene por eficiência.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Var(T₂) &lt; Var(T₁) = Var(T₃)</div>
+                <p>Todos são não viciados. Calculando as variâncias (em unidades de Var(µ̂₂)): Var(T₁)=1/3, Var(T₂)=0.76/3≈0.253, Var(T₃)=1/3. T₂ é o mais eficiente; T₁ e T₃ empatam.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 3</div>
+              <p class="q">20 componentes com vida útil Exponencial(λ) são testados. Após 24h, y=15 dos 20 ainda funcionavam. Encontre o EMV de λ.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">λ̂ = −ln(p̂)/24 = −ln(0.75)/24 ≈ 0.012</div>
+                <p>P(X&gt;24) = e^(−24λ) = p. O EMV de p (Bernoulli "funcionar 24h") é p̂ = y/n = 15/20 = 0.75. Pela propriedade invariante, λ̂ = −ln(p̂)/24 ≈ 0.0120 por hora.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 4</div>
+              <p class="q">Processo de nascimento puro: tempos sucessivos de nascimento observados até o 6º: 25.2, 41.7, 51.2, 55.5, 59.5, 61.8. Encontre o EMV de λ.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">λ̂ = 6 / Σ(i·Tᵢ) ≈ 0.0436</div>
+                <p>Com T₁=25.2, T₂=16.5, T₃=9.5, T₄=4.3, T₅=4.0, T₆=2.3 (diferenças sucessivas entre nascimentos): Σ(i·Tᵢ) = 25.2+2(16.5)+3(9.5)+4(4.3)+5(4.0)+6(2.3) = 137.7. λ̂ = 6/137.7 ≈ 0.0436.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="module-footer">
+          <div class="wrap">
+            <div class="refs">
+              DEVORE, J.L. — Probabilidade e Estatística para Engenharia e Ciências, Thomson, 2006 · BUSSAB, W.O.; MORETTIN, P.A. — Estatística Básica, 10ª ed., Saraiva, 2024 · CASELLA, G.; BERGER, R.L. — Statistical Inference, 2ª ed., Duxbury, 2002 · MEYER, P.L. — Probabilidade: Aplicações à Estatística, LTC, 1977
+            </div>
+            <div class="credit">Guia de estudo baseado no módulo "Estimação Pontual de Parâmetros" de PRO 3200 — Estatística, EP-USP.</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ================= END MODULE: ESTIMAÇÃO PONTUAL DE PARÂMETROS ================= -->
+
+      <div class="module-page" data-module="estimacao-intervalar" id="page-estimacao-intervalar" hidden>
+
+        <div class="page-subnav">
+          <div class="page-subnav-inner">
+            <span class="psn-title">P1 · Estimação Intervalar</span>
+            <div class="navlinks">
+              <button class="navlink" data-target="erro-ii">Erro amostral</button>
+              <button class="navlink" data-target="ic-z-ii">IC para µ (Z)</button>
+              <button class="navlink" data-target="ic-t-ii">IC para µ (t)</button>
+              <button class="navlink" data-target="tamanho-ii">Tamanho & unilateral</button>
+              <button class="navlink" data-target="ic-p-ii">IC para p</button>
+              <button class="navlink" data-target="ic-var-ii">IC para σ²</button>
+              <button class="navlink" data-target="bootstrap-ii">Bootstrap</button>
+              <button class="navlink" data-target="exercicios-ii">Exercícios</button>
+            </div>
+          </div>
+        </div>
+
+        <header class="hero" id="inicio-ii">
+          <div class="wrap hero-grid">
+            <div>
+              <div class="eyebrow">Módulo 4 · Profas. Linda Lee Ho e Celma de Oliveira Ribeiro</div>
+              <h1>Um ponto não basta. <em>Um intervalo revela o quão perto ele está da verdade.</em></h1>
+              <p class="lede">µ̂ = X̄ é só um número — e todo número erra por algum tanto. Este módulo transforma essa margem de erro em ferramenta: a partir da amostra, constrói-se um intervalo [a,b] que, com um nível de confiança escolhido, deve conter o valor verdadeiro do parâmetro — seja ele µ, p ou σ².</p>
+              <div class="hero-meta">
+                <span><strong>Depto.</strong> Engenharia de Produção — USP</span>
+                <span><strong>Módulo</strong> Estimação Intervalar</span>
+              </div>
+            </div>
+            <div id="heroCI" aria-hidden="true"></div>
+          </div>
+        </header>
+
+        <section class="section reveal" id="erro-ii">
+          <div class="wrap">
+            <div class="eyebrow">01 · Do ponto ao intervalo</div>
+            <h2>Erro amostral e o princípio de todo intervalo de confiança</h2>
+            <p class="intro">Uma estimativa pontual não diz nada sobre a própria precisão. Um intervalo de confiança soma a ela justamente essa informação — o quão longe, com que probabilidade, ela pode estar do valor real.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Erro amostral</span>
+                <h3>Erro amostral = θ̂ − θ</h3>
+                <p>Como θ̂ é uma variável aleatória — muda a cada amostra coletada — o erro amostral também é. Pode ser positivo ou negativo, e seu valor exato nunca é conhecido na prática.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">O que se quer garantir</span>
+                <h3>P(|θ̂ − θ| &lt; ε) = 1 − α</h3>
+                <p>Fixado um nível de confiança 1−α, busca-se o maior erro ε que a estimativa comete com essa probabilidade. Esse é o princípio que sustenta praticamente todo intervalo de confiança do curso.</p>
+              </div>
+            </div>
+
+            <div class="callout teal" style="margin-top:28px;">
+              <div class="eyebrow">Definição · Intervalo de confiança</div>
+              <p>Dada uma amostra aleatória simples X₁,...,Xₙ, o objetivo é achar um intervalo [a,b] tal que, com um certo nível de confiança 1−α (95%, 90%...), ele contenha o verdadeiro valor do parâmetro. O intervalo é aleatório — muda a cada amostra — porque é função dos dados observados; o parâmetro, esse, é fixo.</p>
+            </div>
+
+            <div class="callout" style="margin-top:20px;">
+              <div class="eyebrow">Atenção — a armadilha de interpretação mais comum</div>
+              <p>É muito comum ouvir: "o verdadeiro valor de µ está no intervalo [a,b] com probabilidade de 1−α%." <strong>Isso está errado</strong> — µ é um parâmetro, não uma variável aleatória, e não está vinculado a nenhum evento aleatório.</p>
+              <p>O jeito correto de se expressar: o valor verdadeiro do parâmetro é desconhecido, mas deve estar no intervalo [a,b] com (1−α)% de confiança. Ou, de forma frequentista: se o cálculo do IC fosse repetido em 100 amostras coletadas do mesmo modo, espera-se que (1−α)% delas produzam intervalos que realmente contêm o valor verdadeiro — como no simulador ao lado do título deste módulo, em que algumas barras (em vermelho) simplesmente erram µ.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="ic-z-ii">
+          <div class="wrap">
+            <div class="eyebrow">02 · Primeiro caso · σ² conhecido</div>
+            <h2>Intervalo de confiança para µ com σ² conhecido</h2>
+            <p class="intro">Ponto de partida: X ~ N(µ, σ²), com µ desconhecido mas σ² conhecido. Já se sabe que X̄ ~ N(µ, σ²/n) e que Z = (X̄−µ)/(σ/√n) ~ N(0,1).</p>
+
+            <div class="formula-box">
+              <div class="f">P(−zα/2 &lt; Z &lt; zα/2) = 1 − α</div>
+              <div class="f-note">substituindo Z por (X̄−µ)/(σ/√n) e isolando µ, chega-se aos limites do IC</div>
+            </div>
+
+            <div class="formula-box" style="margin-top:16px;">
+              <div class="f">X̄ − zα/2 · σ/√n &nbsp;&nbsp;≤ µ ≤&nbsp;&nbsp; X̄ + zα/2 · σ/√n</div>
+              <div class="f-note">o erro máximo (margem) é ε = zα/2 · σ/√n</div>
+            </div>
+
+            <p class="intro" style="margin-top:24px;">Vale a pena examinar essa margem ε de perto — o que acontece com ela quando cada peça da fórmula muda:</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Pergunta 1</div>
+              <p class="q">O que acontece com ε se aumentarmos o tamanho da amostra n?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">ε diminui</div>
+                <p>n está no denominador dentro de uma raiz — mais dados sempre reduzem a margem de erro, embora a um custo de raiz quadrada, não linear (quadruplicar n só reduz ε pela metade).</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Pergunta 2</div>
+              <p class="q">O que acontece com ε num processo de alta variabilidade (σ grande)?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">ε aumenta</div>
+                <p>Quanto mais dispersos os dados individuais, menos precisa é a estimativa da média — o intervalo precisa ser mais largo para manter a mesma confiança.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Pergunta 3</div>
+              <p class="q">O que acontece com ε se aumentarmos o nível de confiança (1−α)?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">ε aumenta</div>
+                <p>Para ter mais certeza de capturar µ, é preciso abrir mão de precisão: zα/2 cresce conforme 1−α cresce — 1.645 (90%) → 1.96 (95%) → 2.576 (99%).</p>
+              </div>
+            </div>
+
+            <table class="datatab" style="margin-top:28px;">
+              <caption>Valores de zα/2 mais usados no curso</caption>
+              <thead><tr><th>1 − α</th><th>zα/2</th></tr></thead>
+              <tbody>
+                <tr><td>90%</td><td>1.645</td></tr>
+                <tr><td>95%</td><td>1.96</td></tr>
+                <tr><td>99%</td><td>2.576</td></tr>
+              </tbody>
+            </table>
+
+            <div class="qa-card" style="margin-top:28px;">
+              <div class="qlabel">Exercício resolvido</div>
+              <p class="q">Uma população tem σ²=25 (conhecida). Em uma amostra de n=36, X̄=8. Construa IC de 90%, 95% e 99% para µ.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Quanto maior a confiança, mais largo o intervalo</div>
+                <table class="datatab">
+                  <caption>X̄ ± zα/2 · σ/√n , com σ/√n = 5/6 ≈ 0.833</caption>
+                  <thead><tr><th>1 − α</th><th>zα/2</th><th>IC para µ</th></tr></thead>
+                  <tbody>
+                    <tr><td>90%</td><td>1.645</td><td>[6.629 ; 9.371]</td></tr>
+                    <tr><td>95%</td><td>1.96</td><td>[6.367 ; 9.633]</td></tr>
+                    <tr><td>99%</td><td>2.576</td><td>[5.853 ; 10.147]</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="gen-box" style="margin-top:28px;">
+              <span class="tag" style="font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--teal); letter-spacing:.06em;">Calculadora de IC para µ</span>
+              <p style="color:var(--ink-soft); font-size:15.5px; margin:10px 0 0;">Funciona tanto para σ conhecido (usa Z) quanto para σ desconhecido, com S amostral (usa t-Student — veja a seção seguinte).</p>
+              <div class="gen-row" style="margin-top:14px; align-items:flex-end;">
+                <div class="gen-field"><label for="icXbar">X̄</label><input type="number" id="icXbar" value="8" step="any"></div>
+                <div class="gen-field"><label for="icN">n</label><input type="number" id="icN" value="36" min="2" step="1"></div>
+                <div class="gen-field" style="min-width:220px;">
+                  <label for="icKnown">Desvio padrão</label>
+                  <select id="icKnown" style="width:100%; font-family:var(--mono); font-size:14px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink);">
+                    <option value="known">σ conhecido (Z)</option>
+                    <option value="unknown">S amostral (t, n−1 gl)</option>
+                  </select>
+                </div>
+                <div class="gen-field"><label id="icSigmaLabel" for="icSigma">σ</label><input type="number" id="icSigma" value="5" step="any"></div>
+                <div class="gen-field"><label for="icConf">Confiança (%)</label><input type="number" id="icConf" value="95" min="50" max="99.9" step="0.5"></div>
+              </div>
+              <button class="sim-btn" id="icBtn">Calcular IC</button>
+              <div class="gen-output" id="icOutput">Clique para calcular.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="ic-t-ii">
+          <div class="wrap">
+            <div class="eyebrow">03 · Segundo caso · σ desconhecido</div>
+            <h2>Quando σ é desconhecido: a distribuição t-Student</h2>
+            <p class="intro">Na prática, quase nunca se conhece σ². A ideia natural é substituí-lo pela variância amostral S² = [Σ(Xᵢ−X̄)²]/(n−1). Só que T = (X̄−µ)/(S/√n) não segue mais uma N(0,1) — segue uma t-Student com n−1 graus de liberdade.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Um pouco de história</span>
+                <h3>William Gosset, cervejeiro</h3>
+                <p>A distribuição foi proposta pelo engenheiro químico irlandês William Gosset, do controle de qualidade da cervejaria Guinness. Como não era bem visto "estudar" no ambiente de trabalho da época, publicou o método sob o pseudônimo <strong>Student</strong> — e ficou conhecido como o primeiro estatístico industrial.</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Propriedades</span>
+                <h3>Simétrica, mais achatada que a Normal</h3>
+                <p>E(t)=0 e Var(t)=ν/(ν−2), para ν&gt;0. Quanto menor ν (menos dados), mais "achatada" e com caudas mais pesadas — conforme ν→∞, a t-Student converge para a N(0,1).</p>
+              </div>
+            </div>
+
+            <div class="formula-box" style="margin-top:24px;">
+              <div class="f">X̄ − tα/2 · S/√n &nbsp;&nbsp;≤ µ ≤&nbsp;&nbsp; X̄ + tα/2 · S/√n</div>
+              <div class="f-note">tα/2 é o quantil da t-Student com ν = n−1 graus de liberdade</div>
+            </div>
+
+            <p class="intro" style="margin-top:24px;">Comparando na prática: a precipitação pluviométrica anual em uma região tem, teoricamente, σ=3.1. Uma amostra de 9 anos deu X̄=30.49 e S=2.73. Veja como o IC de 98% muda conforme a origem do desvio padrão usado:</p>
+
+            <div class="compare">
+              <div class="compare-card p">
+                <h3>Se σ=3.1 fosse conhecido (Z)</h3>
+                <p>zα/2 = 2.33 (98% bilateral)</p>
+                <ul>
+                  <li>X̄ = 30.49</li>
+                  <li>σ/√n = 3.1/√9 ≈ 1.033</li>
+                  <li>ε = 2.33 × 1.033 ≈ 2.41</li>
+                </ul>
+                <div class="verdict">IC ≈ [28.08 ; 32.90]</div>
+              </div>
+              <div class="compare-card np">
+                <h3>Com σ desconhecido, só S (t)</h3>
+                <p>tα/2 = 2.896 (98%, ν=8)</p>
+                <ul>
+                  <li>X̄ = 30.49</li>
+                  <li>S/√n = 2.73/√9 = 0.91</li>
+                  <li>ε = 2.896 × 0.91 ≈ 2.64</li>
+                </ul>
+                <div class="verdict">IC ≈ [27.85 ; 33.13]</div>
+              </div>
+            </div>
+
+            <div class="flow-note">Note que o IC baseado em t é ligeiramente mais largo — parte da confiança é "gasta" para compensar a incerteza extra de estimar σ a partir da própria amostra, em vez de já conhecê-lo de antemão.</div>
+
+            <div class="qa-card" style="margin-top:28px;">
+              <div class="qlabel">Exercício resolvido · dados agrupados</div>
+              <p class="q">Uma amostra de 70 observações agrupadas em classes produziu X̄=259.29 e S=44.32. Construa um IC de 95% para a média.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">IC ≈ [248.75 ; 269.83]</div>
+                <p>ν = n−1 = 69, tα/2 ≈ 1.99. S/√n = 44.32/√70 ≈ 5.297. ε = 1.99 × 5.297 ≈ 10.54. IC = 259.29 ± 10.54.</p>
+              </div>
+            </div>
+
+            <div class="flow-note">A calculadora da seção anterior já cobre esse caso: basta trocar "Desvio padrão" para "S amostral (t, n−1 gl)" e informar S no lugar de σ.</div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="tamanho-ii">
+          <div class="wrap">
+            <div class="eyebrow">04 · Planejamento da coleta</div>
+            <h2>Tamanho de amostra e intervalos unilaterais</h2>
+            <p class="intro">O mesmo raciocínio do erro amostral serve para planejar a coleta: que tamanho de amostra garante um erro máximo ε, com confiança 1−α, antes mesmo de ir a campo?</p>
+
+            <div class="formula-box">
+              <div class="f">n ≥ (zα/2 · σ / ε)²</div>
+              <div class="f-note">isolando n a partir de ε = zα/2·σ/√n — na prática, n é sempre arredondado para cima</div>
+            </div>
+
+            <div class="qa-card" style="margin-top:24px;">
+              <div class="qlabel">Exercício resolvido</div>
+              <p class="q">O banco Incerteza quer que o erro amostral do endividamento médio dos clientes não passe de 25, com 90% de confiança, sabendo que σ=93.76. Quantos clientes consultar?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">n ≈ 38 clientes</div>
+                <p>n ≥ (1.645 × 93.76 / 25)² ≈ 37.9 → arredondando para cima, n = 38.</p>
+              </div>
+            </div>
+
+            <div class="gen-box" style="margin-top:24px;">
+              <span class="tag" style="font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--teal); letter-spacing:.06em;">Calculadora de tamanho de amostra</span>
+              <div class="gen-row" style="margin-top:12px; align-items:flex-end;">
+                <div class="gen-field"><label for="ssSigma">σ</label><input type="number" id="ssSigma" value="93.76" step="any"></div>
+                <div class="gen-field"><label for="ssEps">ε desejado</label><input type="number" id="ssEps" value="25" step="any"></div>
+                <div class="gen-field"><label for="ssConf">Confiança (%)</label><input type="number" id="ssConf" value="90" min="50" max="99.9" step="0.5"></div>
+              </div>
+              <button class="sim-btn" id="ssBtn">Calcular n</button>
+              <div class="gen-output" id="ssOutput">Clique para calcular.</div>
+            </div>
+
+            <h3 style="margin-top:40px; font-size:20px;">Intervalos unilaterais (monocaudais)</h3>
+            <p class="intro">Até agora, todos os IC foram bilaterais — construídos a partir de P(−zα/2 &lt; Z &lt; zα/2) = 1−α. Às vezes só interessa um lado: um piso mínimo garantido, ou um teto máximo.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Limite inferior · (b, ∞)</span>
+                <h3>µ &gt; X̄ − zα σ/√n &nbsp;(ou X̄ − tα S/√n)</h3>
+                <p>Parte de P(Z &lt; zα) = 1−α, sem dividir α por 2 — útil quando só interessa garantir um piso, como "a resistência mínima de um material".</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Limite superior · (−∞, a)</span>
+                <h3>µ &lt; X̄ + zα σ/√n &nbsp;(ou X̄ + tα S/√n)</h3>
+                <p>Parte de P(Z &gt; −zα) = 1−α — útil quando só interessa um teto, como "o tempo máximo de um processo".</p>
+              </div>
+            </div>
+
+            <div class="flow-note">Repare que zα (unilateral) é diferente de zα/2 (bilateral) para o mesmo 1−α: 95% bilateral usa 1.96, mas 95% unilateral usa 1.645 — o mesmo valor que o bilateral de 90% usava para zα/2, porque toda a "folga" de α fica concentrada de um lado só.</div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="ic-p-ii">
+          <div class="wrap">
+            <div class="eyebrow">05 · Uma proporção também é uma média</div>
+            <h2>Intervalo de confiança para a proporção p</h2>
+            <p class="intro">X ~ Bernoulli(p). O estimador natural é p̂ = (ΣXᵢ)/n — que, em si, também é uma média amostral. Pelo Teorema Central do Limite, para n grande, p̂ ≈ N(p, p(1−p)/n).</p>
+
+            <div class="formula-box">
+              <div class="f">Z = (p̂ − p) / √(p(1−p)/n) ≈ N(0,1)</div>
+              <div class="f-note">isolando p, os limites do IC seriam p̂ ± zα/2√(p(1−p)/n)</div>
+            </div>
+
+            <div class="callout" style="margin-top:20px;">
+              <div class="eyebrow">O detalhe que passa despercebido</div>
+              <p>Esses limites dependem do próprio parâmetro desconhecido p! Na prática, a solução é substituí-lo pelo seu estimador — os limites finais usados são:</p>
+              <p style="font-family:var(--mono); text-align:center; font-size:16px; color:var(--teal-deep);">p̂ − zα/2√(p̂(1−p̂)/n) &nbsp;&nbsp;e&nbsp;&nbsp; p̂ + zα/2√(p̂(1−p̂)/n)</p>
+            </div>
+
+            <div class="qa-card" style="margin-top:28px;">
+              <div class="qlabel">Exercício resolvido · itens defeituosos</div>
+              <p class="q">Em 10.000 itens inspecionados, 4.000 tinham ao menos 1 defeito. Construa um IC de 98% para a proporção de itens defeituosos.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">IC ≈ [0.389 ; 0.411]</div>
+                <p>p̂ = 0.4, zα/2 = 2.33. ε = 2.33 × √(0.4×0.6/10000) ≈ 0.0114. IC = 0.4 ± 0.0114.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício resolvido · intenção de compra</div>
+              <p class="q">500 pessoas foram entrevistadas para o lançamento de um produto; 157 manifestaram intenção de compra. Construa um IC de 92% para essa proporção.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">IC ≈ [0.277 ; 0.351]</div>
+                <p>p̂ = 157/500 = 0.314, zα/2 = 1.76. ε = 1.76 × √(0.314×0.686/500) ≈ 0.0365. IC = 0.314 ± 0.0365.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício resolvido · tamanho de amostra para p</div>
+              <p class="q">Uma amostra preliminar de 500 famílias mostrou 340 com forno de micro-ondas. Que tamanho de amostra garante erro ≤ 0.02 com 95% de confiança?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">n ≈ 2090 (ou 2401, na versão conservadora)</div>
+                <p>n &gt; zα/2² · p̂(1−p̂) / ε² = 1.96² × 0.68 × 0.32 / 0.02² ≈ 2089.6 → n = 2090. Sem nenhuma estimativa prévia de p, a solução conservadora usa p=0.5 (o valor que maximiza p(1−p)): n = 1.96²×0.25/0.02² ≈ 2401.</p>
+              </div>
+            </div>
+
+            <div class="gen-box" style="margin-top:24px;">
+              <span class="tag" style="font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--teal); letter-spacing:.06em;">Calculadora de IC para proporção</span>
+              <div class="gen-row" style="margin-top:12px; align-items:flex-end;">
+                <div class="gen-field"><label for="propX">Sucessos (x)</label><input type="number" id="propX" value="157" min="0" step="1"></div>
+                <div class="gen-field"><label for="propN">n</label><input type="number" id="propN" value="500" min="1" step="1"></div>
+                <div class="gen-field"><label for="propConf">Confiança (%)</label><input type="number" id="propConf" value="92" min="50" max="99.9" step="0.5"></div>
+              </div>
+              <button class="sim-btn" id="propBtn">Calcular IC</button>
+              <div class="gen-output" id="propOutput">Clique para calcular.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="ic-var-ii">
+          <div class="wrap">
+            <div class="eyebrow">06 · Terceiro parâmetro · a variância</div>
+            <h2>Intervalo de confiança para σ² — a distribuição qui-quadrado</h2>
+            <p class="intro">O estimador de σ² é S² = [Σ(Xᵢ−X̄)²]/(n−1), justo e consistente. Mas construir seu IC exige uma distribuição nova: a qui-quadrado.</p>
+
+            <div class="def-grid">
+              <div class="def-card">
+                <span class="tag">Origem</span>
+                <h3>Soma de normais padrão ao quadrado</h3>
+                <p>Se Z ~ N(0,1), então Z² ~ χ²₁. Somando n dessas variáveis independentes ao quadrado, obtém-se uma χ²ₙ. Descontando 1 grau de liberdade pelo uso de X̄ na fórmula de S², chega-se a:</p>
+              </div>
+              <div class="def-card">
+                <span class="tag">Propriedades</span>
+                <h3>E(χ²)=ν · Var(χ²)=2ν</h3>
+                <p>Assimétrica e só assume valores positivos — bem diferente da forma em sino simétrica da Normal e da t-Student.</p>
+              </div>
+            </div>
+
+            <div class="formula-box" style="margin-top:8px;">
+              <div class="f">(n−1)S² / σ² &nbsp;~&nbsp; χ²ₙ₋₁</div>
+              <div class="f-note">a partir daqui, escolhem-se a e b tais que P(χ² &lt; a) = P(χ² &gt; b) = α/2</div>
+            </div>
+
+            <div class="formula-box" style="margin-top:16px;">
+              <div class="f">(n−1)S² / b &nbsp;&nbsp;≤ σ² ≤&nbsp;&nbsp; (n−1)S² / a</div>
+              <div class="f-note">a e b são os quantis da χ²ₙ₋₁ tais que P(χ²&lt;a)=P(χ²&gt;b)=α/2</div>
+            </div>
+
+            <div class="callout" style="margin-top:20px;">
+              <div class="eyebrow">Atenção — este IC não é simétrico</div>
+              <p>Diferente dos IC para µ e p, o intervalo para σ² não fica centrado em S² — porque a χ² é assimétrica, o "pedaço" cortado de cada cauda tem larguras diferentes em valor absoluto.</p>
+            </div>
+
+            <table class="datatab" style="margin-top:24px;">
+              <caption>Valores críticos χ²(ν,p) selecionados — p = P(χ²ν ≥ χ²ν,p)</caption>
+              <thead><tr><th>ν</th><th>p=0.950</th><th>p=0.050</th><th>p=0.975</th><th>p=0.025</th></tr></thead>
+              <tbody>
+                <tr><td>9</td><td>3.33</td><td>16.92</td><td>2.70</td><td>19.02</td></tr>
+                <tr><td>10</td><td>3.94</td><td>18.31</td><td>3.25</td><td>20.48</td></tr>
+                <tr><td>15</td><td>7.26</td><td>25.00</td><td>6.26</td><td>27.49</td></tr>
+                <tr><td>18</td><td>9.39</td><td>28.87</td><td>8.23</td><td>31.53</td></tr>
+                <tr><td>19</td><td>10.12</td><td>30.14</td><td>8.91</td><td>32.85</td></tr>
+                <tr><td>20</td><td>10.85</td><td>31.41</td><td>9.59</td><td>34.17</td></tr>
+                <tr><td>30</td><td>18.49</td><td>43.77</td><td>16.79</td><td>46.98</td></tr>
+              </tbody>
+            </table>
+            <p style="font-family:var(--mono); font-size:12.5px; color:var(--ink-faint); margin-top:8px;">Para 90% bilateral use as colunas p=0.950 (limite a) e p=0.050 (limite b); para 95%, use p=0.975 (a) e p=0.025 (b). A tabela completa (todos os ν e todos os p) está nos slides da disciplina.</p>
+
+            <div class="qa-card" style="margin-top:28px;">
+              <div class="qlabel">Exercício resolvido</div>
+              <p class="q">A resistência à tração de 20 corpos de prova gerou S²=32.79. Construa um IC de 95% para a variância.</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">IC ≈ [18.94 ; 69.83]</div>
+                <p>ν = n−1 = 19; a=8.906, b=32.852 (χ²₁₉ com p=0.975 e p=0.025). IC = [19×32.79/32.852 ; 19×32.79/8.906] ≈ [18.94 ; 69.83].</p>
+              </div>
+            </div>
+
+            <div class="flow-note">Conexão entre as três distribuições: a própria t-Student pode ser escrita como a razão entre uma Normal padrão e a raiz de uma χ² dividida pelos graus de liberdade — t = Z / √(χ²ν/ν). Cancelando (n−1) e σ nessa razão, chega-se de volta a T = (X̄−µ)/(S/√n).</div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="bootstrap-ii">
+          <div class="wrap">
+            <div class="eyebrow">07 · Quando a teoria falta</div>
+            <h2>Bootstrap: reamostrar os dados que você já tem</h2>
+            <p class="intro">Todos os IC anteriores exigiram conhecer a distribuição exata do estimador. Mas nem sempre isso é possível — às vezes a teoria é complicada demais, ou simplesmente não existe. Proposto por B. Efron em 1979, o bootstrap contorna o problema com poder computacional.</p>
+
+            <div class="flow" style="margin-top:8px;">
+              <div class="flow-box"><div class="fb-label">1</div><div class="fb-title">Amostra observada<br><span style="font-weight:400;font-size:13px;color:var(--ink-soft);">x = (x₁,...,xₙ)</span></div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box"><div class="fb-label">2</div><div class="fb-title">Reamostrar com reposição<br><span style="font-weight:400;font-size:13px;color:var(--ink-soft);">gera x* de tamanho n</span></div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box"><div class="fb-label">3</div><div class="fb-title">Repetir B vezes<br><span style="font-weight:400;font-size:13px;color:var(--ink-soft);">x*₁, x*₂, ..., x*_B</span></div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box"><div class="fb-label">4</div><div class="fb-title">Calcular o estimador<br><span style="font-weight:400;font-size:13px;color:var(--ink-soft);">em cada réplica</span></div></div>
+            </div>
+
+            <div class="formula-box" style="margin-top:28px;">
+              <div class="f">Var̂(θ̂) = Σ(θ̂(x*_b) − θ̄*)² / (B−1)</div>
+              <div class="f-note">e o IC aproximado fica θ̄* ± zα/2·√Var̂(θ̂), com θ̄* = Σθ̂(x*_b)/B</div>
+            </div>
+
+            <p class="intro" style="margin-top:24px;">Experimente com os 10 valores abaixo — já são os do exercício da apostila (23, 25, 35, 48, 55, 60, 62, 62, 70, 85). Rode o simulador com a estatística "Amplitude" para obter, na prática, um IC aproximado de 95% para max(Xᵢ) − min(Xᵢ) — exatamente o que se pede.</p>
+
+            <div class="sim-layout" style="margin-top:20px;">
+              <div class="sim-board">
+                <div id="bootHistWrap"></div>
+                <div class="sim-legend">
+                  <span><span class="sw" style="background:var(--teal)"></span>distribuição das réplicas bootstrap</span>
+                </div>
+              </div>
+              <div class="sim-panel">
+                <h3>Simulador de bootstrap</h3>
+                <p>Cole seus próprios dados ou use os do exercício — escolha a estatística, o número B de réplicas e a confiança.</p>
+                <div class="gen-field" style="margin-bottom:14px;">
+                  <label for="bootData">Dados (separados por vírgula)</label>
+                  <input type="text" id="bootData" value="23, 25, 35, 48, 55, 60, 62, 62, 70, 85" style="width:100%;">
+                </div>
+                <div class="gen-row">
+                  <div class="gen-field" style="min-width:210px;">
+                    <label for="bootStat">Estatística</label>
+                    <select id="bootStat" style="width:100%; font-family:var(--mono); font-size:14px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink);">
+                      <option value="amplitude">Amplitude (máx − mín)</option>
+                      <option value="mediana">Mediana</option>
+                      <option value="media">Média</option>
+                      <option value="iq">Intervalo interquartil (Q3−Q1)</option>
+                    </select>
+                  </div>
+                  <div class="gen-field"><label for="bootB">B (réplicas)</label><input type="number" id="bootB" value="1000" min="100" max="5000" step="100"></div>
+                  <div class="gen-field"><label for="bootConf">Confiança (%)</label><input type="number" id="bootConf" value="95" min="50" max="99.9" step="0.5"></div>
+                </div>
+                <button class="sim-btn" id="bootBtn">Rodar bootstrap</button>
+                <div class="sim-readout" id="bootOutput"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section alt reveal" id="exercicios-ii">
+          <div class="wrap">
+            <div class="eyebrow">08 · Pratique</div>
+            <h2>Mais exercícios da apostila</h2>
+            <p class="intro">Quatro exercícios adicionais, cobrindo os pontos que ainda não apareceram acima. Tente resolver antes de revelar a resposta.</p>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 1 · comparando fatores</div>
+              <p class="q">Com X̄ = 10, construa os IC para os seis cenários abaixo:</p>
+              <table class="datatab" style="margin-bottom:16px;">
+                <caption>Cenários</caption>
+                <thead><tr><th></th><th>I</th><th>II</th><th>III</th><th>IV</th><th>V</th><th>VI</th></tr></thead>
+                <tbody>
+                  <tr><td>n</td><td>9</td><td>9</td><td>16</td><td>100</td><td>25</td><td>25</td></tr>
+                  <tr><td>σ</td><td>4</td><td>12</td><td>5</td><td>5</td><td>8</td><td>8</td></tr>
+                  <tr><td>1−α</td><td>95%</td><td>95%</td><td>95%</td><td>95%</td><td>99%</td><td>95%</td></tr>
+                </tbody>
+              </table>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Menor σ ou maior n → intervalo mais estreito; maior confiança → intervalo mais largo</div>
+                <table class="datatab">
+                  <caption>Resultados</caption>
+                  <thead><tr><th>Cenário</th><th>Lim. inf.</th><th>Lim. sup.</th></tr></thead>
+                  <tbody>
+                    <tr><td>I</td><td>7.39</td><td>12.61</td></tr>
+                    <tr><td>II</td><td>2.16</td><td>17.84</td></tr>
+                    <tr><td>III</td><td>7.55</td><td>12.45</td></tr>
+                    <tr><td>IV</td><td>9.02</td><td>10.98</td></tr>
+                    <tr><td>V</td><td>5.88</td><td>14.12</td></tr>
+                    <tr><td>VI</td><td>6.86</td><td>13.14</td></tr>
+                  </tbody>
+                </table>
+                <p>II vs. I: mesmo n, σ maior → intervalo bem mais largo. III vs. I: n maior → intervalo mais estreito. IV vs. III: n salta de 16 para 100 → largura despenca. V vs. VI: mesmos n e σ, só a confiança muda (99% vs. 95%) → V é mais largo.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 2 · tamanho de amostra</div>
+              <p class="q">O desvio padrão da altura de crianças de 12 anos é 5 cm. (a) Uma amostra de 36 crianças deu X̄=150 cm — qual o IC de 95%? (b) Que tamanho de amostra faz o intervalo 150 ± 0.98 valer para 95% de confiança?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">(a) [148.37 ; 151.63] &nbsp;·&nbsp; (b) n = 100</div>
+                <p>(a) IC = 150 ± 1.96×5/√36 = 150 ± 1.63 → [148.37;151.63]. (b) 1.96×5/√n = 0.98 → √n = 1.96×5/0.98 = 10 → n = 100.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 3 · distribuição de Poisson</div>
+              <p class="q">No mesmo lote de 10.000 itens (0 a 4 defeitos por item, com frequências 6000/3000/600/350/50), qual a distribuição do número de defeitos por item, o estimador de λ e o IC de 98% para o número médio de defeitos?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">λ̂ = X̄ = 0.545 → IC ≈ [0.528 ; 0.562]</div>
+                <p>O número de defeitos por item segue uma Poisson(λ), com estimador λ̂=X̄ e Var(λ̂)≈λ̂/n. IC = 0.545 ± 2.33×√(0.545/10000) ≈ 0.545 ± 0.0172.</p>
+              </div>
+            </div>
+
+            <div class="qa-card">
+              <div class="qlabel">Exercício 4 · usando informação prévia sobre p</div>
+              <p class="q">Na mesma pesquisa de mercado (157 de 500 pretendem comprar), se soubermos de antemão que a proporção real é inferior a 40%, ou inferior a 80%, como isso muda o IC de 92%?</p>
+              <button class="qa-toggle">Revelar resposta</button>
+              <div class="qa-answer">
+                <div class="verdict">Usa-se o maior p(1−p) possível dentro do limite conhecido, não p̂</div>
+                <p>Com limite 40%: IC = 0.314 ± 1.76×√(0.4×0.6/500) ≈ [0.276;0.352]. Com limite 80%: IC = 0.314 ± 1.76×√(0.8×0.2/500) ≈ [0.283;0.345]. Quanto mais perto de 0.5 o limite considerado, maior a margem — porque p(1−p) é máximo em p=0.5.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="module-footer">
+          <div class="wrap">
+            <div class="refs">
+              DEVORE, J.L. — Probabilidade e Estatística para Engenharia e Ciências, Thomson, 2006 · BUSSAB, W.O.; MORETTIN, P.A. — Estatística Básica, 10ª ed., Saraiva, 2024 · CASELLA, G.; BERGER, R.L. — Statistical Inference, 2ª ed., Duxbury, 2002 · MEYER, P.L. — Probabilidade: Aplicações à Estatística, LTC, 1977 · EFRON, B. — Bootstrap Methods: Another Look at the Jackknife, Annals of Statistics, 1979
+            </div>
+            <div class="credit">Guia de estudo baseado no módulo "Estimação Intervalar" de PRO 3200 — Estatística, EP-USP.</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ================= END MODULE: ESTIMAÇÃO INTERVALAR ================= -->
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+
+  // ======================================================================
+  // MODULE REGISTRY
+  // Add a new entry here (status:'ready') and write its static
+  // <div class="module-page" data-module="ID"> ... </div> in the HTML
+  // once the corresponding slides are turned into content.
+  // ======================================================================
+  const MODULES = [
+    { id:'intro-amostragem',      group:'P1',  title:'Introdução e Amostragem', status:'ready' },
+    { id:'estatistica-descritiva',group:'P1',  title:'Estatística Descritiva',  status:'ready' },
+    { id:'estimacao-pontual',     group:'P1',  title:'Estimação Pontual de Parâmetros', status:'ready' },
+    { id:'estimacao-intervalar',  group:'P1',  title:'Estimação Intervalar', status:'ready' }
+  ];
+
+  // ---------- build sidebar ----------
+  const nav = document.getElementById('moduleNav');
+  const groups = [];
+  MODULES.forEach(m=>{
+    let g = groups.find(g=>g.name===m.group);
+    if(!g){ g = {name:m.group, items:[]}; groups.push(g); }
+    g.items.push(m);
+  });
+  groups.forEach(g=>{
+    const gEl = document.createElement('div');
+    gEl.className = 'module-group';
+    const label = document.createElement('div');
+    label.className = 'group-label';
+    label.textContent = g.name;
+    gEl.appendChild(label);
+    g.items.forEach((m, i)=>{
+      const btn = document.createElement('button');
+      btn.className = 'module-link';
+      btn.dataset.module = m.id;
+      btn.dataset.status = m.status;
+      btn.innerHTML = '<span class="ml-index">'+String(MODULES.indexOf(m)+1).padStart(2,'0')+'</span>'+
+                      '<span class="ml-title">'+m.title+'</span>'+
+                      (m.status==='soon' ? '<span class="ml-tag">em breve</span>' : '');
+      btn.addEventListener('click', ()=> showModule(m.id));
+      gEl.appendChild(btn);
+    });
+    nav.appendChild(gEl);
+  });
+
+  // ---------- build placeholder pages for modules without static content ----------
+  const stage = document.getElementById('moduleStage');
+  MODULES.filter(m=> m.status==='soon').forEach(m=>{
+    const page = document.createElement('div');
+    page.className = 'module-page';
+    page.dataset.module = m.id;
+    page.hidden = true;
+    page.innerHTML =
+      '<div class="wrap placeholder-wrap">'+
+        '<div class="eyebrow">'+m.group+' · Em construção</div>'+
+        '<h2>'+m.title+'</h2>'+
+        '<p class="intro">Esse módulo ainda não foi montado. Assim que os slides de "'+m.title+'" chegarem, ele ganha os mesmos diagramas, simuladores e exercícios interativos que o módulo de Amostragem.</p>'+
+        '<div class="placeholder-dots" id="pd-'+m.id+'"></div>'+
+      '</div>';
+    stage.appendChild(page);
+    const dotsWrap = page.querySelector('.placeholder-dots');
+    for(let i=0;i<64;i++){
+      const d = document.createElement('div');
+      d.className='pd';
+      dotsWrap.appendChild(d);
+    }
+  });
+
+  // ---------- mobile sidebar ----------
+  const sidebar = document.getElementById('sidebar');
+  const scrim = document.getElementById('scrim');
+  const hamburger = document.getElementById('hamburger');
+  function openSidebarMobile(){ sidebar.classList.add('open'); scrim.classList.add('show'); }
+  function closeSidebarMobile(){ sidebar.classList.remove('open'); scrim.classList.remove('show'); }
+  if(hamburger){ hamburger.addEventListener('click', openSidebarMobile); }
+  scrim.addEventListener('click', closeSidebarMobile);
+
+  // ---------- module switching ----------
+  let currentModuleId = MODULES[0].id;
+
+  function showModule(id){
+    currentModuleId = id;
+    document.querySelectorAll('.module-page').forEach(p=>{ p.hidden = (p.dataset.module !== id); });
+    document.querySelectorAll('.module-link').forEach(l=> l.classList.toggle('active', l.dataset.module===id));
+    window.scrollTo({top:0, behavior:'auto'});
+    closeSidebarMobile();
+  }
+  showModule(currentModuleId);
+
+  // ---------- in-page section nav (buttons, not links — avoids the artifact's external-link dialog) ----------
+  const navLinks = document.querySelectorAll('#page-intro-amostragem .navlinks .navlink');
+  const sections = Array.from(navLinks).map(btn => document.getElementById(btn.dataset.target)).filter(Boolean);
+  navLinks.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const el = document.getElementById(btn.dataset.target);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+  const spy = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.id;
+        navLinks.forEach(btn=> btn.classList.toggle('active', btn.dataset.target===id));
+      }
+    });
+  }, {rootMargin:'-40% 0px -55% 0px'});
+  sections.forEach(s=> spy.observe(s));
+
+  // ---------- reveal on scroll ----------
+  const revealEls = document.querySelectorAll('.reveal');
+  const ro = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target);} });
+  }, {threshold:0.12});
+  revealEls.forEach(el=> ro.observe(el));
+
+  // ---------- hero decorative viz ----------
+  const heroViz = document.getElementById('heroViz');
+  const HERO_N = 121;
+  for(let i=0;i<HERO_N;i++){
+    const d = document.createElement('div');
+    d.className='d';
+    heroViz.appendChild(d);
+  }
+  function pulseHero(){
+    const dots = heroViz.querySelectorAll('.d');
+    dots.forEach(d=>d.classList.remove('on'));
+    const idx = new Set();
+    while(idx.size < 9){ idx.add(Math.floor(Math.random()*HERO_N)); }
+    let i=0;
+    idx.forEach(k=>{
+      setTimeout(()=> dots[k].classList.add('on'), i*80);
+      i++;
+    });
+  }
+  pulseHero();
+  setInterval(pulseHero, 3400);
+
+  // ---------- SIMULADOR ----------
+  const POP_N = 120;
+  const COLS = 12;
+  const grid = document.getElementById('popGrid');
+  const dots = [];
+
+  function stratumOf(col){
+    if(col <= 3) return 0;
+    if(col <= 8) return 1;
+    return 2;
+  }
+  function clusterOf(row, col){
+    const rowBlock = row < 5 ? 0 : 1;
+    const colBlock = Math.floor(col/4);
+    return rowBlock*3 + colBlock;
+  }
+
+  for(let i=0;i<POP_N;i++){
+    const row = Math.floor(i/COLS);
+    const col = i%COLS;
+    const el = document.createElement('div');
+    el.className='pdot';
+    el.dataset.stratum = stratumOf(col);
+    el.dataset.cluster = clusterOf(row,col);
+    el.dataset.index = i;
+    grid.appendChild(el);
+    dots.push(el);
+  }
+
+  const readout = document.getElementById('simReadout');
+
+  function clearSelection(){
+    dots.forEach(d=> d.classList.remove('selected'));
+  }
+
+  function drawIndices(indices, label){
+    clearSelection();
+    const arr = Array.from(indices);
+    arr.forEach((idx, i)=>{
+      setTimeout(()=> dots[idx].classList.add('selected'), i*45);
+    });
+    readout.textContent = label + ' — ' + arr.length + ' elemento(s) selecionado(s).';
+  }
+
+  function methodAAS(){
+    const idx = new Set();
+    while(idx.size < 12){ idx.add(Math.floor(Math.random()*POP_N)); }
+    drawIndices(idx, 'Amostra aleatória simples: 12 sorteios independentes');
+  }
+
+  function methodSist(){
+    const k = 10;
+    const start = Math.floor(Math.random()*k);
+    const idx = [];
+    for(let v = start; v < POP_N; v += k){ idx.push(v); }
+    drawIndices(idx, 'Amostragem sistemática: k = 10, início aleatório = ' + start);
+  }
+
+  function methodEstrat(){
+    const targets = {0:4, 1:5, 2:3};
+    let idx = [];
+    [0,1,2].forEach(s=>{
+      const pool = dots.map((d,i)=>i).filter(i=> Number(dots[i].dataset.stratum)===s);
+      const chosen = new Set();
+      while(chosen.size < targets[s]){ chosen.add(pool[Math.floor(Math.random()*pool.length)]); }
+      idx = idx.concat(Array.from(chosen));
+    });
+    drawIndices(idx, 'Amostragem estratificada proporcional: 4 + 5 + 3 = 12');
+  }
+
+  function methodCong(){
+    const clusterIds = [0,1,2,3,4,5];
+    const chosen = new Set();
+    while(chosen.size < 2){ chosen.add(clusterIds[Math.floor(Math.random()*clusterIds.length)]); }
+    const idx = dots.map((d,i)=>i).filter(i=> chosen.has(Number(dots[i].dataset.cluster)));
+    drawIndices(idx, 'Conglomerados: clusters sorteados = {' + Array.from(chosen).join(', ') + '} — todos os elementos dentro deles entram na amostra');
+  }
+
+  const methods = {
+    aas:   { title:'Amostra casual (aleatória) simples',
+             desc:'Cada uma das 120 unidades tem exatamente a mesma probabilidade de ser sorteada — como números tirados de uma urna. Toda a inferência ensinada em cursos de estatística parte dessa suposição.',
+             example:'Selecionar 5 alunos de uma população de 900 usando uma tabela de números aleatórios: linha 3, colunas 7–9 → alunos 246, 828, 716, 751, 188.',
+             run: methodAAS },
+    sist:  { title:'Amostra sistemática',
+             desc:'Sorteia-se um ponto de partida e depois toma-se um elemento a cada k posições na lista ordenada. É preciso checar que a lista não tenha periodicidade escondida — senão a amostra fica enviesada.',
+             example:'Rua com 500 prédios, amostra de 20 → k = 500/20 = 25. Sorteio inicial = 12 → prédios 12, 37, 62 … até 487.',
+             run: methodSist },
+    estrat:{ title:'Amostra estratificada',
+             desc:'A população é dividida em estratos internamente homogêneos (aqui, as três cores). De cada estrato sorteia-se uma amostra aleatória simples — proporcional ao tamanho do estrato, nesta simulação.',
+             example:'População de 52 meninos e 38 meninas; amostra proporcional de 10% → 5 meninos e 4 meninas.',
+             run: methodEstrat },
+    cong:  { title:'Amostra por conglomerados',
+             desc:'Em vez de sortear indivíduos, sorteiam-se grupos inteiros (os seis blocos coloridos por contorno). Todo elemento do bloco sorteado entra na amostra — ideal quando não existe uma lista de referência de indivíduos.',
+             example:'PNAD/IBGE: o país é dividido em setores censitários (~300 domicílios cada); sorteia-se uma amostra aleatória de setores.',
+             run: methodCong }
+  };
+
+  const simTitle = document.getElementById('simTitle');
+  const simDesc = document.getElementById('simDesc');
+  const simExampleP = document.querySelector('#simExample p');
+  const drawBtn = document.getElementById('simDraw');
+  const tabs = document.querySelectorAll('.tab');
+  let currentMethod = 'aas';
+
+  function setMethod(key){
+    currentMethod = key;
+    tabs.forEach(t=> t.classList.toggle('active', t.dataset.method===key));
+    simTitle.textContent = methods[key].title;
+    simDesc.textContent = methods[key].desc;
+    simExampleP.textContent = methods[key].example;
+    clearSelection();
+    readout.textContent = '';
+  }
+
+  tabs.forEach(t=> t.addEventListener('click', ()=> setMethod(t.dataset.method)));
+  drawBtn.addEventListener('click', ()=> methods[currentMethod].run());
+  setTimeout(()=> methods.aas.run(), 500);
+
+  // ---------- random number table ----------
+  const rows = [
+    [1,'9486 9821 6074 1432 0995'],
+    [2,'3155 9878 3359 8244 8952'],
+    [3,'6136 2824 6030 4256 3870'],
+    [4,'7249 9182 8669 7423 1768'],
+    [5,'0071 9871 6678 0140 9522'],
+    [6,'1558 4775 1699 1652 2555'],
+    [7,'2204 5318 8337 3867 6184'],
+    [8,'7285 8390 9134 9863 9486'],
+    [9,'1735 1248 9807 1910 3155'],
+    [10,'2709 0561 4397 1135 6136']
+  ];
+  const tbody = document.getElementById('randTabBody');
+  rows.forEach(r=>{
+    const cols = r[1].split(' ');
+    const tr = document.createElement('tr');
+    let html = '<td class="rowhead">'+r[0]+'</td>';
+    cols.forEach(c=> html += '<td>'+c+'</td>');
+    tr.innerHTML = html;
+    tbody.appendChild(tr);
+  });
+
+  // ---------- generator ----------
+  const genBtn = document.getElementById('genBtn');
+  const genOutput = document.getElementById('genOutput');
+  genBtn.addEventListener('click', ()=>{
+    let N = parseInt(document.getElementById('popSize').value) || 100;
+    let n = parseInt(document.getElementById('sampSize').value) || 5;
+    n = Math.min(n, N);
+    const chosen = new Set();
+    while(chosen.size < n){ chosen.add(1 + Math.floor(Math.random()*N)); }
+    const arr = Array.from(chosen).sort((a,b)=>a-b);
+    genOutput.innerHTML = 'Sorteados de 1 a ' + N + ': ' + arr.map(v=>'<span class="num">'+v+'</span>').join('');
+  });
+
+  // ---------- quiz toggles ----------
+  document.querySelectorAll('.qa-toggle').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const answer = btn.nextElementSibling;
+      const showing = answer.classList.toggle('show');
+      btn.textContent = showing ? 'Ocultar resposta' : 'Revelar resposta';
+    });
+  });
+
+  // ======================================================================
+  // MODULE 2 — Estatística Descritiva
+  // ======================================================================
+
+  // ---------- page section nav (scoped to module 2) ----------
+  const navLinks2 = document.querySelectorAll('#page-estatistica-descritiva .navlinks .navlink');
+  const sections2 = Array.from(navLinks2).map(btn => document.getElementById(btn.dataset.target)).filter(Boolean);
+  navLinks2.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const el = document.getElementById(btn.dataset.target);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+  const spy2 = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.id;
+        navLinks2.forEach(btn=> btn.classList.toggle('active', btn.dataset.target===id));
+      }
+    });
+  }, {rootMargin:'-40% 0px -55% 0px'});
+  sections2.forEach(s=> spy2.observe(s));
+
+  // ---------- hero bars viz (a histogram that keeps re-forming) ----------
+  const heroBars = document.getElementById('heroBars');
+  if(heroBars){
+    const BAR_N = 11;
+    for(let i=0;i<BAR_N;i++){
+      const b = document.createElement('div');
+      b.className='b';
+      heroBars.appendChild(b);
+    }
+    function pulseBars(){
+      const bars = heroBars.querySelectorAll('.b');
+      const peak = 2 + Math.floor(Math.random()*(bars.length-4));
+      bars.forEach((b,i)=>{
+        const dist = Math.abs(i-peak);
+        const h = Math.max(10, 92 - dist*dist*9 - Math.random()*10);
+        b.style.height = h + '%';
+        b.classList.toggle('hi', i===peak);
+      });
+    }
+    pulseBars();
+    setInterval(pulseBars, 3400);
+  }
+
+  // ---------- classificador de variáveis (mini-game) ----------
+  const CZ_ITEMS = [
+    {label:'Classe social', answer:'ordinal'},
+    {label:'Grau de instrução', answer:'ordinal'},
+    {label:'Sexo', answer:'nominal'},
+    {label:'Cor dos olhos', answer:'nominal'},
+    {label:'Sabor de sorvete preferido', answer:'nominal'},
+    {label:'Número de acidentes por mês', answer:'discreta'},
+    {label:'Número de pessoas infectadas', answer:'discreta'},
+    {label:'Número de filhos', answer:'discreta'},
+    {label:'Peso de um paciente (kg)', answer:'continua'},
+    {label:'Altura de uma criança (cm)', answer:'continua'},
+    {label:'Tempo de sobrevivência (dias)', answer:'continua'},
+    {label:'Time de futebol do coração', answer:'nominal'},
+    {label:'Nível de dor relatado (leve / moderada / intensa)', answer:'ordinal'}
+  ];
+  const czPrompt = document.getElementById('czPrompt');
+  if(czPrompt){
+    let czHits = 0, czTotal = 0, czCurrent = null;
+    const czFeedback = document.getElementById('czFeedback');
+    const czScoreEl = document.getElementById('czScore');
+    const czButtons = document.querySelectorAll('.cz-btn');
+    const czNameOf = key => ({nominal:'nominal', ordinal:'ordinal', discreta:'discreta', continua:'contínua'}[key]);
+
+    function czNext(){
+      czCurrent = CZ_ITEMS[Math.floor(Math.random()*CZ_ITEMS.length)];
+      czPrompt.textContent = czCurrent.label;
+      czButtons.forEach(b=> b.classList.remove('correct','wrong'));
+    }
+    czButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        czTotal++;
+        const isRight = btn.dataset.answer === czCurrent.answer;
+        if(isRight){
+          czHits++;
+          btn.classList.add('correct');
+        } else {
+          btn.classList.add('wrong');
+          const correctBtn = Array.from(czButtons).find(b=> b.dataset.answer===czCurrent.answer);
+          if(correctBtn) correctBtn.classList.add('correct');
+        }
+        czFeedback.textContent = '"' + czCurrent.label + '" é ' + czNameOf(czCurrent.answer) + '.';
+        czScoreEl.textContent = 'Acertos: ' + czHits + ' / ' + czTotal;
+        setTimeout(czNext, 1400);
+      });
+    });
+    czNext();
+  }
+
+  // ---------- quantile / percentile helper (shared) ----------
+  function computeQuantile(sortedArr, p){
+    const n = sortedArr.length;
+    const i = (p/100)*n;
+    if(Math.abs(i - Math.round(i)) < 1e-9){
+      const ii = Math.round(i);
+      if(ii<1) return {value:sortedArr[0], detail:'i=' + ii + ' → 1º elemento'};
+      if(ii>=n) return {value:sortedArr[n-1], detail:'i=' + ii + ' → último elemento'};
+      const v = (sortedArr[ii-1]+sortedArr[ii])/2;
+      return {value:v, detail:'i=' + ii + ' é inteiro → média entre as posições ' + ii + ' (' + sortedArr[ii-1] + ') e ' + (ii+1) + ' (' + sortedArr[ii] + ')'};
+    } else {
+      const idx = Math.min(Math.max(Math.ceil(i),1), n);
+      return {value:sortedArr[idx-1], detail:'i=' + i.toFixed(2) + ' não é inteiro → arredonda para cima → posição ' + idx};
+    }
+  }
+
+  // ---------- calculadora de quantis ----------
+  const qtBtn = document.getElementById('qtBtn');
+  if(qtBtn){
+    qtBtn.addEventListener('click', ()=>{
+      const raw = document.getElementById('qtDataInput').value;
+      const arr = raw.split(',').map(s=>parseFloat(s.trim())).filter(v=>!isNaN(v)).sort((a,b)=>a-b);
+      const p = parseFloat(document.getElementById('qtP').value);
+      const out = document.getElementById('qtOutput');
+      if(arr.length < 2 || isNaN(p) || p<=0 || p>=100){
+        out.textContent = 'Informe ao menos 2 dados válidos e um percentil entre 1 e 99.';
+        return;
+      }
+      const res = computeQuantile(arr, p);
+      const rounded = Math.round(res.value*100)/100;
+      out.innerHTML = 'n = ' + arr.length + ' · ' + res.detail + ' → <span class="num">q(' + p + ') = ' + rounded + '</span>';
+    });
+  }
+
+  // ---------- detector de outliers e box-plot ----------
+  const BT_PRESETS = {
+    ex1: '40,52,55,60,70,75,86,90,90,90,94,94,95,98,100,115,125,150',
+    ratos: '43,45,53,56,56,57,58,66,67,73,74,79,80,80,81,81,81,82,83,83,84,88,89,91,91,92,92,97,99,99,100,100,101,102,102,102,103,104,107,108,109,113,114,118,121,123,126,128,137,138,139,144,145,147,156,162,174,178,179,184,191,198,211,214,243,249,329,380,403,511,522,598'
+  };
+  document.querySelectorAll('.bt-preset').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const dataEl = document.getElementById('btData');
+      if(dataEl){ dataEl.value = BT_PRESETS[btn.dataset.preset]; analyzeBoxplot(); }
+    });
+  });
+
+  function analyzeBoxplot(){
+    const dataEl = document.getElementById('btData');
+    if(!dataEl) return;
+    const raw = dataEl.value;
+    const arr = raw.split(',').map(s=>parseFloat(s.trim())).filter(v=>!isNaN(v)).sort((a,b)=>a-b);
+    const statsEl = document.getElementById('btStats');
+    const outEl = document.getElementById('btOutliers');
+    const svgWrap = document.getElementById('btSvgWrap');
+    if(arr.length < 4){
+      statsEl.innerHTML = '';
+      outEl.classList.remove('ok');
+      outEl.textContent = 'Informe pelo menos 4 valores separados por vírgula.';
+      svgWrap.innerHTML = '';
+      return;
+    }
+    const round2 = v => Math.round(v*100)/100;
+    const min = arr[0], max = arr[arr.length-1];
+    const q1 = computeQuantile(arr,25).value;
+    const md = computeQuantile(arr,50).value;
+    const q3 = computeQuantile(arr,75).value;
+    const iq = q3 - q1;
+    const fPossLo = q1 - 1.5*iq, fPossHi = q3 + 1.5*iq;
+    const fProbLo = q1 - 3*iq, fProbHi = q3 + 3*iq;
+
+    statsEl.innerHTML = [
+      ['Mín', min], ['Q1', round2(q1)], ['Md', round2(md)], ['Q3', round2(q3)], ['Máx', max], ['IQ', round2(iq)]
+    ].map(([k,v])=> '<span class="stat-pill">'+k+': <strong>'+v+'</strong></span>').join('');
+
+    const probable = arr.filter(v=> v<fProbLo || v>fProbHi);
+    const possible = arr.filter(v=> (v<fPossLo || v>fPossHi) && !(v<fProbLo || v>fProbHi));
+    if(probable.length===0 && possible.length===0){
+      outEl.classList.add('ok');
+      outEl.textContent = 'Nenhum outlier detectado nesta amostra.';
+    } else {
+      outEl.classList.remove('ok');
+      const msg = [];
+      if(probable.length) msg.push('prováveis: ' + probable.join(', '));
+      if(possible.length) msg.push('possíveis: ' + possible.join(', '));
+      outEl.textContent = 'Outliers — ' + msg.join(' · ');
+    }
+
+    // ---- render box-plot SVG ----
+    const W = 560, H = 150, padX = 34;
+    const lo = Math.min(min, fProbLo), hi = Math.max(max, fProbHi);
+    const span = (hi - lo) || 1;
+    const scaleX = v => padX + ((v-lo)/span) * (W - 2*padX);
+    const midY = 62, boxH = 46;
+    const inFence = arr.filter(v=> v>=fPossLo && v<=fPossHi);
+    const whiskerLo = inFence.length ? inFence[0] : q1;
+    const whiskerHi = inFence.length ? inFence[inFence.length-1] : q3;
+
+    let svg = '<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" xmlns="http://www.w3.org/2000/svg">';
+    svg += '<line x1="'+scaleX(whiskerLo)+'" y1="'+midY+'" x2="'+scaleX(q1)+'" y2="'+midY+'" stroke="var(--ink-faint)" stroke-width="1.5"/>';
+    svg += '<line x1="'+scaleX(q3)+'" y1="'+midY+'" x2="'+scaleX(whiskerHi)+'" y2="'+midY+'" stroke="var(--ink-faint)" stroke-width="1.5"/>';
+    svg += '<line x1="'+scaleX(whiskerLo)+'" y1="'+(midY-9)+'" x2="'+scaleX(whiskerLo)+'" y2="'+(midY+9)+'" stroke="var(--ink-faint)" stroke-width="1.5"/>';
+    svg += '<line x1="'+scaleX(whiskerHi)+'" y1="'+(midY-9)+'" x2="'+scaleX(whiskerHi)+'" y2="'+(midY+9)+'" stroke="var(--ink-faint)" stroke-width="1.5"/>';
+    svg += '<rect x="'+scaleX(q1)+'" y="'+(midY-boxH/2)+'" width="'+Math.max(2,(scaleX(q3)-scaleX(q1)))+'" height="'+boxH+'" fill="rgba(31,92,85,0.14)" stroke="var(--teal)" stroke-width="1.5"/>';
+    svg += '<line x1="'+scaleX(md)+'" y1="'+(midY-boxH/2)+'" x2="'+scaleX(md)+'" y2="'+(midY+boxH/2)+'" stroke="var(--rust)" stroke-width="2.5"/>';
+    arr.forEach(v=>{
+      if(v<fPossLo || v>fPossHi){
+        const isProbable = v<fProbLo || v>fProbHi;
+        svg += '<circle cx="'+scaleX(v)+'" cy="'+midY+'" r="4.5" fill="'+(isProbable? 'var(--rust)':'var(--amber)')+'" stroke="var(--white)" stroke-width="1"/>';
+      }
+    });
+    [['Mín',min],['Q1',round2(q1)],['Md',round2(md)],['Q3',round2(q3)],['Máx',max]].forEach(([label,v])=>{
+      svg += '<text x="'+scaleX(v)+'" y="'+(midY+boxH/2+22)+'" font-size="10.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-faint)" text-anchor="middle">'+label+'</text>';
+      svg += '<text x="'+scaleX(v)+'" y="'+(midY+boxH/2+35)+'" font-size="10.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-soft)" text-anchor="middle">'+v+'</text>';
+    });
+    svg += '</svg>';
+    svgWrap.innerHTML = svg;
+  }
+
+  const btAnalyze = document.getElementById('btAnalyze');
+  if(btAnalyze){
+    btAnalyze.addEventListener('click', analyzeBoxplot);
+    analyzeBoxplot();
+  }
+
+  // ---------- correlation simulator ----------
+  function pearsonR(xs, ys){
+    const n = xs.length;
+    let sx=0, sy=0, sxy=0, sxx=0, syy=0;
+    for(let i=0;i<n;i++){ sx+=xs[i]; sy+=ys[i]; sxy+=xs[i]*ys[i]; sxx+=xs[i]*xs[i]; syy+=ys[i]*ys[i]; }
+    const mx=sx/n, my=sy/n;
+    const num = sxy - n*mx*my;
+    const den = Math.sqrt((sxx-n*mx*mx)*(syy-n*my*my));
+    return den===0 ? 0 : num/den;
+  }
+  function randNormal(){
+    let u=0,v=0;
+    while(u===0) u=Math.random();
+    while(v===0) v=Math.random();
+    return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
+  }
+  function drawCorrScatter(xs, ys){
+    const wrap = document.getElementById('corrSvgWrap');
+    if(!wrap) return;
+    const W=440, H=340, pad=30;
+    const minX=Math.min(...xs), maxX=Math.max(...xs);
+    const minY=Math.min(...ys), maxY=Math.max(...ys);
+    const spanX=(maxX-minX)||1, spanY=(maxY-minY)||1;
+    const sx = v => pad + ((v-minX)/spanX)*(W-2*pad);
+    const sy = v => H-pad - ((v-minY)/spanY)*(H-2*pad);
+    let svg = '<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" xmlns="http://www.w3.org/2000/svg">';
+    svg += '<line x1="'+pad+'" y1="'+(H-pad)+'" x2="'+(W-pad)+'" y2="'+(H-pad)+'" stroke="var(--line)" stroke-width="1"/>';
+    svg += '<line x1="'+pad+'" y1="'+pad+'" x2="'+pad+'" y2="'+(H-pad)+'" stroke="var(--line)" stroke-width="1"/>';
+    for(let i=0;i<xs.length;i++){
+      svg += '<circle cx="'+sx(xs[i])+'" cy="'+sy(ys[i])+'" r="4.5" fill="var(--teal)" fill-opacity="0.75"/>';
+    }
+    svg += '</svg>';
+    wrap.innerHTML = svg;
+  }
+  function generateCorrSample(){
+    const targetInput = document.getElementById('corrTarget');
+    if(!targetInput) return;
+    const rho = parseFloat(targetInput.value);
+    const n = 40;
+    const xs=[], ys=[];
+    for(let i=0;i<n;i++){
+      const x = randNormal();
+      const noise = randNormal();
+      const y = rho*x + Math.sqrt(Math.max(0,1-rho*rho))*noise;
+      xs.push(x); ys.push(y);
+    }
+    drawCorrScatter(xs, ys);
+    const rActual = pearsonR(xs, ys);
+    const readout = document.getElementById('corrReadout');
+    if(readout) readout.textContent = 'r calculado nesta amostra: ' + rActual.toFixed(3);
+  }
+  const corrTarget = document.getElementById('corrTarget');
+  const corrTargetLabel = document.getElementById('corrTargetLabel');
+  if(corrTarget){
+    corrTarget.addEventListener('input', ()=>{ corrTargetLabel.textContent = parseFloat(corrTarget.value).toFixed(1); });
+  }
+  const corrGen = document.getElementById('corrGen');
+  if(corrGen){
+    corrGen.addEventListener('click', generateCorrSample);
+    generateCorrSample();
+  }
+
+  // ======================================================================
+  // MODULE 3 — Estimação Pontual de Parâmetros
+  // ======================================================================
+
+  // ---------- page section nav (scoped to module 3) ----------
+  const navLinks3 = document.querySelectorAll('#page-estimacao-pontual .navlinks .navlink');
+  const sections3 = Array.from(navLinks3).map(btn => document.getElementById(btn.dataset.target)).filter(Boolean);
+  navLinks3.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const el = document.getElementById(btn.dataset.target);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+  const spy3 = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.id;
+        navLinks3.forEach(btn=> btn.classList.toggle('active', btn.dataset.target===id));
+      }
+    });
+  }, {rootMargin:'-40% 0px -55% 0px'});
+  sections3.forEach(s=> spy3.observe(s));
+
+  // ---------- hero target viz (bullseye: dispersão de estimativas em torno do valor verdadeiro) ----------
+  const heroTarget = document.getElementById('heroTarget');
+  if(heroTarget){
+    const HT_SIZE = 300, htcx = 150, htcy = 150;
+    let svgHT = '<svg viewBox="0 0 '+HT_SIZE+' '+HT_SIZE+'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">';
+    svgHT += '<circle cx="'+htcx+'" cy="'+htcy+'" r="110" fill="none" stroke="var(--line)" stroke-width="1"/>';
+    svgHT += '<circle cx="'+htcx+'" cy="'+htcy+'" r="72" fill="none" stroke="var(--line)" stroke-width="1"/>';
+    svgHT += '<circle cx="'+htcx+'" cy="'+htcy+'" r="36" fill="none" stroke="var(--line)" stroke-width="1"/>';
+    svgHT += '<circle cx="'+htcx+'" cy="'+htcy+'" r="4.5" fill="var(--rust)"/>';
+    for(let i=0;i<14;i++){
+      svgHT += '<circle class="est-dot" id="est-'+i+'" cx="'+htcx+'" cy="'+htcy+'" r="5" fill="var(--amber)" fill-opacity="0.85" style="transition:cx 1.1s ease, cy 1.1s ease;"/>';
+    }
+    svgHT += '</svg>';
+    heroTarget.innerHTML = svgHT;
+
+    let htTight = true;
+    function pulseTarget(){
+      htTight = !htTight;
+      for(let i=0;i<14;i++){
+        const dot = document.getElementById('est-'+i);
+        if(!dot) continue;
+        const angle = Math.random()*Math.PI*2;
+        const maxR = htTight ? 28 : 105;
+        const r = Math.random()*maxR;
+        dot.setAttribute('cx', htcx + r*Math.cos(angle));
+        dot.setAttribute('cy', htcy + r*Math.sin(angle));
+      }
+    }
+    pulseTarget();
+    setInterval(pulseTarget, 2600);
+  }
+
+  // ---------- calculadora do método dos momentos ----------
+  const mmBtn = document.getElementById('mmBtn');
+  if(mmBtn){
+    mmBtn.addEventListener('click', ()=>{
+      const raw = document.getElementById('mmDataInput').value;
+      const arr = raw.split(',').map(s=>parseFloat(s.trim())).filter(v=>!isNaN(v));
+      const dist = document.getElementById('mmDist').value;
+      const out = document.getElementById('mmOutput');
+      if(arr.length < 1){ out.textContent = 'Informe ao menos um dado válido.'; return; }
+      const n = arr.length;
+      const mean = arr.reduce((a,b)=>a+b,0)/n;
+      const round3 = v => Math.round(v*1000)/1000;
+      if(dist === 'uniforme0'){
+        out.innerHTML = 'X̄ = ' + round3(mean) + ' → <span class="num">θ̂ = 2X̄ = ' + round3(2*mean) + '</span>';
+      } else if(dist === 'exponencial'){
+        out.innerHTML = 'X̄ = ' + round3(mean) + ' → <span class="num">λ̂ = 1/X̄ = ' + round3(1/mean) + '</span>';
+      } else {
+        const variance = arr.reduce((a,b)=>a+(b-mean)*(b-mean),0)/n;
+        out.innerHTML = 'µ̂ = X̄ = <span class="num">' + round3(mean) + '</span> · σ̂² = [Σ(Xᵢ−X̄)²]/n = <span class="num">' + round3(variance) + '</span>';
+      }
+    });
+  }
+
+  // ---------- simulador de verossimilhança (Bernoulli/Binomial) ----------
+  function round2ep(v){ return Math.round(v*100)/100; }
+  function plotMLE(){
+    const nEl = document.getElementById('mleN');
+    const kEl = document.getElementById('mleK');
+    if(!nEl || !kEl) return;
+    const n = parseInt(nEl.value), k = parseInt(kEl.value);
+    const wrap = document.getElementById('mleSvgWrap');
+    const readout = document.getElementById('mleReadout');
+    if(isNaN(n) || isNaN(k) || n<1 || k<0 || k>n){
+      readout.textContent = 'Informe n ≥ 1 e 0 ≤ k ≤ n.';
+      return;
+    }
+    const W=440, H=240, padX=36, padY=26;
+    const steps = 200;
+    const raw = [];
+    let maxL = 0;
+    for(let i=0;i<=steps;i++){
+      const p = i/steps;
+      let Lval;
+      if(p===0){ Lval = (k===0)?1:0; }
+      else if(p===1){ Lval = (k===n)?1:0; }
+      else { Lval = Math.pow(p,k)*Math.pow(1-p,n-k); }
+      raw.push(Lval);
+      if(Lval>maxL) maxL = Lval;
+    }
+    const norm = raw.map(v=> maxL>0 ? v/maxL : 0);
+    const sx = i => padX + (i/steps)*(W-2*padX);
+    const sy = v => H-padY - v*(H-2*padY);
+    let path = '';
+    norm.forEach((v,i)=>{ path += (i===0?'M ':'L ') + sx(i).toFixed(1) + ' ' + sy(v).toFixed(1) + ' '; });
+    const pHat = k/n;
+    const pHatX = padX + pHat*(W-2*padX);
+    let svg = '<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" xmlns="http://www.w3.org/2000/svg">';
+    svg += '<line x1="'+padX+'" y1="'+(H-padY)+'" x2="'+(W-padX)+'" y2="'+(H-padY)+'" stroke="var(--line)" stroke-width="1"/>';
+    svg += '<line x1="'+padX+'" y1="'+padY+'" x2="'+padX+'" y2="'+(H-padY)+'" stroke="var(--line)" stroke-width="1"/>';
+    svg += '<path d="'+path+'" fill="none" stroke="var(--teal)" stroke-width="2.5"/>';
+    svg += '<line x1="'+pHatX+'" y1="'+padY+'" x2="'+pHatX+'" y2="'+(H-padY)+'" stroke="var(--rust)" stroke-width="1.5" stroke-dasharray="4,3"/>';
+    svg += '<text x="'+padX+'" y="'+(H-8)+'" font-size="10.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-faint)">p=0</text>';
+    svg += '<text x="'+(W-padX)+'" y="'+(H-8)+'" font-size="10.5" font-family="IBM Plex Mono, monospace" fill="var(--ink-faint)" text-anchor="end">p=1</text>';
+    svg += '<text x="'+pHatX+'" y="'+(padY-8)+'" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--rust)" text-anchor="middle">p̂='+round2ep(pHat)+'</text>';
+    svg += '</svg>';
+    wrap.innerHTML = svg;
+    readout.textContent = 'p̂ = k/n = ' + k + '/' + n + ' = ' + round2ep(pHat) + ' — o ponto em que L(p) é máxima.';
+  }
+  const mleBtn = document.getElementById('mleBtn');
+  if(mleBtn){
+    mleBtn.addEventListener('click', plotMLE);
+    document.querySelectorAll('.mle-preset').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const parts = btn.dataset.mle.split(',').map(Number);
+        document.getElementById('mleN').value = parts[0];
+        document.getElementById('mleK').value = parts[1];
+        plotMLE();
+      });
+    });
+    plotMLE();
+  }
+
+
+  // ======================================================================
+  // MODULE 4 — Estimação Intervalar
+  // ======================================================================
+
+  // ---------- statistical helper functions (shared by all calculators below) ----------
+  function normQuantile(p){
+    // Acklam's rational approximation for the inverse standard normal CDF
+    if(p <= 0) return -Infinity;
+    if(p >= 1) return Infinity;
+    const a = [-3.969683028665376e+01, 2.209460984245205e+02, -2.759285104469687e+02, 1.383577518672690e+02, -3.066479806614716e+01, 2.506628277459239e+00];
+    const b = [-5.447609879822406e+01, 1.615858368580409e+02, -1.556989798598866e+02, 6.680131188771972e+01, -1.328068155288572e+01];
+    const c = [-7.784894002430293e-03, -3.223964580411365e-01, -2.400758277161838e+00, -2.549732539343734e+00, 4.374664141464968e+00, 2.938163982698783e+00];
+    const d = [7.784695709041462e-03, 3.224671290700398e-01, 2.445134137142996e+00, 3.754408661907416e+00];
+    const pLow = 0.02425, pHigh = 1 - pLow;
+    let q, r;
+    if(p < pLow){
+      q = Math.sqrt(-2*Math.log(p));
+      return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) / ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+    } else if(p <= pHigh){
+      q = p - 0.5; r = q*q;
+      return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q / (((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
+    } else {
+      q = Math.sqrt(-2*Math.log(1-p));
+      return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) / ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+    }
+  }
+  function tQuantile(p, df){
+    // Cornish-Fisher expansion, using the normal quantile as the base term
+    const z = normQuantile(p);
+    if(!isFinite(z) || df <= 0) return z;
+    const z2=z*z, z3=z2*z, z5=z3*z2, z7=z5*z2, z9=z7*z2;
+    const g1 = (z3+z)/4;
+    const g2 = (5*z5+16*z3+3*z)/96;
+    const g3 = (3*z7+19*z5+17*z3-15*z)/384;
+    const g4 = (79*z9+776*z7+1482*z5-1920*z3-945*z)/92160;
+    return z + g1/df + g2/(df*df) + g3/Math.pow(df,3) + g4/Math.pow(df,4);
+  }
+  function r3ii(v){ return Math.round(v*1000)/1000; }
+
+  // ---------- page section nav (scoped to module 4) ----------
+  const navLinks4 = document.querySelectorAll('#page-estimacao-intervalar .navlinks .navlink');
+  const sections4 = Array.from(navLinks4).map(btn => document.getElementById(btn.dataset.target)).filter(Boolean);
+  navLinks4.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const el = document.getElementById(btn.dataset.target);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+  const spy4 = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.id;
+        navLinks4.forEach(btn=> btn.classList.toggle('active', btn.dataset.target===id));
+      }
+    });
+  }, {rootMargin:'-40% 0px -55% 0px'});
+  sections4.forEach(s=> spy4.observe(s));
+
+  // ---------- hero viz: repeated confidence intervals around µ ----------
+  const heroCI = document.getElementById('heroCI');
+  if(heroCI){
+    const CI_W = 320, CI_H = 300, muX = 160;
+    let svgCI = '<svg viewBox="0 0 '+CI_W+' '+CI_H+'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">';
+    svgCI += '<line x1="'+muX+'" y1="14" x2="'+muX+'" y2="270" stroke="var(--ink)" stroke-width="1.5"/>';
+    svgCI += '<text x="'+muX+'" y="288" font-size="13" font-family="IBM Plex Mono, monospace" fill="var(--ink-soft)" text-anchor="middle">µ</text>';
+    for(let i=0;i<8;i++){
+      const y = 34 + i*30;
+      svgCI += '<line id="ci-bar-'+i+'" x1="'+(muX-40)+'" y1="'+y+'" x2="'+(muX+40)+'" y2="'+y+'" stroke="var(--teal)" stroke-width="3.5" stroke-linecap="round" style="transition:x1 1.1s ease, x2 1.1s ease, stroke 0.4s;"/>';
+      svgCI += '<circle id="ci-dot-'+i+'" cx="'+muX+'" cy="'+y+'" r="3.5" fill="var(--teal)" style="transition:cx 1.1s ease, fill 0.4s;"/>';
+    }
+    svgCI += '</svg>';
+    heroCI.innerHTML = svgCI;
+
+    function pulseCI(){
+      for(let i=0;i<8;i++){
+        const y = 34 + i*30;
+        const bar = document.getElementById('ci-bar-'+i);
+        const dot = document.getElementById('ci-dot-'+i);
+        if(!bar) continue;
+        const halfWidth = 34 + Math.random()*24;
+        const jitter = (Math.random()*2-1) * 64;
+        const center = muX + jitter;
+        const left = center - halfWidth, right = center + halfWidth;
+        const hit = left <= muX && muX <= right;
+        const color = hit ? 'var(--teal)' : 'var(--rust)';
+        bar.setAttribute('x1', left); bar.setAttribute('x2', right);
+        bar.setAttribute('stroke', color);
+        if(dot){ dot.setAttribute('cx', center); dot.setAttribute('fill', color); }
+      }
+    }
+    pulseCI();
+    setInterval(pulseCI, 2800);
+  }
+
+  // ---------- calculadora de IC para a média (Z ou t) ----------
+  const icSigmaLabel = document.getElementById('icSigmaLabel');
+  const icKnownSel = document.getElementById('icKnown');
+  if(icKnownSel){
+    icKnownSel.addEventListener('change', function(){
+      icSigmaLabel.textContent = this.value === 'known' ? 'σ' : 'S (amostral)';
+    });
+  }
+  const icBtn = document.getElementById('icBtn');
+  if(icBtn){
+    icBtn.addEventListener('click', ()=>{
+      const xbar = parseFloat(document.getElementById('icXbar').value);
+      const n = parseInt(document.getElementById('icN').value);
+      const known = document.getElementById('icKnown').value;
+      const sd = parseFloat(document.getElementById('icSigma').value);
+      const confPct = parseFloat(document.getElementById('icConf').value);
+      const out = document.getElementById('icOutput');
+      if(isNaN(xbar) || isNaN(n) || n<2 || isNaN(sd) || sd<=0 || isNaN(confPct) || confPct<=0 || confPct>=100){
+        out.textContent = 'Confira os valores informados (n ≥ 2, desvio padrão > 0, confiança entre 0 e 100).';
+        return;
+      }
+      const alpha = 1 - confPct/100;
+      let crit, label, dfNote = '';
+      if(known === 'known'){
+        crit = normQuantile(1 - alpha/2);
+        label = 'z';
+      } else {
+        const df = n - 1;
+        crit = tQuantile(1 - alpha/2, df);
+        label = 't';
+        dfNote = ' (ν=' + df + ')';
+      }
+      const eps = crit * sd / Math.sqrt(n);
+      const lo = xbar - eps, hi = xbar + eps;
+      out.innerHTML = label + 'α/2 = <span class="num">'+r3ii(crit)+'</span>' + dfNote +
+        ' · ε = <span class="num">'+r3ii(eps)+'</span> · IC = <span class="num">['+r3ii(lo)+' ; '+r3ii(hi)+']</span>';
+    });
+  }
+
+  // ---------- calculadora de tamanho de amostra ----------
+  const ssBtn = document.getElementById('ssBtn');
+  if(ssBtn){
+    ssBtn.addEventListener('click', ()=>{
+      const sd = parseFloat(document.getElementById('ssSigma').value);
+      const eps = parseFloat(document.getElementById('ssEps').value);
+      const confPct = parseFloat(document.getElementById('ssConf').value);
+      const out = document.getElementById('ssOutput');
+      if(isNaN(sd) || sd<=0 || isNaN(eps) || eps<=0 || isNaN(confPct) || confPct<=0 || confPct>=100){
+        out.textContent = 'Confira os valores informados.';
+        return;
+      }
+      const alpha = 1 - confPct/100;
+      const z = normQuantile(1 - alpha/2);
+      const nRaw = Math.pow(z*sd/eps, 2);
+      const n = Math.ceil(nRaw);
+      out.innerHTML = 'zα/2 = <span class="num">'+r3ii(z)+'</span> · n ≥ <span class="num">'+(Math.round(nRaw*100)/100)+'</span> → <span class="num">n = '+n+'</span>';
+    });
+  }
+
+  // ---------- calculadora de IC para proporção ----------
+  const propBtn = document.getElementById('propBtn');
+  if(propBtn){
+    propBtn.addEventListener('click', ()=>{
+      const x = parseFloat(document.getElementById('propX').value);
+      const n = parseInt(document.getElementById('propN').value);
+      const confPct = parseFloat(document.getElementById('propConf').value);
+      const out = document.getElementById('propOutput');
+      if(isNaN(x) || isNaN(n) || n<1 || x<0 || x>n || isNaN(confPct) || confPct<=0 || confPct>=100){
+        out.textContent = 'Confira os valores informados (0 ≤ sucessos ≤ n).';
+        return;
+      }
+      const phat = x/n;
+      const alpha = 1 - confPct/100;
+      const z = normQuantile(1 - alpha/2);
+      const eps = z * Math.sqrt(phat*(1-phat)/n);
+      const lo = Math.max(0, phat-eps), hi = Math.min(1, phat+eps);
+      out.innerHTML = 'p̂ = <span class="num">'+r3ii(phat)+'</span> · zα/2 = <span class="num">'+r3ii(z)+'</span> · ε = <span class="num">'+r3ii(eps)+'</span> · IC = <span class="num">['+r3ii(lo)+' ; '+r3ii(hi)+']</span>';
+    });
+  }
+
+  // ---------- simulador de bootstrap ----------
+  function computeStatII(arr, type){
+    const sorted = [...arr].sort((a,b)=>a-b);
+    const n = sorted.length;
+    if(type === 'amplitude') return sorted[n-1] - sorted[0];
+    if(type === 'media') return arr.reduce((a,b)=>a+b,0)/n;
+    if(type === 'mediana'){
+      const mid = Math.floor(n/2);
+      return n%2 ? sorted[mid] : (sorted[mid-1]+sorted[mid])/2;
+    }
+    if(type === 'iq'){
+      function quantileII(sortedArr, q){
+        const pos = (sortedArr.length-1)*q;
+        const base = Math.floor(pos);
+        const rest = pos - base;
+        return (sortedArr[base+1] !== undefined) ? sortedArr[base] + rest*(sortedArr[base+1]-sortedArr[base]) : sortedArr[base];
+      }
+      return quantileII(sorted, 0.75) - quantileII(sorted, 0.25);
+    }
+    return NaN;
+  }
+  function drawHistogramII(values, containerId){
+    const wrap = document.getElementById(containerId);
+    if(!wrap) return;
+    const W=440, H=200, padX=26, padY=22;
+    const minV = Math.min(...values), maxV = Math.max(...values);
+    const span = (maxV-minV) || 1;
+    const bins = 18;
+    const counts = new Array(bins).fill(0);
+    values.forEach(v=>{
+      let idx = Math.floor((v-minV)/span*bins);
+      if(idx>=bins) idx = bins-1; if(idx<0) idx = 0;
+      counts[idx]++;
+    });
+    const maxCount = Math.max(...counts);
+    const barW = (W-2*padX)/bins;
+    let svg = '<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" xmlns="http://www.w3.org/2000/svg">';
+    svg += '<line x1="'+padX+'" y1="'+(H-padY)+'" x2="'+(W-padX)+'" y2="'+(H-padY)+'" stroke="var(--line)" stroke-width="1"/>';
+    counts.forEach((c,i)=>{
+      const h = maxCount>0 ? (c/maxCount)*(H-2*padY) : 0;
+      const x = padX + i*barW;
+      const y = H-padY-h;
+      svg += '<rect x="'+(x+1)+'" y="'+y+'" width="'+(barW-2)+'" height="'+h+'" fill="var(--teal)" fill-opacity="0.75"/>';
+    });
+    svg += '</svg>';
+    wrap.innerHTML = svg;
+  }
+  const bootBtn = document.getElementById('bootBtn');
+  if(bootBtn){
+    bootBtn.addEventListener('click', ()=>{
+      const raw = document.getElementById('bootData').value;
+      const arr = raw.split(',').map(s=>parseFloat(s.trim())).filter(v=>!isNaN(v));
+      const statType = document.getElementById('bootStat').value;
+      let B = parseInt(document.getElementById('bootB').value);
+      const confPct = parseFloat(document.getElementById('bootConf').value);
+      const out = document.getElementById('bootOutput');
+      if(arr.length < 2){ out.textContent = 'Informe ao menos 2 dados válidos.'; return; }
+      if(isNaN(B) || B<100) B = 1000;
+      if(B > 5000) B = 5000;
+      const n = arr.length;
+      const original = computeStatII(arr, statType);
+      const reps = [];
+      for(let b=0; b<B; b++){
+        const resample = [];
+        for(let i=0;i<n;i++){ resample.push(arr[Math.floor(Math.random()*n)]); }
+        reps.push(computeStatII(resample, statType));
+      }
+      const mean = reps.reduce((a,b)=>a+b,0)/B;
+      const variance = reps.reduce((a,b)=>a+(b-mean)*(b-mean),0)/(B-1);
+      const se = Math.sqrt(variance);
+      const alpha = 1 - confPct/100;
+      const z = normQuantile(1 - alpha/2);
+      const lo = mean - z*se, hi = mean + z*se;
+      out.innerHTML = 'estatística observada = <span class="num">'+r3ii(original)+'</span> · erro padrão bootstrap ≈ <span class="num">'+r3ii(se)+'</span> · IC ≈ <span class="num">['+r3ii(lo)+' ; '+r3ii(hi)+']</span> <span style="color:var(--ink-faint); font-family:var(--mono); font-size:12px;">(B='+B+' réplicas)</span>';
+      drawHistogramII(reps, 'bootHistWrap');
+    });
+  }
+
+})();
+</script>
+
+</body>
+</html>
